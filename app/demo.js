@@ -1,16 +1,16 @@
-// 
-// Here is how to define your module 
+//
+// Here is how to define your module
 // has dependent on mobile-angular-ui
-// 
+//
 var app = angular.module('MobileAngularUiExamples', [
   'ngRoute',
   'mobile-angular-ui',
-  
+
   // touch/drag feature: this is from 'mobile-angular-ui.gestures.js'
   // it is at a very beginning stage, so please be careful if you like to use
-  // in production. This is intended to provide a flexible, integrated and and 
+  // in production. This is intended to provide a flexible, integrated and and
   // easy to use alternative to other 3rd party libs like hammer.js, with the
-  // final pourpose to integrate gestures into default ui interactions like 
+  // final pourpose to integrate gestures into default ui interactions like
   // opening sidebars, turning switches on/off ..
   'mobile-angular-ui.gestures'
 ]);
@@ -20,18 +20,18 @@ app.run(function($transform, $anchorScroll) {
   $anchorScroll.yOffset = -50;   // always scroll by 50 extra pixels
 });
 
-// 
+//
 // You can configure ngRoute as always, but to take advantage of SharedState location
-// feature (i.e. close sidebar on backbutton) you should setup 'reloadOnSearch: false' 
+// feature (i.e. close sidebar on backbutton) you should setup 'reloadOnSearch: false'
 // in order to avoid unwanted routing.
-// 
+//
 app.config(function($routeProvider) {
   $routeProvider.when('/',              {templateUrl: 'forms.html', reloadOnSearch: false});
-//  $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false}); 
-//  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false}); 
-//  $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false}); 
-//  $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false}); 
-//  $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false}); 
+//  $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false});
+//  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false});
+//  $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false});
+//  $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false});
+//  $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false});
 //  $routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
 //  $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
 //  $routeProvider.when('/touch',         {templateUrl: 'touch.html', reloadOnSearch: false});
@@ -39,16 +39,17 @@ app.config(function($routeProvider) {
 //  $routeProvider.when('/drag',          {templateUrl: 'drag.html', reloadOnSearch: false});
 //  $routeProvider.when('/drag2',         {templateUrl: 'drag2.html', reloadOnSearch: false});
 //  $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
-//  
+//
   $routeProvider.when('/search',        {templateUrl: 'search.html', reloadOnSearch: false});
   $routeProvider.when('/job',           {templateUrl: 'job.html', reloadOnSearch: false});
   $routeProvider.when('/jobApply',           {templateUrl: 'jobApply.html', reloadOnSearch: false});
-    
+  $routeProvider.when('/jobs',           {templateUrl: 'jobs.html', reloadOnSearch: false});
+
 });
 
-// 
+//
 // `$touch example`
-// 
+//
 
 app.directive('toucharea', ['$touch', function($touch){
   // Runs during compile
@@ -63,7 +64,7 @@ app.directive('toucharea', ['$touch', function($touch){
         },
 
         cancel: function(touch) {
-          $scope.touch = touch;  
+          $scope.touch = touch;
           $scope.$apply();
         },
 
@@ -109,9 +110,9 @@ app.directive('dragToDismiss', function($drag, $parse, $timeout){
           end: function(drag) {
             if (dismiss) {
               elem.addClass('dismitted');
-              $timeout(function() { 
+              $timeout(function() {
                 scope.$apply(function() {
-                  dismissFn(scope);  
+                  dismissFn(scope);
                 });
               }, 300);
             } else {
@@ -125,7 +126,7 @@ app.directive('dragToDismiss', function($drag, $parse, $timeout){
 });
 
 //
-// Another `$drag` usage example: this is how you could create 
+// Another `$drag` usage example: this is how you could create
 // a touch enabled "deck of cards" carousel. See `carousel.html` for markup.
 //
 app.directive('carousel', function(){
@@ -165,7 +166,7 @@ app.directive('carouselItem', function($drag) {
     link: function(scope, elem, attrs, carousel) {
       scope.carousel = carousel;
       var id = carousel.addItem();
-      
+
       var zIndex = function(){
         var res = 0;
         if (id === carousel.activeItem){
@@ -183,34 +184,34 @@ app.directive('carouselItem', function($drag) {
       }, function(){
         elem[0].style.zIndex = zIndex();
       });
-      
+
       $drag.bind(elem, {
         //
         // This is an example of custom transform function
         //
         transform: function(element, transform, touch) {
-          // 
+          //
           // use translate both as basis for the new transform:
-          // 
+          //
           var t = $drag.TRANSLATE_BOTH(element, transform, touch);
-          
+
           //
           // Add rotation:
           //
-          var Dx    = touch.distanceX, 
-              t0    = touch.startTransform, 
+          var Dx    = touch.distanceX,
+              t0    = touch.startTransform,
               sign  = Dx < 0 ? -1 : 1,
               angle = sign * Math.min( ( Math.abs(Dx) / 700 ) * 30 , 30 );
-          
+
           t.rotateZ = angle + (Math.round(t0.rotateZ));
-          
+
           return t;
         },
         move: function(drag){
           if(Math.abs(drag.distanceX) >= drag.rect.width / 4) {
-            elem.addClass('dismiss');  
+            elem.addClass('dismiss');
           } else {
-            elem.removeClass('dismiss');  
+            elem.removeClass('dismiss');
           }
         },
         cancel: function(){
@@ -233,10 +234,10 @@ app.directive('carouselItem', function($drag) {
 app.directive('dragMe', ['$drag', function($drag){
   return {
     controller: function($scope, $element) {
-      $drag.bind($element, 
+      $drag.bind($element,
         {
           //
-          // Here you can see how to limit movement 
+          // Here you can see how to limit movement
           // to an element
           //
           transform: $drag.TRANSLATE_INSIDE($element.parent()),
@@ -254,10 +255,10 @@ app.directive('dragMe', ['$drag', function($drag){
 }]);
 
 //
-// For this trivial demo we have just a unique MainController 
+// For this trivial demo we have just a unique MainController
 // for everything
 //
-app.controller('MainController', function($rootScope, $scope, $location, $anchorScroll){
+app.controller('MainController', function($rootScope, $scope, $location, $anchorScroll, $filter){
 
   $scope.swiped = function(direction) {
     alert('Swiped ' + direction);
@@ -265,7 +266,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
-  
+
   // Needed for the loading screen
   $rootScope.$on('$routeChangeStart', function(){
     $rootScope.loading = false;
@@ -278,9 +279,9 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   // Fake text i used here and there.
   $scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
 
-  // 
+  //
   // 'Scroll' screen
-  // 
+  //
   var scrollItems = [];
 
   for (var i=1; i<=100; i++) {
@@ -288,15 +289,52 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   }
 
   $scope.scrollItems = scrollItems;
+  $scope.currentPage = 0;
+  $scope.pageSize = 10;
+  $scope.data = [];
+  $scope.q = '';
+  var jobs = []
+  $scope.jobs = [];
+  for(var i = 1; i<=10; i++){
+    jobs.push({
+      jobTitle: 'Fulltime administratief medewerker bedrijfsbureau',
+      jobDienstverband: 'Vast',
+      jobLocatie: 'Groningen',
+      jobAantal: '40',
+      jobWerk: 'MBO werk- en denkniveau',
+      jobDescription: 'Voor een relatie in Veenendaal zijn wij op zoek naar schoonmaakmedewerker voor 29 en 30 augustus. Werktijden:Maandag 15.30-20.30 uur Dinsdag 7.30-20.30 uur ivm uitbraak van een virus dient een ver...'
+    });
+    jobs.push({
+      jobTitle: 'Heftruckchauffeur (m/v)',
+      jobDienstverband: 'Avondwerk',
+      jobLocatie: 'S-Gravenhage',
+      jobAantal: '40',
+      jobWerk: 'HBO werk- en denkniveau',
+      jobDescription: 'Wij zijn op zoek naar servicegerichte medewerkers voor een project van Tele2 in Groningen. Het betreft een tijdelijke vacature vanaf 12 september voor de duur van 2 maanden. Tijdens deze gehele peri...'
+    });
+    jobs.push({
+      jobTitle: 'Technisch commercieel medewerker',
+      jobDienstverband: 'Vast',
+      jobLocatie: 'Veldhoven',
+      jobAantal: '20',
+      jobWerk: 'HBO werk- en denkniveau',
+      jobDescription: 'Voor onze opdrachtgever zijn wij op zoek naar een timmerman, welke op diverse (grotere) klussen (zelfstandig) aan de slag kan. Als timmerman verricht je onder andere de volgende werkzaamheden: * Best...'
+    })
+  }
 
-  $scope.bottomReached = function() {
-    /* global alert: false; */
-    alert('Congrats you scrolled to the end of the list!');
-  };
+  $scope.jobs = jobs;
+  $scope.getData = function () {
+      // needed for the pagination calc
+      return $filter('filter')($scope.jobs, $scope.q)
+  }
 
-  // 
+  $scope.numberOfPages=function(){
+      return Math.ceil($scope.getData().length/$scope.pageSize);
+  }
+
+  //
   // Right Sidebar
-  // 
+  //
   $scope.chatUsers = [
     { name: 'Carlos  Flowers', online: true },
     { name: 'Byron Taylor', online: true },
@@ -325,22 +363,27 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     { name: 'Ebony Rice', online: false }
   ];
 
+  $scope.dummyuser = [{
+    email: "sander@test.nl",
+    password: "sander"
+  }]
+
   //
   // 'Forms' screen
-  //  
+  //
   $scope.rememberMe = true;
   $scope.email = 'me@example.com';
-  
+
   $scope.go = function(path) {
 //    alert('You submitted the login form');
     $location.path( '/' + path );
   };
 
-  // 
+  //
   // 'Drag' screen
-  // 
+  //
   $scope.notices = [];
-  
+
   for (var j = 0; j < 10; j++) {
     $scope.notices.push({icon: 'envelope', message: 'Notice ' + (j + 1) });
   }
@@ -355,31 +398,85 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   // Job apply form data
   //
   $scope.panelHeadingsTitle = ["Vul je emailadres in", "Vul je persoonlijke gegevens in", "Ervaring &amp; Motivatie"]
-  
+
   $scope.panels = [
     {
       panelHeadingTitle: "Vul je emailadres in",
       isEditable: true,
       isActive: true,
       isDisabled: false,
-      closed: false
+      closed: false,
+      isComplete: false
     },
     {
       panelHeadingTitle: "Vul je persoonlijke gegevens in",
       isEditable: true,
       isActive: false,
       isDisabled: true,
-      closed: true
+      closed: true,
+      isComplete: false
     },
     {
       panelHeadingTitle: "Ervaring & Motivatie",
       isEditable: true,
       isActive: false,
       isDisabled: true,
-      closed: true
+      closed: true,
+      isComplete: false
     }
-  ]
-  
+  ];
+  //job apply form
+  $scope.emailRegx = new RegExp('.+@.+\\..+');
+
+  $scope.userRegistrationStep1Submits = function(validityOfForm, i){
+    $scope.buttonOfForm1CLicked = true;
+    if(validityOfForm == true){
+      $scope.panels[i].isComplete = true;
+      $scope.panels[i].isActive = false;
+      $scope.panels[i].closed = true;
+      $scope.openAndClosed(i+1, true);
+    }
+  }
+
+  $scope.userRegistrationStep2Submits = function(validityOfForm, i){
+    $scope.buttonOfForm1CLicked = true;
+    if(validityOfForm == true){
+      $scope.panels[i].isComplete = true;
+      $scope.panels[i].isActive = false;
+      $scope.panels[i].closed = true;
+      $scope.openAndClosed(i+1, true);
+    }
+  }
+
+  $scope.userRegistrationStep3Submits = function(validityOfForm, i){
+    $scope.buttonOfForm1CLicked = true;
+    if(validityOfForm == true){
+      $scope.panels[i].isComplete = true;
+      $scope.panels[i].isActive = false;
+      $scope.panels[i].closed = true;
+      // $scope.openAndClosed(i+1, true);
+    }
+  }
+
+  $scope.openAndClosed = function(i, buttonCalling){
+
+    if(buttonCalling == true){
+      $scope.panels[i].isActive = true;
+      $scope.panels[i].closed = false;
+      $scope.panels[i].isDisabled = false;
+    }else{
+      if($scope.panels[i].isDisabled == false){
+        angular.forEach($scope.panels, function(value, key) {
+          value.isActive = false;
+          value.closed = true;
+        });
+      if($scope.panels[i].isDisabled == false){
+        $scope.panels[i].isActive = true;
+        $scope.panels[i].closed = false;
+      }
+    }
+  }
+
   $scope.gotoAnchor = function(x) {
     var newHash = 'panel' + x;
     if ($location.hash() !== newHash) {
@@ -390,24 +487,31 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       // call $anchorScroll() explicitly,
       // since $location.hash hasn't changed
       $anchorScroll();
-    } 
-    angular.element(document.getElementById(newHash)).toggleClass('closed');
+    }
+    angular.element(document.getElementById(newHash)).toggleClass('closed is-active');
   };
 });
-
+//We already have a limitTo filter built-in to angular,
+//let's make a startFrom filter
+app.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});
 /*
 Accordion code
 */
-app.directive('toggleBody', function() {
-  return {
-    restrict: 'AE',
-    scope: {},
-    link: function(scope, elem, attrs) {
-      elem.on('click', function(){
-        if(!elem.hasClass('is-disabled') && !elem.hasClass('is-active')){
-          elem.toggleClass('closed');
-        }
-      })
-    }
-  }
-});
+// app.directive('toggleBody', function() {
+//   return {
+//     restrict: 'AE',
+//     scope: {},
+//     link: function(scope, elem, attrs) {
+//       elem.on('click', function(){
+//         if(!elem.hasClass('is-disabled') && !elem.hasClass('is-active')){
+//           elem.toggleClass('closed');
+//         }
+//       })
+//     }
+//   }
+// });

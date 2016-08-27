@@ -3,9 +3,9 @@
 </div>
 
 <div class="scrollable">
- <div class="scrollable-content section">
-   
-  <form role="form" ng-submit='go("job")'>
+ <div class="scrollable-content">
+
+  <form role="form" ng-submit='go("jobs")' class="height-114 new-section">
     <fieldset>
       <h2>Direct zoeken naar vacatures</h2>
       <hr>
@@ -19,7 +19,7 @@
 
         <div class="form-group">
           <label>Waar zoek je:</label>
-          <input type="text" 
+          <input type="text"
                  class="form-control"
                  placeholder="Postcode/plaats">
         </div>
@@ -31,9 +31,11 @@
     </button>
 
     <div ui-content-for="navbarAction">
-      <a class='btn' ng-click='go("")'>Toon vacatures</a>
+      <a class='btn' href="javascript:void(0)" ng-click='go("")'>Toon vacatures</a>
     </div>
 
   </form>
+  <!-- footer -->
+  <div ng-include="'footer.html'" class="footer"></div>
  </div>
 </div>

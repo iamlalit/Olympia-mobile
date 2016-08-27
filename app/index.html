@@ -21,8 +21,8 @@
     <script src="demo.js"></script>
   </head>
 
-  <body 
-    ng-app="MobileAngularUiExamples" 
+  <body
+    ng-app="MobileAngularUiExamples"
     ng-controller="MainController"
     ui-prevent-touchmove-defaults
     >
@@ -35,8 +35,8 @@
 
     <div class="app" ui-swipe-right='Ui.turnOn("uiSidebarLeft")' ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
     <!-- Sidebars ends -->
-        
-        
+
+
     <!-- Navbars starts-->
 
       <div class="navbar navbar-app navbar-absolute-top">
@@ -44,7 +44,7 @@
           <img src="img/logo.png" />
         </div>-->
         <div class="navbar-brand navbar-brand-center">
-          
+
         </div>
         <div class="btn-group pull-left">
           <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
@@ -61,13 +61,13 @@
         -->
       </div>
 
-      <div class="navbar navbar-app navbar-absolute-bottom">
+      <!-- <div class="navbar navbar-app navbar-absolute-bottom">
         <a href="#/search" class="btn btn-navbar"><i class="fa fa-arrow-left fa-navbar"></i> naar zoekresultaat</a>
         <a href="#/" class="btn btn-navbar pull-right"><i class="fa fa-search fa-navbar"></i> Zoeken</a>
-      </div>
+      </div> -->
     <!-- Navbars ends -->
       <!-- App Body -->
-      <div class="app-body" ng-class="{loading: loading}">
+      <div class="app-body" ng-class="{loading: loading}" id="top">
         <div ng-show="loading" class="app-content-loading">
           <i class="fa fa-spinner fa-spin loading-spinner"></i>
         </div>
@@ -77,10 +77,7 @@
       </div>
 
     </div><!-- ~ .app -->
-    <!-- footer -->
-    
-    
-    
+
     <div ui-yield-to="modals"></div>
     <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
     <script>

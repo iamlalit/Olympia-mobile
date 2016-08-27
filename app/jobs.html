@@ -1,0 +1,60 @@
+<div ui-content-for="title">
+  <h2>Vacatures</h2>
+</div>
+
+<div class="scrollable jobs">
+  <div class="scrollable-content">
+    <div class="new-section">
+      <h2>Vacatures</h2>
+      <div class="row">
+        <div class="col-xs-12">
+          <a href="#/" class="orange"><i class="fa fa-chevron-left"></i> Terug naar vacatures zoekscherm</a>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-primary pull-left col-xs-3" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">< vorige</button>
+          <span class="text-center col-xs-5 paging">{{currentPage+1}}/{{numberOfPages()}}</span>
+          <button class="btn btn-primary pull-right col-xs-4" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">volgende ></button>
+        </div>
+      </div>
+      <hr>
+      <div class="list-group">
+        <a ng-repeat="job in jobs | startFrom:currentPage*pageSize | limitTo:pageSize" href="#/job" class="list-group-item">
+          <div class="row">
+            <div class="col-xs-12">
+              <h4 class="orange" data-ng-bind="job.jobTitle"></h4>
+            </div>
+            <div class="col-xs-10">
+              <div class="info-wrap">
+                  <div class="info">
+                    Dienstverband: <strong data-ng-bind="job.jobDienstverband"></strong> <span>|</span> Locatie: <strong data-ng-bind="job.jobLocatie"></strong> <span>|</span> Aantal uur: <strong data-ng-bind="job.jobAantal"></strong> <span>|</span> Werk-/denkniveau: <strong data-ng-bind="job.jobWerk"></strong>
+                  </div>
+      		    </div>
+            </div>
+            <div class="col-xs-2">
+              <span>
+                <img src="img/blue-tip.png"/>
+              </span>
+            </div>
+            <div class="col-xs-12 padding-top-1x">
+              <p><strong>Functie-omschrijving: </strong> <span data-ng-bind="job.jobDescription"></span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-primary pull-left col-xs-3" ng-click="currentPage=currentPage-1">< vorige</button>
+          <span class="text-center col-xs-5 paging">{{currentPage+1}}/{{numberOfPages()}}</span>
+          <button class="btn btn-primary pull-right col-xs-4" ng-click="currentPage=currentPage+1">volgende ></button>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <!-- footer -->
+    <div ng-include="'footer.html'" class="footer"></div>
+  </div>
+</div>
