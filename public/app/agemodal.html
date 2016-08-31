@@ -1,0 +1,24 @@
+<div class="modal modal-overlay" ui-if='agemodal' ui-state='agemodal'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close"
+                ui-turn-off="agemodal" ng-click="saveValueOfModal(false)">&times;</button>
+        <h4 class="modal-title">Bevestiging</h4>
+      </div>
+      <div class="modal-body">
+        <p>Bent u 16 jaar of ouder?</p>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-xs-6">
+          </div>
+          <div class="col-xs-6">
+              <button ui-turn-off="agemodal" class="btn btn-primary" ng-click="saveValueOfModal(true)">Ja</button>
+              <button ui-turn-off="agemodal" class="btn btn-primary" ng-click="saveValueOfModal(false)">Nee</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

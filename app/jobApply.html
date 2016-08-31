@@ -20,7 +20,6 @@
           </li>
         </ul>
         <hr>
-
         <div class="panel-group">
           <div class="panel panel-default" ng-repeat="panel in panels" data-ng-class="{'is-active': panel.isActive, 'is-editable': panel.isEditable, 'is-disabled': panel.isDisabled, 'closed': panel.closed, 'is-complete': panel.isComplete}" id="panel{{$index}}">
             <div class="panel-heading" data-ng-click="openAndClosed($index, false)" >
@@ -29,75 +28,76 @@
               </h4>
             </div>
             <div class="panel-body" data-ng-if="$index == 0">
-              <form name="userRegistrationStep1" id="userRegistrationStep1" novalidate ng-submit="userRegistrationStep1Submits(userRegistrationStep1.$valid, $index)" role="form" data-ng-init="buttonOfForm1CLicked = false">
+              <form name="userRegistrationStep1" id="userRegistrationStep1" scroll-to-error novalidate ng-submit="userRegistrationStep1Submits(userRegistrationStep1.$valid, $index)" role="form" data-ng-init="buttonOfForm1CLicked = false">
+                <imput type="hidden" value="false" data-ng-modal="user.modalPopUpValue" id="modalPopUpValue" name="modalPopUpValue" >
                 <div class="row margin-top-10">
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label for="userEmail">E-mailadres{{userRegistrationStep1.userEmail.$error.required}}</label>
-                            <input type="text" name="userEmail" class="form-control" id="userEmail" data-required="true" data-ng-pattern="emailRegx" data-ng-model="user.userEmail" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep1.userEmail.$error.required && buttonOfForm1CLicked}">
+                            <label for="userEmail">E-mailadres</label>
+                            <input type="text" name="userEmail" class="form-control" id="userEmail" data-required="true" data-ng-pattern="emailRegx" data-ng-model="user.userEmail" data-ng-required="true" data-ng-class="{'validation-error': (userRegistrationStep1.userEmail.$error.required || userRegistrationStep1.userEmail.$error.pattern) && buttonOfForm1CLicked}">
                             <div class="error" data-ng-show="userRegistrationStep1.userEmail.$error.required && buttonOfForm1CLicked">
-                              <span>Je bent je e-mailadres vergeten in te vullen.</span>
+                              <span>E-mail adres is verplicht</span>
                             </div>
                             <div class="error" data-ng-show="userRegistrationStep1.userEmail.$error.pattern && buttonOfForm1CLicked">
-                              <span>Dit is geen geldig email adres.</span>
+                              <span>Het e-mailadres staat niet in een geldig formaat</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                      <div class="form-group" data-ng-init="radioEmail = 'option1'" style="padding-bottom: 0">
+                      <div class="form-group" data-ng-init="user.radioEmail = 'option1'" style="padding-bottom: 0">
                           <div class="radio">
                               <label>
-                                  <input type="radio" name="radioEmail" id="radio-email1" value="option1" data-required="true" ng-model="radioEmail"> Ik ben nieuw bij Olympia
+                                  <input type="radio" name="radioEmail" id="radio-email1" value="option1" data-required="true" ng-model="user.radioEmail" data-ng-click="buttonOfForm1CLicked = false"> Ik ben nieuw bij Olympia
                               </label>
                           </div>
                           <div class="radio">
                               <label>
-                                  <input type="radio" name="radioEmail" id="radio-email2" value="option2" data-required="true" ng-model="radioEmail" data-ng-click="buttonOfForm1CLicked = false"> Ik heb eerder gesolliciteerd via Olympia
+                                  <input type="radio" name="radioEmail" id="radio-email2" value="option2" data-required="true" ng-model="user.radioEmail" data-ng-click="buttonOfForm1CLicked = false"> Ik heb eerder gesolliciteerd via Olympia
                               </label>
                           </div>
                       </div>
                     </div>
                 </div>
                 <hr>
-                <div class="row" data-ng-show="radioEmail == 'option1'">
+                <div class="row" data-ng-show="user.radioEmail == 'option1'">
                   <div class="col-sm-12 text-justified">
                       <p>
                           Met de gegevens van dit sollicitatieformulier wordt gelijk een persoonlijk Olympia account aangemaakt. Hiermee kan je de opgeslagen vacature- en sollicatie gegevens bij een (eventuele) volgende sollicitatie direct hergebruiken en gemakkelijk aanpassen.
                       </p>
                       <span style="display: inline-block">
-                          <label>Je kan ook inloggen door gebruik te maken van:</label>
+                          <label>Of log in met:</label>
                       </span>
                   </div>
-                  <div class="col-xs-6">
+                  <div class="col-xs-6 padding-right-0">
                       <a href="javascript:void(0)" title="Deel via Facebook" class=" col-xs-12 social facebook btn btn-primary"><img src="img/facebook-icon.png">facebook</a>
                   </div>
-                  <div class="col-xs-6">
+                  <div class="col-xs-6 padding-left-0">
                       <a href="javascript:void(0)" title="Deel via Linkedin" class=" col-xs-12 social linkedin btn btn-primary"><img src="img/linkedin-icon.png">linkedin</a>
                   </div>
                   <div class="col-xs-12">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" id="terms" name="terms" value="1" data-ng-model="user.terms" data-ng-required="true">
+                            <input type="checkbox" id="terms" name="terms" value="1" data-ng-model="user.terms" data-ng-required="user.radioEmail == 'option1'">
                             Ik verleen hierbij toestemming om de door mij verstrekte gegevens op te slaan en verklaar mij akkoord met de  <a class="orange" href="javascript:void(0)">privacyverklaring</a>
                         </label>
                     </div>
                     <div class="error" data-ng-show="userRegistrationStep1.terms.$error.required && buttonOfForm1CLicked">
-                      <span>Kijk dan op de checkbox in om vooruit te komen.</span>
+                      <span>Je dient akkoord te gaan met de privacyverklaring om verder te gaan.</span>
                     </div>
                   </div>
                 </div>
-                <div ng-show="radioEmail == 'option2'" class="row">
+                <div ng-show="user.radioEmail == 'option2'" class="row">
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label for="password">Wachtwoord</label>
-                            <input type="password" name="password" class="form-control wdith-494" id="password" data-ng-required="radioEmail == 'option2'" data-ng-model="user.password" data-ng-class="{'validation-error': userRegistrationStep1.password.$error.required && buttonOfForm1CLicked}">
+                            <input type="password" name="password" class="form-control wdith-494" id="password" data-ng-required="user.radioEmail == 'option2'" data-ng-model="user.password" data-ng-class="{'validation-error': userRegistrationStep1.password.$error.required && buttonOfForm1CLicked}">
                             <div class="error" data-ng-show="userRegistrationStep1.password.$error.required && buttonOfForm1CLicked">
-                              <span>Vul wachtwoord in.</span>
+                              <span>Wachtwoord is verplicht.</span>
                             </div>
-                            <div class="error" data-ng-show="!userRegistrationStep1.password.$error.required && buttonOfForm1CLicked && user.password != dummyuser[0].password">
-                              <span>Wachtwoord onjuist.</span>
+                            <div class="error" data-ng-show="!userRegistrationStep1.password.$error.required && buttonOfForm1CLicked && !invalidUser">
+                              <span>De ingevoerde gebruikersnaam of het ingevoerde wachtwoord is onjuist.</span>
                             </div>
                             <a class="orange" href="#" title="Wachtwoord vergeten">Wachtwoord vergeten?</a>
                         </div>
@@ -112,21 +112,21 @@
               </form>
             </div>
             <div class="panel-body" data-ng-if="$index == 1">
-              <form name="userRegistrationStep2" id="userRegistrationStep2" novalidate ng-submit="userRegistrationStep2Submits(userRegistrationStep2.$valid, $index)" role="form" data-ng-init="buttonOfForm2CLicked = false">
+              <form name="userRegistrationStep2" id="userRegistrationStep2" scroll-to-error  novalidate ng-submit="userRegistrationStep2Submits(userRegistrationStep2.$valid, $index)" role="form" data-ng-init="buttonOfForm2CLicked = false">
                 <div class="row">
                   <div class="col-xs-12">
                       <div class="form-group">
                           <label for="firstname">Voornaam</label>
                           <input type="text" class="form-control" name="firstname" id="firstname" data-ng-model="user.firstname" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.firstname.$error.required && buttonOfForm2CLicked}">
                           <div class="error" data-ng-show="userRegistrationStep2.firstname.$error.required && buttonOfForm2CLicked">
-                            <span>Vul voornaam in.</span>
+                            <span>Voornaam is verplicht</span>
                           </div>
                       </div>
                   </div>
                   <div class="col-xs-12">
                       <div class="form-group">
                           <label for="3">Tussenvoegsel (optioneel)</label>
-                          <input type="text" class="form-control" id="3">
+                          <input type="text" class="form-control" id="3" data-ng-model="user.tussenvoegsel">
                       </div>
                   </div>
                   <div class="col-xs-12">
@@ -134,7 +134,7 @@
                         <label for="lastname">Achternaam</label>
                         <input type="text" name="lastname" class="form-control" id="lastname" data-ng-model="user.lastname" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.lastname.$error.required && buttonOfForm2CLicked}">
                         <div class="error" data-ng-show="userRegistrationStep2.lastname.$error.required && buttonOfForm2CLicked">
-                          <span>Vul achternaam in.</span>
+                          <span>Achternaam is verplicht</span>
                         </div>
                     </div>
                   </div>
@@ -143,13 +143,13 @@
                         <label>Geslacht</label>
                         <br>
                         <label class="radio-inline">
-                            <input type="radio" name="Gaslachet" value="option1" data-ng-model="user.Gaslachet" data-ng-required="true"> Man
+                            <input type="radio" name="Gaslachet" value="Man" data-ng-model="user.Gaslachet" data-ng-required="true"> Man
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="Gaslachet" value="option2" data-ng-model="user.Gaslachet" data-ng-required="true"> Vrouw
+                            <input type="radio" name="Gaslachet" value="Vrouw" data-ng-model="user.Gaslachet" data-ng-required="true"> Vrouw
                         </label>
                         <div class="error" data-ng-show="userRegistrationStep2.Gaslachet.$error.required && buttonOfForm2CLicked">
-                          <span>Vul geslacht in.</span>
+                          <span>Geslacht is verplicht</span>
                         </div>
                     </div>
                   </div>
@@ -157,8 +157,8 @@
                     <div class="form-group">
                       <label for="month">Geboortedatum</label>
                       <div class="row">
-                          <div class="col-xs-3 padding-right-0">
-                              <select class="form-control" id="dobDay" name="dobDay" data-ng-model="user.dobDay" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.dobDay.$error.required && buttonOfForm2CLicked}">
+                          <div class="col-xs-3 padding-right-0" data-ng-init="user.dobDay = '0'">
+                              <select class="form-control" id="dobDay" name="dobDay" data-ng-model="user.dobDay" data-ng-required="true" data-ng-class="{'validation-error': user.dobDay == '0' && buttonOfForm2CLicked}">
                                   <option value="0" select="selected">Dag</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
@@ -193,8 +193,8 @@
                                   <option value="31">31</option>
                               </select>
                           </div>
-                          <div class="col-xs-5 padding-right-0">
-                              <select class="form-control" id="dobMonth" name="dobMonth" data-ng-model="user.dobMonth" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.dobMonth.$error.required && buttonOfForm2CLicked}">
+                          <div class="col-xs-5 padding-right-0" data-ng-init="user.dobMonth = '0'">
+                              <select class="form-control" id="dobMonth" name="dobMonth" data-ng-model="user.dobMonth" data-ng-required="true" data-ng-class="{'validation-error': user.dobMonth == '0' && buttonOfForm2CLicked}">
                                   <option value="0" select="selected">Maand</option>
                                   <option value="1">Januari</option>
                                   <option value="2">Februari</option>
@@ -210,8 +210,8 @@
                                   <option value="12">December</option>
                               </select>
                           </div>
-                          <div class="col-xs-4">
-                              <select class="form-control" id="dobYear" name="dobYear" data-ng-model="user.dobYear" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.dobYear.$error.required && buttonOfForm2CLicked}">
+                          <div class="col-xs-4" data-ng-init="user.dobYear = '0'">
+                              <select class="form-control" id="dobYear" name="dobYear" data-ng-model="user.dobYear" data-ng-required="true" data-ng-class="{'validation-error': user.dobYear == '0' && buttonOfForm2CLicked}">
                                   <option value="0" select="selected">Jaar</option>
                                   <option value="17">1998</option>
                                   <option value="18">1997</option>
@@ -275,32 +275,32 @@
                               </select>
                           </div>
                       </div>
-                      <div class="error" data-ng-show="userRegistrationStep2.dobDay.$error.required && userRegistrationStep2.dobMonth.$error.required  && userRegistrationStep2.dobYear.$error.required && buttonOfForm2CLicked">
-                        <span>Vul geboortedatum in.</span>
+                      <div class="error" data-ng-show="(user.dobDay == '0'  || user.dobMonth == '0' || user.dobYear == '0') && buttonOfForm2CLicked">
+                        <span>Geboortedatum is verplicht</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="form-group">
-                      <label for="6">Mobiel telefoonnummer</label>
-                      <input type="tel" name="Mobielnummer" class="form-control" id="Mobielnummer" data-ng-model="user.Mobielnummer" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Mobielnummer.$error.required && buttonOfForm2CLicked}">
-                      <div class="error" data-ng-show="userRegistrationStep2.Mobielnummer.$error.required && buttonOfForm2CLicked">
-                        <span>Vul mobielnummer in.</span>
+                      <label for="Mobielnummer">Mobiel telefoonnummer</label>
+                      <input type="tel" name="Mobielnummer" class="form-control" id="Mobielnummer" data-ng-model="user.Mobielnummer" data-ng-required="user.Telefoonnummer == undefined || user.Telefoonnummer == ''" data-ng-class="{'validation-error': (userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required) && buttonOfForm2CLicked}">
+                      <div class="error" data-ng-show="userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required && buttonOfForm2CLicked">
+                        <span>Telefoonnummer is verplicht</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="form-group">
-                      <label for="6">Vast telefoonnummer</label>
-                      <input type="tel" name="Telefoonnummer" class="form-control" id="Telefoonnummer"  data-ng-model="user.Telefoonnummer" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Telefoonnummer.$error.required && buttonOfForm2CLicked}">
-                      <div class="error" data-ng-show="userRegistrationStep2.Telefoonnummer.$error.required && buttonOfForm2CLicked">
-                        <span>Vul mobielnummer in.</span>
+                      <label for="Telefoonnummer">Vast telefoonnummer</label>
+                      <input type="tel" name="Telefoonnummer" class="form-control" id="Telefoonnummer"  data-ng-model="user.Telefoonnummer" data-ng-required="user.Mobielnummer == undefined || user.Mobielnummer == ''" data-ng-class="{'validation-error': (userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required) && buttonOfForm2CLicked}">
+                      <div class="error" data-ng-show="userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required && buttonOfForm2CLicked">
+                        <span>Telefoonnummer is verplicht</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-xs-12">
-                    <div class="form-group">
-                      <label for="12">Land</label>
+                    <div class="form-group" data-ng-init="user.Land = 'Nederland'">
+                      <label for="Land">Land</label>
                       <select class="form-control" id="Land" name="Land" data-ng-model="user.Land" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Land.$error.required && buttonOfForm2CLicked}">
                           <option>Nederland</option>
                           <option>België</option>
@@ -313,10 +313,10 @@
                   </div>
                   <div class="col-xs-12">
                     <div class="form-group">
-                      <label for="10">Postcode</label>
+                      <label for="Postcode">Postcode</label>
                       <input type="text" name="Postcode" class="form-control" id="Postcode" data-ng-model="user.Postcode" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Postcode.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Postcode.$error.required && buttonOfForm2CLicked">
-                        <span>Vul postcode in.</span>
+                        <span>Postcode is verplicht</span>
                       </div>
                     </div>
                   </div>
@@ -325,7 +325,7 @@
                       <label for="8">Huisnummer</label>
                       <input type="text" name="Huisnummer" class="form-control" id="Huisnummer" data-ng-model="user.Huisnummer" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Huisnummer.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Huisnummer.$error.required && buttonOfForm2CLicked">
-                        <span>Vul huisnummer in.</span>
+                        <span>Huisnummer is verplicht</span>
                       </div>
                     </div>
                   </div>
@@ -340,7 +340,7 @@
                       <label for="7">Straat</label>
                       <input type="text" name="Straat" class="form-control" id="Straat" data-ng-model="user.Straat" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Straat.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Straat.$error.required && buttonOfForm2CLicked">
-                        <span>Vul huisnummer in.</span>
+                        <span>Straat is verplicht</span>
                       </div>
                     </div>
                   </div>
@@ -349,7 +349,7 @@
                       <label for="11">Woonplaats</label>
                       <input type="text" name="Woonplaats" class="form-control" id="Woonplaats" data-ng-model="user.Woonplaats" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Woonplaats.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Woonplaats.$error.required && buttonOfForm2CLicked">
-                        <span>Vul woonplaats in.</span>
+                        <span>Woonplaats is verplicht</span>
                       </div>
                     </div>
                   </div>
@@ -357,7 +357,7 @@
                     <div class="form-group">
                       <label>Foto Toevoegen (optioneel)</label>
                       <p>Upload hier je foto waarmee je jezelf optimaal presenteert aan ons en (potentiële) opdrachtgevers.</p>
-                      <input id="myFileInput" type="file" accept="image/*;capture=camera">
+                      <input id="myFileInput" type="file" accept="image/*;capture=camera" data-ng-model="user.foto">
                     </div>
                   </div>
                   <div class="col-xs-12">
@@ -365,27 +365,27 @@
                       <label>Rijbewijs</label>
                       <div class="row">
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox1" value="option1" data-ng-model="user.checkbox1"> A
+                            <input type="checkbox" id="inlineCheckbox1" value="option1" data-ng-model="user.checkbox1"  data-ng-change="user.checkbox8 = false;"> A
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox2" value="option2" data-ng-model="user.checkbox2"> BE
+                            <input type="checkbox" id="inlineCheckbox2" value="option2" data-ng-model="user.checkbox2"  data-ng-change="user.checkbox8 = false;"> BE
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox3" value="option3" data-ng-model="user.checkbox3"> CE
+                            <input type="checkbox" id="inlineCheckbox3" value="option3" data-ng-model="user.checkbox3"  data-ng-change="user.checkbox8 = false;"> CE
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox4" value="option4" data-ng-model="user.checkbox4"> DE
+                            <input type="checkbox" id="inlineCheckbox4" value="option4" data-ng-model="user.checkbox4"  data-ng-change="user.checkbox8 = false;"> DE
                         </label>
                       </div>
                       <div class="row">
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox5" value="option5" data-ng-model="user.checkbox5"> B
+                            <input type="checkbox" id="inlineCheckbox5" value="option5" data-ng-model="user.checkbox5"  data-ng-change="user.checkbox8 = false;"> B
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox6" value="option6" data-ng-model="user.checkbox6"> C
+                            <input type="checkbox" id="inlineCheckbox6" value="option6" data-ng-model="user.checkbox6"  data-ng-change="user.checkbox8 = false;"> C
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox7" value="option7" data-ng-model="user.checkbox7"> D
+                            <input type="checkbox" id="inlineCheckbox7" value="option7" data-ng-model="user.checkbox7"  data-ng-change="user.checkbox8 = false;"> D
                         </label>
                         <label class="col-xs-3 padding-right-0">
                             <input type="checkbox" id="inlineCheckbox8" value="option8" data-ng-model="user.checkbox8" data-ng-change="user.checkbox1 = false;user.checkbox2 = false;user.checkbox3 = false;user.checkbox4 = false;user.checkbox5 = false;user.checkbox6 = false;user.checkbox7 = false;"> Geen
@@ -396,7 +396,7 @@
                   <div class="row">
                     <div class="col-xs-12">
                       <br>
-                      <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm2CLicked = true;">Verder naar Ervaring & Motivatie <i class="fa fa-arrow-down"></i></button>
+                      <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm2CLicked = true;">Verder naar CV & Ervaring <i class="fa fa-arrow-down"></i></button>
                     </div>
                   </div>
                 </div>
@@ -409,36 +409,50 @@
                     <p>Voeg je CV toe door een bestand te uploaden of maak hieronder een nieuw CV.
                     <a href="#" id="zoomTextarea" class="website-icons small" data-toggle="modal" data-target="#cvHelp"><i class=" fa fa-question-circle"></i></a></p>
                 </div>
-                <div class="col-xs-12" data-ng-init="cvChoice = 'cvUpload'">
+                <div class="col-xs-12" data-ng-init="user.cvChoice = 'cvUpload'">
                   <label class="radio-inline">
-                    <input type="radio" name="cvChoice" value="cvUpload" checked="" ng-model="cvChoice"> CV uploaden
+                    <input type="radio" name="user.cvChoice" value="cvUpload" checked="" ng-model="user.cvChoice"> CV uploaden
                   </label>
                 </div>
                 <div class="col-xs-12">
                   <label class="radio-inline">
-                    <input type="radio" name="cvChoice" value="cvWrite" ng-model="cvChoice"> CV aanmaken
+                    <input type="radio" name="user.cvChoice" value="cvWrite" ng-model="user.cvChoice"> CV aanmaken
                   </label>
                 </div>
-                <div class="col-xs-12" data-ng-show="cvChoice == 'cvUpload'">
+                <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvUpload'">
                   <br>
-                  <div class="well" id="cvUpload">
+                  <div id="cvUpload">
                       <div class="row">
                           <div class="col-xs-12">
-                              <label>CV uploaden</label>
+                              <label>CV uploaden vanaf</label>
                           </div>
                           <div class="col-xs-12">
-                              <div class="row">
-                                  <div class="col-xs-12">
-                                    <input type="file" class="cvUpload" id="input-cvUpload" name="cv" accept="*">
-                                  </div>
-                                  <div class="col-xs-12">CV creëeren (handmatig of met jouw linkedin profiel) of sleep een bestand in dit gebied. (alleen .doc, .docx, .pdf bestanden)</div>
-                              </div>
-                              <input type="file" class="cvUpload hidden" id="input-cvUpload" name="cv" accept="*">
+                            <div class="well blue" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
+                              <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
+                            </div>
+                          </div>
+                          <div class="col-xs-12">
+                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick()"><label>Dropbox</label></a>
+                          </div>
+                          <div class="col-xs-12">
+                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="googleButtonClick()"><label>Google Drive</label></a>
+                          </div>
+                          <div class="col-xs-12">
+                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick()"><label>One Drive</label></a>
+                          </div>
+                          <div class="col-xs-12">
+                            <button class="btn btn-default">
+                              <label for="file-input">Dit apparaat</label>
+                            </button>
+                            <input id="file-input" style="display:none" type="file" onchange="angular.element(this).scope().fileValueChange()" data-ng-model="user.uploadCV">
+                            <div class="error" data-ng-show="user.valueOfCV == '' && buttonOfForm3CLicked == true">
+                              <span>Upload een CV-bestand</span>
+                            </div>
                           </div>
                       </div>
                   </div>
                 </div>
-                <div class="col-xs-12" data-ng-show="cvChoice == 'cvWrite'">
+                <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvWrite'">
                   <br>
                   <div class="well">
                     <label>CV aanmaken</label>
@@ -950,54 +964,213 @@
                   </div>
                 </div>
                 <div class="col-xs-12">
-                  <div class="form-group">
-                      <div class="row">
-                          <div class="col-xs-12">
-                              <label for="text-content">Motivatie</label>
-                              <p>Klik <a class="link-in-text" href="javascript:void(0)">hier</a> voor tips voor het schrijven van een motivatie.</p>
-
-                              <textarea id="text-content" maxlength="4000" class="form-control" rows="5"></textarea>
-                              <p>Aantal karakters: <span id="text-content-count">0</span> (max 4000 karakters)</p>
-                              <p><i class="olympia-spell-check"></i><a class="orange" href="javascript:void(0)" id="check-textarea">Spelling Check</a></p>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="col-xs-12">
-                  <div class="form-group" id="botChk">
-                      <div class="row">
-                          <div class="col-xs-12">
-                              <label>Wil je automatische updates ontvangen?</label>
-                              <div class="radio">
-                                  <label>
-                                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="1">
-                                      Ja, ik sta open voor heftruckchauffeur vacturesuggesties en/of gerelateerde functies.
-                                  </label>
-                              </div>
-                              <div class="radio">
-                                  <label>
-                                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="3">
-                                      Nee, ik wil dat Olympia mij alleen helpt met deze solicitatie
-                                  </label>
-                              </div>
-                          </div>
-                      </div>
+                  <div class="form-group" data-ng-init="user.opleidingsniveau = '0'">
+                    <label for="opleidingsniveau">Wat is uw opleidingsniveau?</label>
+                    <select class="form-control" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm3CLicked}">
+                      <option value="0">Geen voorkeur</option>
+                      <option value="HAVO">HAVO</option>
+                      <option value="HBO">HBO</option>
+                      <option value="LBO">LBO</option>
+                      <option value="MAVO">MAVO</option>
+                      <option value="MBO">MBO</option>
+                      <option value="Ongeschoold">Ongeschoold</option>
+                      <option value="Universitair">Universitair</option>
+                      <option value="VWO">VWO</option>
+                    </select>
+                    <div class="error" data-ng-show="user.opleidingsniveau == '0' && buttonOfForm3CLicked">
+                      <span>Selecteer alsjeblieft een opleidingsniveau</span>
+                    </div>
                   </div>
                 </div>
                 <div class="col-xs-12">
                   <div class="form-group">
-                      <div class="row">
-                          <div class="col-xs-12">
-                              <div class="row">
-                                  <div class="col-xs-12">
-                                      <button type="submit" class="btn btn-block margin-top-5 btn-primary" id="form-submit">Verstuur sollicitatie</button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" id="form-submit" data-ng-click="buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '' && user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="panel-body" data-ng-if="$index == 3">
+              <div class="row">
+                <div class="col-xs-12">
+                  <ul class="list-style-none">
+                    <li class="text-right"><a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(0)"><i class="fa fa-pencil"></i> Bewerken persoonlijke gegevens </a></li>
+                    <li>
+                      <strong>Naam:</strong><span>{{user.firstname}} {{user.lastname}}</span>
+                    </li>
+                    <li>
+                      <strong>E-mail:</strong><span>{{user.userEmail}}</span>
+                    </li>
+                    <li>
+                      <strong>Adres & plaats:</strong><span>{{user.Straat}} {{user.Huisnummer}}</span>
+                    </li>
+                    <li>
+                      <strong></strong><span>{{user.Postcode}} {{user.Woonplaats}}</span>
+                    </li>
+                    <li>
+                      <strong>Mobiel/Telefoon</strong><span>{{user.Mobielnummer ? user.Mobielnummer : user.Telefoonnummer}}</span>
+                    </li>
+                    <li>
+                      <img data-ng-if="user.foto" ng-src="{{getSrc(user.foto)}}" width="80">
+                    </li>
+                    <li><hr/></li>
+                    <li class="text-right"><a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(1)"><i class="fa fa-pencil"></i> Bewerken CV & ervaring</a></li>
+                    <li>
+                      <strong>Mijn CV</strong><span><a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">Mijn CV wijzigen</a></span>
+                    </li>
+                    <li>
+                      <strong>Opleidingsniveau</strong><span>{{user.opleidingsniveau}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <form name="userRegistrationStep4" id="userRegistrationStep4" novalidate ng-submit="userRegistrationStep4Submits(userRegistrationStep4.$valid, $index)" role="form" data-ng-init="buttonOfForm4CLicked = false">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="text-content">Motivatie</label>
+                                <p>Klik <a class="orange" href="javascript:void(0)">hier</a> voor tips voor het schrijven van een motivatie.</p>
+
+                                <textarea maxlength="4000" data-ng-init="user.motivatie = ''" class="form-control" rows="5" id="motivatie" name="motivatie" data-ng-model="user.motivatie" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep4.motivatie.$error.required && buttonOfForm4CLicked}"></textarea>
+                                <div class="error" data-ng-show="userRegistrationStep4.motivatie.$error.required && buttonOfForm4CLicked">
+                                  <span>Motivatie vereist.</spam>
+                                </div>
+                                <p>Aantal karakters: <span id="text-content-count"> {{user.motivatie ? user.motivatie.length : 0}}</span> (max 4000 karakters)</p>
+                                <p><i class="olympia-spell-check"></i><a class="orange" href="javascript:void(0)" id="check-textarea">Spelling Check</a></p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="form-group" data-ng-init="user.SelectedOfficeDropDown = '149'">
+                      <label for="SelectedOfficeDropDown">Welke vestiging heeft jouw voorkeur?</label>
+                      <select class="form-control" id="SelectedOfficeDropDown" name="SelectedOffice" data-ng-model="user.SelectedOfficeDropDown">
+                        <option value="149">Alkmaar</option>
+                        <option value="183">Almelo</option>
+                        <option value="177">Almere</option>
+                        <option value="185">Alphen a/d Rijn</option>
+                        <option value="154">Amersfoort</option>
+                        <option value="211">Amstelveen</option>
+                        <option value="133">Amsterdam</option>
+                        <option value="172">Apeldoorn</option>
+                        <option value="121">Arnhem</option>
+                        <option value="128">Assen</option>
+                        <option value="143">Barendrecht</option>
+                        <option value="559">Barendrecht - Inhouse Greenery</option>
+                        <option value="131">Bergen op Zoom</option>
+                        <option value="132">Breda</option>
+                        <option value="124">Cuijk</option>
+                        <option value="126">Delfzijl</option>
+                        <option value="117">Den Bosch</option>
+                        <option value="101">Den Haag</option>
+                        <option value="204">Den Helder</option>
+                        <option value="203">Deurne</option>
+                        <option value="168">Deventer</option>
+                        <option value="198">Doetinchem</option>
+                        <option value="155">Dordrecht</option>
+                        <option value="152">Drachten</option>
+                        <option value="187">Ede</option>
+                        <option value="118">Eindhoven</option>
+                        <option value="104">Emmen</option>
+                        <option value="122">Enschede</option>
+                        <option value="148">Etten-leur</option>
+                        <option value="166">Gorinchem</option>
+                        <option value="107">Gouda</option>
+                        <option value="125">Groningen</option>
+                        <option value="194">Haaksbergen</option>
+                        <option value="180">Haarlem</option>
+                        <option value="189">Harderwijk</option>
+                        <option value="186">Heerenveen</option>
+                        <option value="174">Heerhugowaard</option>
+                        <option value="163">Helmond</option>
+                        <option value="147">Hengelo</option>
+                        <option value="160">Hilversum</option>
+                        <option value="520">Honselersdijk</option>
+                        <option value="191">Hoogeveen</option>
+                        <option value="179">Hoorn</option>
+                        <option value="208">Katwijk</option>
+                        <option value="164">Leeuwarden</option>
+                        <option value="159">Leiden</option>
+                        <option value="195">Lichtenvoorde</option>
+                        <option value="103">Maassluis</option>
+                        <option value="144">Maastricht</option>
+                        <option value="192">Meppel</option>
+                        <option value="196">Nieuwegein</option>
+                        <option value="162">Nijmegen</option>
+                        <option value="169">Oosterhout</option>
+                        <option value="115">Oss</option>
+                        <option value="129">Oud-Beijerland</option>
+                        <option value="176">Rijswijk</option>
+                        <option value="123">Roermond</option>
+                        <option value="173">Roosendaal</option>
+                        <option value="106">Rotterdam Coolsingel</option>
+                        <option value="110">Rotterdam Laan op Zuid</option>
+                        <option value="153">Sassenheim</option>
+                        <option value="165">Schiedam</option>
+                        <option value="157">Schijndel</option>
+                        <option value="138">Schiphol</option>
+                        <option value="193">Sneek</option>
+                        <option value="112">Tiel</option>
+                        <option value="156">Tilburg</option>
+                        <option value="119">Uden</option>
+                        <option value="108">Utrecht</option>
+                        <option value="127">Veendam</option>
+                        <option value="161">Veenendaal</option>
+                        <option value="116">Veghel</option>
+                        <option value="171">Veldhoven</option>
+                        <option value="120">Venlo</option>
+                        <option value="167">Venray</option>
+                        <option value="178">Waalwijk</option>
+                        <option value="175">Weert</option>
+                        <option value="130">Wijchen</option>
+                        <option value="215">Woerden</option>
+                        <option value="181">Zaandam</option>
+                        <option value="190">Zaltbommel</option>
+                        <option value="184">Zeist</option>
+                        <option value="151">Zevenaar</option>
+                        <option value="102">Zoetermeer</option>
+                        <option value="188">Zutphen</option>
+                        <option value="150">Zwolle</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="form-group" id="botChk">
+                        <div class="row">
+                            <div class="col-xs-12" data-ng-init="user.optionsRadios = '1'">
+                                <label>Wil je automatische updates ontvangen?</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" data-ng-model="user.optionsRadios">
+                                        Ja, ik sta open voor heftruckchauffeur vacturesuggesties en/of gerelateerde functies.
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="3" data-ng-model="user.optionsRadios">
+                                        Nee, ik wil dat Olympia mij alleen helpt met deze solicitatie
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="form-group">
+                      <div class="row">
+                          <div class="col-xs-12">
+                              <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-click="buttonOfForm4CLicked = true;">Verstuur sollicitatie</button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -1005,5 +1178,8 @@
     </div>
     <!-- footer -->
     <div ng-include="'footer.html'" class="footer"></div>
+    <div ui-content-for="modals">
+      <div ng-include="'agemodal.html'"></div>
+    </div>
   </div>
 </div>

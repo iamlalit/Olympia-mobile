@@ -31,7 +31,7 @@ app.config(function($routeProvider) {
 //  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false});
 //  $routeProvider.when('/tabs',          {templateUrl: 'tabs.html', reloadOnSearch: false});
 //  $routeProvider.when('/accordion',     {templateUrl: 'accordion.html', reloadOnSearch: false});
-//  $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false});
+  $routeProvider.when('/overlay',       {templateUrl: 'overlay.html', reloadOnSearch: false});
 //  $routeProvider.when('/forms',         {templateUrl: 'forms.html', reloadOnSearch: false});
 //  $routeProvider.when('/dropdown',      {templateUrl: 'dropdown.html', reloadOnSearch: false});
 //  $routeProvider.when('/touch',         {templateUrl: 'touch.html', reloadOnSearch: false});
@@ -269,7 +269,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
   // Needed for the loading screen
   $rootScope.$on('$routeChangeStart', function(){
-    $rootScope.loading = false;
+    $rootScope.loading = true;
   });
 
   $rootScope.$on('$routeChangeSuccess', function(){
@@ -366,7 +366,8 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   $scope.dummyuser = [{
     email: "sander@test.nl",
     password: "sander"
-  }]
+  }];
+  $scope.user = [];
 
   //
   // 'Forms' screen
@@ -401,7 +402,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
   $scope.panels = [
     {
-      panelHeadingTitle: "Vul je emailadres in",
+      panelHeadingTitle: "E-mail adres",
       isEditable: true,
       isActive: true,
       isDisabled: false,
@@ -409,7 +410,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       isComplete: false
     },
     {
-      panelHeadingTitle: "Vul je persoonlijke gegevens in",
+      panelHeadingTitle: "Persoonlijke gegevens",
       isEditable: true,
       isActive: false,
       isDisabled: true,
@@ -417,7 +418,15 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       isComplete: false
     },
     {
-      panelHeadingTitle: "Ervaring & Motivatie",
+      panelHeadingTitle: "CV & ervaring",
+      isEditable: true,
+      isActive: false,
+      isDisabled: true,
+      closed: true,
+      isComplete: false
+    },
+    {
+      panelHeadingTitle: "Samenvatting & motivatie",
       isEditable: true,
       isActive: false,
       isDisabled: true,
@@ -427,20 +436,98 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   ];
   //job apply form
   $scope.emailRegx = new RegExp('.+@.+\\..+');
+  $scope.user.modalPopUpValue = false;
+  $scope.previousUser = [{
+    "userEmail": "sander@ignite.online",
+    "password": "password",
+    "radioEmail": "option2",
+    "terms": true,
+    "firstname": "Sander",
+    "tussenvoegsel": "Mr.",
+    "lastname": "Noteborn",
+    "Gaslachet": "Man",
+    "dobDay": "12",
+    "dobMonth": "6",
+    "dobYear": "32",
+    "Mobielnummer": "9999999999",
+    "Telefoonnummer": "9999999999",
+    "Land": "Nederland",
+    "Postcode": "1017 HL",
+    "Huisnummer": "68-78",
+    "Straat": "Vijzelstraat",
+    "Woonplaats": "Amsterdam",
+    "foto": "sander-photo.jpg",
+    "checkbox1": false,
+    "checkbox2": false,
+    "checkbox3": false,
+    "checkbox4": false,
+    "checkbox5": false,
+    "checkbox6": false,
+    "checkbox7": false,
+    "checkbox8": true,
+    "cvChoice": "cvUpload",
+    "valueOfCV": "cv.pdf",
+    "opleidingsniveau": "MBO",
+    "SelectedOfficeDropDown": "117",
+    "optionsRadios": "1"
+  }];
 
-  $scope.userRegistrationStep1Submits = function(validityOfForm, i){
-    $scope.buttonOfForm1CLicked = true;
-    if(validityOfForm == true){
-      $scope.panels[i].isComplete = true;
-      $scope.panels[i].isActive = false;
-      $scope.panels[i].closed = true;
-      $scope.openAndClosed(i+1, true);
+  $scope.getSrc = function(src){
+    return "img/"+src;
+  }
+
+  $scope.invalidUser = false;
+  $scope.saveValueOfModal = function(value){
+    if(value){
+        $scope.user.modalPopUpValue = value;
+        $scope.userRegistrationStep1Submits(true,0);
+    }else{
+        $scope.go('jobs');
     }
   }
 
-  $scope.userRegistrationStep2Submits = function(validityOfForm, i){
+  $scope.userRegistrationStep1Submits = function(validityOfForm, i){
     $scope.buttonOfForm1CLicked = true;
-    if(validityOfForm == true){
+    if($scope.user.radioEmail == 'option1'){
+      console.log($scope.user);
+      if(validityOfForm == true){
+        $rootScope.Ui.turnOn('agemodal');
+      }
+      if(validityOfForm == true && $scope.user.modalPopUpValue){
+        $scope.panels[i].isComplete = true;
+        $scope.panels[i].isActive = false;
+        $scope.panels[i].closed = true;
+        $scope.openAndClosed(i+1, true);
+      }
+    }else if($scope.user.radioEmail == 'option2'){
+      // make all steps comlete
+      $scope.invalidUser = $scope.previousUser[0].password == $scope.user.password && $scope.previousUser[0].userEmail == $scope.user.userEmail;
+      if(validityOfForm == true && $scope.invalidUser){
+        $scope.previousUser[0].radioEmail = $scope.user.radioEmail;
+        $scope.user = angular.copy($scope.previousUser[0]);
+
+        toMoveToNextFunction(0);
+        toMoveToNextFunction(1);
+        toMoveToNextFunction(2);
+      }
+    }
+  }
+
+  $scope.moveToPreviousNode = function(i){
+    toMoveToNextFunction(i);
+  }
+
+  function toMoveToNextFunction(i){
+    $scope.panels[i].isComplete = true;
+    $scope.panels[i].isActive = false;
+    $scope.panels[i].closed = true;
+    $scope.openAndClosed(i+1, true);
+  }
+
+  $scope.userRegistrationStep2Submits = function(validityOfForm, i, phoneParam){
+    $scope.buttonOfForm2CLicked = true;
+    if(validityOfForm == true ){
+      console.log($scope.user);
       $scope.panels[i].isComplete = true;
       $scope.panels[i].isActive = false;
       $scope.panels[i].closed = true;
@@ -449,8 +536,20 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   }
 
   $scope.userRegistrationStep3Submits = function(validityOfForm, i){
-    $scope.buttonOfForm1CLicked = true;
+    $scope.buttonOfForm3CLicked = true;
     if(validityOfForm == true){
+      console.log($scope.user);
+      $scope.panels[i].isComplete = true;
+      $scope.panels[i].isActive = false;
+      $scope.panels[i].closed = true;
+      $scope.openAndClosed(i+1, true);
+    }
+  }
+
+  $scope.userRegistrationStep4Submits = function(validityOfForm, i){
+    $scope.buttonOfForm4CLicked = true;
+    if(validityOfForm == true){
+      console.log($scope.user);
       $scope.panels[i].isComplete = true;
       $scope.panels[i].isActive = false;
       $scope.panels[i].closed = true;
@@ -460,36 +559,201 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
   $scope.openAndClosed = function(i, buttonCalling){
 
-    if(buttonCalling == true){
-      $scope.panels[i].isActive = true;
-      $scope.panels[i].closed = false;
-      $scope.panels[i].isDisabled = false;
-    }else{
-      if($scope.panels[i].isDisabled == false){
-        angular.forEach($scope.panels, function(value, key) {
-          value.isActive = false;
-          value.closed = true;
-        });
-      if($scope.panels[i].isDisabled == false){
+      if(buttonCalling == true){
         $scope.panels[i].isActive = true;
         $scope.panels[i].closed = false;
+        $scope.panels[i].isDisabled = false;
+        $scope.gotoAnchor('panel'+i);
+      }else{
+        if($scope.panels[i].isDisabled == false){
+          angular.forEach($scope.panels, function(value, key) {
+            value.isActive = false;
+            value.closed = true;
+          });
+        if($scope.panels[i].isDisabled == false){
+          $scope.panels[i].isActive = true;
+          $scope.panels[i].closed = false;
+        }
       }
     }
   }
 
   $scope.gotoAnchor = function(x) {
-    var newHash = 'panel' + x;
-    if ($location.hash() !== newHash) {
+    if ($location.hash() !== x) {
       // set the $location.hash to `newHash` and
       // $anchorScroll will automatically scroll to it
-      $location.hash('panel' + x);
+      $location.hash(x);
     } else {
       // call $anchorScroll() explicitly,
       // since $location.hash hasn't changed
       $anchorScroll();
     }
-    angular.element(document.getElementById(newHash)).toggleClass('closed is-active');
   };
+
+  $scope.checkForGeen = function(){
+    if($scope.user.checkbox8 == true){
+
+    }
+  }
+
+  $scope.fileValueChange = function(){
+    var value = angular.element(document.getElementById("file-input")).val();
+    console.log(value);
+    if(typeof value !== "undefined"){
+      var value = value.replace('C:\\fakepath\\', '');
+      $scope.$apply(function() {
+          $scope.user.valueOfCV = value;
+      });
+
+      angular.element(document.getElementById("valueOfCV")).text(value);
+      angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+    }
+  }
+
+  //dropbox
+  var options = {
+
+      // Required. Called when a user selects an item in the Chooser.
+      success: function(files) {
+          $scope.$apply(function() {
+              $scope.user.valueOfCV = files[0].name;
+          });
+          angular.element(document.getElementById("valueOfCV")).text(files[0].name);
+          angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+      },
+
+      // Optional. Called when the user closes the dialog without selecting a file
+      // and does not include any parameters.
+      cancel: function() {
+
+      },
+
+      // Optional. "preview" (default) is a preview link to the document for sharing,
+      // "direct" is an expiring link to download the contents of the file. For more
+      // information about link types, see Link types below.
+      linkType: "direct", // or "direct"
+
+      // Optional. A value of false (default) limits selection to a single file, while
+      // true enables multiple file selection.
+      multiselect: false, // or true
+
+      // Optional. This is a list of file extensions. If specified, the user will
+      // only be able to select files with these extensions. You may also specify
+      // file types, such as "video" or "images" in the list. For more information,
+      // see File types below. By default, all extensions are allowed.
+      extensions: ['.pdf', '.doc', '.docx'],
+  };
+  $scope.dropboxButtonClick = function(){
+    Dropbox.choose(options);
+  }
+  //dropbox ends
+  //google drive starts
+  // The Browser API key obtained from the Google Developers Console.
+    // Replace with your own Browser API key, or your own key.
+    var developerKey = 'AIzaSyDZ7FS13bhiLF09rOnPswudxsucMSGIG_Y';
+
+    // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
+    var clientId = "87021219866-v1eqmlc0vvlho02l22ohdpo1vpjnbpov.apps.googleusercontent.com"
+
+    // Replace with your own App ID. (Its the first number in your Client ID)
+    var appId = "87021219866";
+
+    // Scope to use to access user's Drive items.
+    var scope = ['https://www.googleapis.com/auth/drive'];
+
+    var pickerApiLoaded = false;
+    var oauthToken;
+
+    // Use the Google API Loader script to load the google.picker script.
+    function loadPicker() {
+      gapi.load('auth', {'callback': onAuthApiLoad});
+      gapi.load('picker', {'callback': onPickerApiLoad});
+    }
+
+    function onAuthApiLoad() {
+      window.gapi.auth.authorize(
+          {
+            'client_id': clientId,
+            'scope': scope,
+            'immediate': false
+          },
+          handleAuthResult);
+    }
+
+    function onPickerApiLoad() {
+      pickerApiLoaded = true;
+      createPicker();
+    }
+
+    function handleAuthResult(authResult) {
+      if (authResult && !authResult.error) {
+        oauthToken = authResult.access_token;
+        createPicker();
+      }
+    }
+
+    // Create and render a Picker object for searching images.
+    function createPicker() {
+      if (pickerApiLoaded && oauthToken) {
+        var view = new google.picker.View(google.picker.ViewId.DOCS);
+        view.setMimeTypes("text/plain,text/html,application/rtf,application/vnd.oasis.opendocument.text,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        var picker = new google.picker.PickerBuilder()
+            .enableFeature(google.picker.Feature.NAV_HIDDEN)
+            .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+            .setAppId(appId)
+            .setOAuthToken(oauthToken)
+            .addView(view)
+            .addView(new google.picker.DocsUploadView())
+            .setLocale('nl')
+            .setDeveloperKey(developerKey)
+            .setCallback(pickerCallback)
+            .build();
+         picker.setVisible(true);
+      }
+    }
+
+    // A simple callback implementation.
+    function pickerCallback(data) {
+      if (data.action == google.picker.Action.PICKED) {
+        var fileName = data.docs[0].name;
+        // alert('The user selected: ' + fileId);
+        $scope.$apply(function() {
+            $scope.user.valueOfCV = fileName;
+        });
+        angular.element(document.getElementById("valueOfCV")).text(fileName);
+        angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+      }
+    }
+
+    $scope.googleButtonClick = function(){
+      loadPicker();
+    }
+  //google drive ends
+  //one drive starts
+  var odOptions = {
+    clientId: "913aa826-40d7-4c0f-b0f0-b4feb82f513c",
+    action: "download",
+    multiSelect: false,
+    openInNewWindow: true,
+    advanced: {queryParameters: "select=id,name"},
+    success: function(files) {
+      $scope.$apply(function() {
+          $scope.user.valueOfCV = files.value[0].name;
+      });
+
+      angular.element(document.getElementById("valueOfCV")).text(files.value[0].name);
+      angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+    },
+    cancel: function() { /* cancel handler */ },
+    error: function(e) { /* error handler */ }
+  }
+  function launchOneDrivePicker(){
+    OneDrive.open(odOptions);
+  }
+  $scope.oneDriveButtonClick = function(){
+    launchOneDrivePicker();
+  }
+  //one drive ends
 });
 //We already have a limitTo filter built-in to angular,
 //let's make a startFrom filter
@@ -515,3 +779,22 @@ Accordion code
 //     }
 //   }
 // });
+
+//scroll the user to the very first error message
+app.directive('scrollToError', function() {
+  return{
+    restrict: 'AE',
+    scope: {},
+    link: function(scope, elem, attrs){
+      elem.on('submit', function(){
+        // find the first invalid element
+        var firstInvalid = elem[0].querySelector('.validation-error');
+
+        // if we find one, set focus
+        if (firstInvalid) {
+            firstInvalid.focus();
+        }
+      })
+    }
+  }
+});

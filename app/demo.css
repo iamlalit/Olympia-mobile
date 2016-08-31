@@ -155,11 +155,15 @@ input.scrollable-header {
 
 .toucharea {width: 100%; height: 100%;}
 
+body{
+  font-weight:400;
+  font-size: 13px;
+}
 .navbar-brand{
     background: url(img/logo.png);
     background-position: right;
     background-repeat: no-repeat;
-    background-size: 160px;
+    background-size: 209px;
 }
 
 ul.list-style-none {
@@ -245,6 +249,11 @@ ul.olympia-static1 li {
   background: #07368b;
   color: #ffffff;
 }
+.panel.is-editable.closed:not(.is-disabled) > .panel-heading{
+  background: #e9f1fb;
+  color: #07368b;
+  cursor: pointer;
+}
 .panel.is-disabled > .panel-heading {
     background-color: #e6e6e6;
     cursor: default;
@@ -266,15 +275,21 @@ ul.olympia-static1 li {
 .well{
   background: white;
 }
+.well.blue{
+  padding: 10px;
+  background: #e9f1fb;
+  color: #07368b;
+  margin-bottom: 10px;
+}
 
 .padding-right-0{
   padding-right: 0;
 }
+.padding-left-0{
+  padding-left: 0;
+}
 .padding-top-1x{
   padding-top: 10px;
-}
-.form-control.validation-error{
-  border-color: #a94442;
 }
 .error{
   background: transparent;
@@ -352,10 +367,31 @@ footer .widget-footer aside a {
 .staticPageContainer ul.results li a {
     display: inline;
 }
-.height-114{
-  height: calc(100% - 114px);
+.height-85{
+  height: calc(100% - 15%);
 }
 .new-section{
   background: #FFF;
   padding: 10px 15px;
+}
+input.ng-invalid, textarea.ng-invalid, .ng-dirty input.ng-invalid{
+  border: 1px solid #cccccc;
+}
+input.ng-invalid.validation-error, textarea.ng-invalid.validation-error, .ng-dirty input.ng-invalid.validation-error{
+  border-color: #a94442;
+}
+select.validation-error{
+  border-color: #a94442;
+}
+.btn.btn-default{
+  width: 100%;
+  margin-bottom: 10px;
+  background: #e6e6e6;
+}
+.btn.btn-default label{
+  margin-bottom: 0;
+}
+p {
+    margin: 0 0 10px;
+    color: #000;
 }

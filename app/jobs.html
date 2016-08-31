@@ -47,9 +47,9 @@
       <hr>
       <div class="row">
         <div class="col-xs-12">
-          <button class="btn btn-primary pull-left col-xs-3" ng-click="currentPage=currentPage-1">< vorige</button>
+          <button class="btn btn-primary pull-left col-xs-3" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">< vorige</button>
           <span class="text-center col-xs-5 paging">{{currentPage+1}}/{{numberOfPages()}}</span>
-          <button class="btn btn-primary pull-right col-xs-4" ng-click="currentPage=currentPage+1">volgende ></button>
+          <button class="btn btn-primary pull-right col-xs-4" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">volgende ></button>
         </div>
       </div>
       <hr>

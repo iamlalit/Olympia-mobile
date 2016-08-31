@@ -18,6 +18,8 @@
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
     <!-- Required to use $touch, $swipe, $drag and $translate services -->
     <script src="/dist/js/mobile-angular-ui.gestures.min.js"></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="ubms1doei7w1mwq"></script>
+    <script type="text/javascript" src="https://js.live.net/v7.0/OneDrive.js"></script>
     <script src="demo.js"></script>
   </head>
 
@@ -79,6 +81,8 @@
     </div><!-- ~ .app -->
 
     <div ui-yield-to="modals"></div>
+    <!-- The Google API Loader script. -->
+    <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=loadPicker"></script>
     <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
     <script>
       // Initialize Firebase
