@@ -1,0 +1,33 @@
+<div class="scrollable">
+ <div class="scrollable-content">
+   <div class="new-section">
+    <h2>Je sollicitatie is verzonden</h2>
+    <hr>
+    <div style='-webkit-user-drag: none; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;'>
+      <p>Bedankt {{user.firstname}} voor je sollicitatie op de vacature "Fulltime administratief medewerker bedrijfsbureau". Wij hebben een bevestigingsmail gestuurd naar {{user.userEmail}} met daarin de door ons ontvangen gegevens. <span data-ng-show="user.radioEmail == 'option1'">Ook heb je een tweede mail ontvangen met je 'Mijn Olympia' account wachtwoord.</span></p>
+      <p>Heb je nog vragen naar aanleiding van je sollicitatie dan kan je contact opnemen met Karin Brabander in Olympia Uitzendbureau Zoetermeer via 079 352 11 00.</p><p>Een automatische job alert is aangemaakt voor je account. Om vacature e-mails te ontvangen dien je de job alert te bevestigen vanuit de e-mail die je ontvangen hebt. </p>
+      <p>Om je job alert instellingen te bewerken ga je naar de <a href="javascript:void(0)" class="orange">Mijn vacatures per E-mail page</a></p>
+      <div class="well col-xs-12">
+        <ul class="list-style-none">
+          <li><strong>Salaris:</strong><span>2000 - 2500</span></li>
+          <li><strong>Branche:</strong><span>Automatisering / ICT</span></li>
+          <li><strong>Functie:</strong><span>Commercieel binnendienst medewerker</span></li>
+          <li><strong>Dienstverband:</strong><span>Vast</span></li>
+          <li><strong>Werk- en denkniveau:</strong><span>MAVO</span></li>
+          <li><strong>Fulltime/parttime:</strong><span>Fulltime</span></li>
+          <li><strong>Vakgebied:</strong><span>Commercieel / Verkoop</span></li>
+          <li><strong></strong><span></span></li>
+          <li class="text-right"><a href="javascrit:void(0)" class="orange">Gegevens wijzigen</a></li>
+        </ul>
+      </div>
+      <div class="col-xs-6">
+        <a class="orange" href="#/job">‹ Terug naar vacature</a>
+      </div>
+      <div class="col-xs-6 padding-left-0 padding-right-0">
+        <a class="orange" href="javascript:void(0)">Commercieel vacatures (2)</a>
+      </div>
+    </div>
+    <!-- footer -->
+    <div ng-include="'footer.html'" class="footer"></div>
+  </div>
+</div>

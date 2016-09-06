@@ -44,6 +44,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/job',           {templateUrl: 'job.html', reloadOnSearch: false});
   $routeProvider.when('/jobApply',           {templateUrl: 'jobApply.html', reloadOnSearch: false});
   $routeProvider.when('/jobs',           {templateUrl: 'jobs.html', reloadOnSearch: false});
+  $routeProvider.when('/bevestiging',        {templateUrl: 'thankyouPage.html', reloadOnSearch: false});
 
 });
 
@@ -435,6 +436,140 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     }
   ];
   //job apply form
+  //cv write
+  $scope.work = {
+    "Functie": "",
+    "bedrijf": "",
+    "Vestigingsplaats": "",
+    "Startdatummaand": "00",
+    "Startdatumjaar": "0",
+    "Einddatummaand": "00",
+    "Einddatumjaar": "0",
+    "FuntieBeschrijving": ""
+  };
+
+  $scope.user.cvWrite = [];
+  $scope.addValuesForWork = function(object){
+    $scope.user.cvWrite.push({
+      "Functie": object.Functie,
+      "Bedrijf": object.Bedrijf,
+      "Vestigingsplaats": object.Vestigingsplaats,
+      "Startdatummaand": object.Startdatummaand,
+      "Startdatumjaar": object.Startdatumjaar,
+      "Einddatummaand": object.Einddatummaand,
+      "Einddatumjaar": object.Einddatumjaar,
+      "FuntieBeschrijving": object.FuntieBeschrijving
+    });
+    //cv write
+    $scope.work = {
+      "Functie": "",
+      "Bedrijf": "",
+      "Vestigingsplaats": "",
+      "Startdatummaand": "00",
+      "Startdatumjaar": "0",
+      "Einddatummaand": "00",
+      "Einddatumjaar": "0",
+      "FuntieBeschrijving": ""
+    };
+  }
+  var globalWekIndexToEdit = 0;
+  $scope.updateValuesForWork = function(object){
+    $scope.user.cvWrite[globalWekIndexToEdit] = object;
+    $scope.removeValueForWork();
+  }
+  $scope.editWerk = function(object, i){
+    globalWekIndexToEdit = i;
+    $scope.work = {
+      "Functie": object.Functie,
+      "Bedrijf": object.Bedrijf,
+      "Vestigingsplaats": object.Vestigingsplaats,
+      "Startdatummaand": object.Startdatummaand,
+      "Startdatumjaar": object.Startdatumjaar,
+      "Einddatummaand": object.Einddatummaand,
+      "Einddatumjaar": object.Einddatumjaar,
+      "FuntieBeschrijving": object.FuntieBeschrijving
+    };
+    $scope.showWorkForm = true;
+  }
+  $scope.removeValueForWork = function(){
+    $scope.work = {
+      "Functie": "",
+      "Bedrijf": "",
+      "Vestigingsplaats": "",
+      "Startdatummaand": "00",
+      "Startdatumjaar": "0",
+      "Einddatummaand": "00",
+      "Einddatumjaar": "0",
+      "FuntieBeschrijving": ""
+    };
+  }
+
+  $scope.deleteWerk = function(object, i){
+    $scope.user.cvWrite.splice(i, 1);
+  }
+
+  //cv write experience
+  $scope.experience = {
+    "Opleiding": "",
+    "Startdatummaand": "00",
+    "Startdatumjaar": "0",
+    "Einddatummaand": "00",
+    "Einddatumjaar": "0",
+    "diploma": "Ja"
+  };
+
+  $scope.user.cvWriteExp = [];
+  $scope.addValuesForExp = function(object){
+    $scope.user.cvWriteExp.push({
+      "Opleiding": object.Opleiding,
+      "Startdatummaand": object.Startdatummaand,
+      "Startdatumjaar": object.Startdatumjaar,
+      "Einddatummaand": object.Einddatummaand,
+      "Einddatumjaar": object.Einddatumjaar,
+      "diploma": object.diploma
+    });
+    //cv write
+    $scope.experience = {
+      "Opleiding": "",
+      "Startdatummaand": "00",
+      "Startdatumjaar": "0",
+      "Einddatummaand": "00",
+      "Einddatumjaar": "0",
+      "diploma": "Ja"
+    };
+  }
+  var globalExpIndexToEdit = 0;
+  $scope.updateValuesForExp = function(object){
+    $scope.user.cvWriteExp[globalExpIndexToEdit] = object;
+    $scope.removeValueForExp();
+  }
+  $scope.editExp = function(object, i){
+    globalExpIndexToEdit = i;
+    $scope.experience = {
+      "Opleiding": object.Opleiding,
+      "Startdatummaand": object.Startdatummaand,
+      "Startdatumjaar": object.Startdatumjaar,
+      "Einddatummaand": object.Einddatummaand,
+      "Einddatumjaar": object.Einddatumjaar,
+      "diploma": object.diploma
+    };
+    $scope.showEducationForm = true;
+  }
+  $scope.removeValueForExp = function(){
+    $scope.experience = {
+      "Opleiding": "",
+      "Startdatummaand": "00",
+      "Startdatumjaar": "0",
+      "Einddatummaand": "00",
+      "Einddatumjaar": "0",
+      "diploma": "Ja"
+    };
+  }
+
+  $scope.deleteExp = function(object, i){
+    $scope.user.cvWriteExp.splice(i, 1);
+  }
+
   $scope.emailRegx = new RegExp('.+@.+\\..+');
   $scope.user.modalPopUpValue = false;
   $scope.previousUser = [{
@@ -467,6 +602,8 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     "checkbox8": true,
     "cvChoice": "cvUpload",
     "valueOfCV": "cv.pdf",
+    "cvWriteExp": [],
+    "cvWrite": [],
     "opleidingsniveau": "MBO",
     "SelectedOfficeDropDown": "117",
     "optionsRadios": "1"
@@ -553,7 +690,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       $scope.panels[i].isComplete = true;
       $scope.panels[i].isActive = false;
       $scope.panels[i].closed = true;
-      // $scope.openAndClosed(i+1, true);
+      $scope.go('bevestiging');
     }
   }
 

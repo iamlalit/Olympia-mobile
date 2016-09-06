@@ -191,6 +191,10 @@ ul.list-style-none li strong{
     display: inline-block;
     border: 1px solid;
 }
+.btn.btn-default.new1 {
+    width: auto;
+    margin-bottom: 0;
+}
 .navbar-app .btn-navbar, .navbar-app .btn{
   color: #07368b;
 }
