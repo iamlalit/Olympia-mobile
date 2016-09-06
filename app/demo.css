@@ -399,3 +399,7 @@ p {
     margin: 0 0 10px;
     color: #000;
 }
+.round-image{
+  border-radius: 50%;
+  border: 1px solid #eaeaea;
+}

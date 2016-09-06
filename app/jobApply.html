@@ -106,7 +106,8 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <br>
-                    <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;">Verder naar persoonlijke gegevens <i class="fa fa-arrow-down"></i></button>
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option1'">Verder naar persoonlijke gegevens <i class="fa fa-arrow-down"></i></button>
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option2'">Log in en solliciteer <i class="fa fa-arrow-down"></i></button>
                   </div>
                 </div>
               </form>
@@ -406,8 +407,7 @@
               <div class="row">
                 <div class="col-xs-12">
                     <label>CV toevoegen</label>
-                    <p>Voeg je CV toe door een bestand te uploaden of maak hieronder een nieuw CV.
-                    <a href="#" id="zoomTextarea" class="website-icons small" data-toggle="modal" data-target="#cvHelp"><i class=" fa fa-question-circle"></i></a></p>
+                    <p>Voeg je CV toe door een bestand te uploaden of maak hieronder een nieuw CV.</p>
                 </div>
                 <div class="col-xs-12" data-ng-init="user.cvChoice = 'cvUpload'">
                   <label class="radio-inline">
@@ -472,7 +472,7 @@
                         </div>
                         <div class="row" data-ng-show="user.showWorkForm == true" data-ng-init="buttonOfForm32CLicked = false;">
                           <form novalidate id="werkForm" name="werkForm"  scroll-to-error>
-                            <h4 class="col-xs-12">Nieuwe opleiding toevoegen</h4>
+                            <h4 class="col-xs-12">Nieuwe werkervaring toevoegen</h4>
                             <div class="col-xs-12 form-group">
                                 <label for="Functie" class="col-xs-12">Functie</label>
                                 <div class="col-sm-12">
@@ -502,7 +502,7 @@
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatummaand" data-ng-model="work.Startdatummaand" data-ng-init="work.Startdatummaand = '00'" >
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -519,7 +519,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatumjaar" data-ng-model="work.Startdatumjaar" data-ng-init="work.Startdatumjaar = '0'">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -608,7 +608,7 @@
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Einddatummaand" data-ng-model="work.Einddatummaand" data-ng-init="work.Einddatummaand = '00'">
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected"></option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -625,7 +625,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Einddatumjaar" data-ng-model="work.Einddatumjaar" data-ng-init="work.Einddatumjaar = '0'">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -760,7 +760,7 @@
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatummaand" data-ng-model="experience.Startdatummaand">
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -777,7 +777,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatumjaar" data-ng-model="experience.Startdatumjaar">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -866,7 +866,7 @@
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="pop-einddatum-maand-1" data-ng-model="experience.Einddatummaand">
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -883,7 +883,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="pop-einddatum-jaar-1" data-ng-model="experience.Einddatumjaar">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -1030,16 +1030,18 @@
             <div class="panel-body" data-ng-if="$index == 3">
               <div class="row">
                 <div class="col-xs-12">
+                  <label>Persoonlijke gegevens</label>
+                </div>
+                <div class="col-xs-12">
                   <ul class="list-style-none">
-                    <li class="text-right"><a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(0)"><i class="fa fa-pencil"></i> Bewerken persoonlijke gegevens </a></li>
                     <li>
-                      <strong>Naam:</strong><span>{{user.firstname}} {{user.lastname}}</span>
+                      <strong>Naam</strong><span>{{user.firstname}} {{user.lastname}}</span>
                     </li>
                     <li>
-                      <strong>E-mail:</strong><span>{{user.userEmail}}</span>
+                      <strong>E-mail</strong><span>{{user.userEmail}}</span>
                     </li>
                     <li>
-                      <strong>Adres & plaats:</strong><span>{{user.Straat}} {{user.Huisnummer}}</span>
+                      <strong>Adres &amp; plaats</strong><span>{{user.Straat}} {{user.Huisnummer}}</span>
                     </li>
                     <li>
                       <strong></strong><span>{{user.Postcode}} {{user.Woonplaats}}</span>
@@ -1048,15 +1050,17 @@
                       <strong>Mobiel/Telefoon</strong><span>{{user.Mobielnummer ? user.Mobielnummer : user.Telefoonnummer}}</span>
                     </li>
                     <li>
-                      <img data-ng-if="user.foto" ng-src="{{getSrc(user.foto)}}" width="80">
                     </li>
-                    <li><hr/></li>
-                    <li class="text-right"><a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(1)"><i class="fa fa-pencil"></i> Bewerken CV & ervaring</a></li>
+                  </ul>
+                  <a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(0)"><i class="fa fa-pencil"></i> Bewerk persoonlijke gegevens </a><img data-ng-if="user.foto" ng-src="{{getSrc(user.foto)}}" width="80" class="round-image">
+                  <hr/>
+                  <label>Meest recente ervaring &amp; opleiding</label>
+                  <ul class="list-style-none">
                     <li data-ng-if="user.cvChoice == 'cvUpload'">
                       <strong>Mijn CV</strong><span><a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">Mijn CV wijzigen</a></span>
                     </li>
                     <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWrite">
-                      <strong>Functie</strong><span>{{user.cvWrite[user.cvWrite.length-1].Functie}}</span>
+                      <strong>Werkervaring</strong><span>{{user.cvWrite[user.cvWrite.length-1].Functie}}, {{user.cvWrite[user.cvWrite.length-1].bedrijf}}</span>
                     </li>
                     <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWriteExp">
                       <strong>Opleiding</strong><span>{{user.cvWriteExp[user.cvWriteExp.length-1].Opleiding}}</span>
@@ -1065,11 +1069,13 @@
                       <strong>Opleidingsniveau</strong><span>{{user.opleidingsniveau}}</span>
                     </li>
                   </ul>
+                  <a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(1)"><i class="fa fa-pencil"></i> Bewerk CV & ervaring</a>
                 </div>
               </div>
               <form name="userRegistrationStep4" id="userRegistrationStep4" novalidate ng-submit="userRegistrationStep4Submits(userRegistrationStep4.$valid, $index)" role="form" data-ng-init="buttonOfForm4CLicked = false">
                 <div class="row">
                   <div class="col-xs-12">
+                    <hr/>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-12">
@@ -1187,13 +1193,13 @@
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" data-ng-model="user.optionsRadios">
-                                        Ja, ik sta open voor heftruckchauffeur vacturesuggesties en/of gerelateerde functies.
+                                        Ja, ik sta open voor heftruckchauffeur vacaturesuggesties en/of gerelateerde functies.
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="optionsRadios" id="optionsRadios1" value="3" data-ng-model="user.optionsRadios">
-                                        Nee, ik wil dat Olympia mij alleen helpt met deze solicitatie
+                                        Nee, ik wil dat Olympia mij alleen helpt met deze sollicitatie
                                     </label>
                                 </div>
                             </div>

@@ -614,7 +614,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     "Huisnummer": "68-78",
     "Straat": "Vijzelstraat",
     "Woonplaats": "Amsterdam",
-    "foto": "sander-photo.jpg",
+    "foto": "Patrick.jpg",
     "checkbox1": false,
     "checkbox2": false,
     "checkbox3": false,
