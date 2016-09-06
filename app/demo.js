@@ -450,32 +450,44 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
   $scope.user.cvWrite = [];
   $scope.addValuesForWork = function(object){
-    $scope.user.cvWrite.push({
-      "Functie": object.Functie,
-      "Bedrijf": object.Bedrijf,
-      "Vestigingsplaats": object.Vestigingsplaats,
-      "Startdatummaand": object.Startdatummaand,
-      "Startdatumjaar": object.Startdatumjaar,
-      "Einddatummaand": object.Einddatummaand,
-      "Einddatumjaar": object.Einddatumjaar,
-      "FuntieBeschrijving": object.FuntieBeschrijving
-    });
-    //cv write
-    $scope.work = {
-      "Functie": "",
-      "Bedrijf": "",
-      "Vestigingsplaats": "",
-      "Startdatummaand": "00",
-      "Startdatumjaar": "0",
-      "Einddatummaand": "00",
-      "Einddatumjaar": "0",
-      "FuntieBeschrijving": ""
-    };
+    if(object.Functie == '' || typeof object.Functie == "undefined"){
+      $scope.user.showWorkForm = true;
+    }else{
+      $scope.user.showWorkForm = false;
+
+      $scope.user.cvWrite.push({
+        "Functie": object.Functie,
+        "Bedrijf": object.Bedrijf,
+        "Vestigingsplaats": object.Vestigingsplaats,
+        "Startdatummaand": object.Startdatummaand,
+        "Startdatumjaar": object.Startdatumjaar,
+        "Einddatummaand": object.Einddatummaand,
+        "Einddatumjaar": object.Einddatumjaar,
+        "FuntieBeschrijving": object.FuntieBeschrijving
+      });
+      //cv write
+      $scope.work = {
+        "Functie": "",
+        "Bedrijf": "",
+        "Vestigingsplaats": "",
+        "Startdatummaand": "00",
+        "Startdatumjaar": "0",
+        "Einddatummaand": "00",
+        "Einddatumjaar": "0",
+        "FuntieBeschrijving": ""
+      };
+
+    }
   }
   var globalWekIndexToEdit = 0;
   $scope.updateValuesForWork = function(object){
-    $scope.user.cvWrite[globalWekIndexToEdit] = object;
-    $scope.removeValueForWork();
+    if(object.Functie == '' || typeof object.Functie == "undefined"){
+      $scope.user.showWorkForm = true;
+    }else{
+      $scope.user.cvWrite[globalWekIndexToEdit] = object;
+      $scope.removeValueForWork();
+      $scope.user.showWorkForm = false;
+    }
   }
   $scope.editWerk = function(object, i){
     globalWekIndexToEdit = i;
@@ -520,28 +532,39 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
   $scope.user.cvWriteExp = [];
   $scope.addValuesForExp = function(object){
-    $scope.user.cvWriteExp.push({
-      "Opleiding": object.Opleiding,
-      "Startdatummaand": object.Startdatummaand,
-      "Startdatumjaar": object.Startdatumjaar,
-      "Einddatummaand": object.Einddatummaand,
-      "Einddatumjaar": object.Einddatumjaar,
-      "diploma": object.diploma
-    });
-    //cv write
-    $scope.experience = {
-      "Opleiding": "",
-      "Startdatummaand": "00",
-      "Startdatumjaar": "0",
-      "Einddatummaand": "00",
-      "Einddatumjaar": "0",
-      "diploma": "Ja"
-    };
+    if(object.Opleiding == '' || typeof object.Opleiding == "undefined"){
+      $scope.user.showEducationForm = true;
+    }else{
+      $scope.user.cvWriteExp.push({
+        "Opleiding": object.Opleiding,
+        "Startdatummaand": object.Startdatummaand,
+        "Startdatumjaar": object.Startdatumjaar,
+        "Einddatummaand": object.Einddatummaand,
+        "Einddatumjaar": object.Einddatumjaar,
+        "diploma": object.diploma
+      });
+      //cv write
+      $scope.experience = {
+        "Opleiding": "",
+        "Startdatummaand": "00",
+        "Startdatumjaar": "0",
+        "Einddatummaand": "00",
+        "Einddatumjaar": "0",
+        "diploma": "Ja"
+      };
+
+      $scope.user.showEducationForm = false;
+    }
   }
   var globalExpIndexToEdit = 0;
   $scope.updateValuesForExp = function(object){
-    $scope.user.cvWriteExp[globalExpIndexToEdit] = object;
-    $scope.removeValueForExp();
+    if(object.Opleiding == '' || typeof object.Opleiding == "undefined"){
+      $scope.user.showEducationForm = true;
+    }else{
+      $scope.user.cvWriteExp[globalExpIndexToEdit] = object;
+      $scope.removeValueForExp();
+      $scope.user.showEducationForm = false;
+    }
   }
   $scope.editExp = function(object, i){
     globalExpIndexToEdit = i;
