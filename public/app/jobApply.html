@@ -1,4 +1,4 @@
-<div class="scrollable">
+<div class="scrollable" >
   <div class="scrollable-content">
     <div class="new-section">
       <h4>Je gaat solliciteren op:</h4>
@@ -24,16 +24,39 @@
           <div class="panel panel-default" ng-repeat="panel in panels" data-ng-class="{'is-active': panel.isActive, 'is-editable': panel.isEditable, 'is-disabled': panel.isDisabled, 'closed': panel.closed, 'is-complete': panel.isComplete}" id="panel{{$index}}">
             <div class="panel-heading" data-ng-click="openAndClosed($index, false)" >
               <h4 class="panel-title">
-                  <i class="fa fa-check" data-ng-show="panel.isComplete"></i> {{$index+1}}. {{panel.panelHeadingTitle}}
+                  <i class="fa fa-check"></i> {{$index+1}}. {{user.radioEmail == 'option1' ? panel.panelSubstituteHeading : panel.panelHeadingTitle}}
               </h4>
             </div>
             <div class="panel-body" data-ng-if="$index == 0">
-              <form name="userRegistrationStep1" id="userRegistrationStep1" scroll-to-error novalidate ng-submit="userRegistrationStep1Submits(userRegistrationStep1.$valid, $index)" role="form" data-ng-init="buttonOfForm1CLicked = false">
+              <div class="row" data-ng-show="user.scenarion == 'nothing'" data-ng-init="user.scenarion = 'nothing'">
+                <div class="col-xs-12">
+                  <h5>Heb je al eerder gesolliciteerd via Olympia?</h5>
+                  <p>Heb je al een Mijn Olympia account, omdat je al eens via Olympia gesolliciteerd of gewerkt hebt? Gebruik dan je account om in te loggen en sneller te solliciteren.</p>
+                  <div class="row padding-top-1x">
+                    <div class="col-xs-5 padding-right-0">
+                      <button class="btn btn-primary width-100" data-ng-click="user.radioEmail = 'option2';user.scenarion='inloggen';gotoAnchor('panel0');focunOnInputElements('userEmail');">inloggen</button>
+                    </div>
+                    <div class="col-xs-2 padding-left-0 padding-right-0 text-center padding-top-1x">
+                      <span> - of - </span>
+                    </div>
+                    <div class="col-xs-5 padding-left-0">
+                      <button class="btn btn-tertiary btn-default blue width-100" data-ng-click="user.radioEmail = 'option1';user.scenarion='neuw';gotoAnchor('panel0');focunOnInputElements('userEmail')">ik ben nieuw</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <form data-ng-show="user.scenarion !== 'nothing'" name="userRegistrationStep1" id="userRegistrationStep1" scroll-to-error novalidate ng-submit="userRegistrationStep1Submits(userRegistrationStep1.$valid, $index)" role="form" data-ng-init="buttonOfForm1CLicked = false">
                 <imput type="hidden" value="false" data-ng-modal="user.modalPopUpValue" id="modalPopUpValue" name="modalPopUpValue" >
-                <div class="row margin-top-10">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h5 data-ng-show="user.radioEmail == 'option2'">Log in met je Mijn Olympia account</h5>
+                    <p data-ng-show="user.radioEmail == 'option1'">Vul het e-mail adres in waarop wij jou kunnen bereiken naar aanleiding van je inschrijving en sollicitatie.</p>
+                  </div>
+                </div>
+                <div class="row">
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label for="userEmail">E-mailadres</label>
+                            <label for="userEmail">E-mailadres <i data-ng-show="user.radioEmail == 'option1'" ui-turn-on="emailmessage" class="fa fa-info-circle"></i></label>
                             <input type="text" name="userEmail" class="form-control" id="userEmail" data-required="true" data-ng-pattern="emailRegx" data-ng-model="user.userEmail" data-ng-required="true" data-ng-class="{'validation-error': (userRegistrationStep1.userEmail.$error.required || userRegistrationStep1.userEmail.$error.pattern) && buttonOfForm1CLicked}">
                             <div class="error" data-ng-show="userRegistrationStep1.userEmail.$error.required && buttonOfForm1CLicked">
                               <span>E-mail adres is verplicht</span>
@@ -44,38 +67,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div data-ng-show="user.radioEmail == 'option2'" class="row">
                     <div class="col-xs-12">
-                      <div class="form-group" data-ng-init="user.radioEmail = 'option1'" style="padding-bottom: 0">
-                          <div class="radio">
-                              <label>
-                                  <input type="radio" name="radioEmail" id="radio-email1" value="option1" data-required="true" ng-model="user.radioEmail" data-ng-click="buttonOfForm1CLicked = false"> Ik ben nieuw bij Olympia
-                              </label>
-                          </div>
-                          <div class="radio">
-                              <label>
-                                  <input type="radio" name="radioEmail" id="radio-email2" value="option2" data-required="true" ng-model="user.radioEmail" data-ng-click="buttonOfForm1CLicked = false"> Ik heb eerder gesolliciteerd via Olympia
-                              </label>
-                          </div>
-                      </div>
+                        <div class="form-group">
+                            <label for="password">Wachtwoord</label>
+                            <input type="password" name="password" class="form-control wdith-494" id="password" data-ng-required="user.radioEmail == 'option2'" data-ng-model="user.password" data-ng-class="{'validation-error': userRegistrationStep1.password.$error.required && buttonOfForm1CLicked}">
+                            <div class="error" data-ng-show="userRegistrationStep1.password.$error.required && buttonOfForm1CLicked">
+                              <span>Wachtwoord is verplicht.</span>
+                            </div>
+                            <div class="error" data-ng-show="!userRegistrationStep1.password.$error.required && buttonOfForm1CLicked && !invalidUser0 && !invalidUser1">
+                              <span>De ingevoerde gebruikersnaam of het ingevoerde wachtwoord is onjuist.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <hr>
                 <div class="row" data-ng-show="user.radioEmail == 'option1'">
-                  <div class="col-sm-12 text-justified">
-                      <p>
-                          Met de gegevens van dit sollicitatieformulier wordt gelijk een persoonlijk Olympia account aangemaakt. Hiermee kan je de opgeslagen vacature- en sollicatie gegevens bij een (eventuele) volgende sollicitatie direct hergebruiken en gemakkelijk aanpassen.
-                      </p>
-                      <span style="display: inline-block">
-                          <label>Of log in met:</label>
-                      </span>
-                  </div>
-                  <div class="col-xs-6 padding-right-0">
-                      <a href="javascript:void(0)" title="Deel via Facebook" class=" col-xs-12 social facebook btn btn-primary"><img src="img/facebook-icon.png">facebook</a>
-                  </div>
-                  <div class="col-xs-6 padding-left-0">
-                      <a href="javascript:void(0)" title="Deel via Linkedin" class=" col-xs-12 social linkedin btn btn-primary"><img src="img/linkedin-icon.png">linkedin</a>
-                  </div>
                   <div class="col-xs-12">
                     <div class="checkbox">
                         <label>
@@ -88,26 +94,39 @@
                     </div>
                   </div>
                 </div>
-                <div ng-show="user.radioEmail == 'option2'" class="row">
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <label for="password">Wachtwoord</label>
-                            <input type="password" name="password" class="form-control wdith-494" id="password" data-ng-required="user.radioEmail == 'option2'" data-ng-model="user.password" data-ng-class="{'validation-error': userRegistrationStep1.password.$error.required && buttonOfForm1CLicked}">
-                            <div class="error" data-ng-show="userRegistrationStep1.password.$error.required && buttonOfForm1CLicked">
-                              <span>Wachtwoord is verplicht.</span>
-                            </div>
-                            <div class="error" data-ng-show="!userRegistrationStep1.password.$error.required && buttonOfForm1CLicked && !invalidUser">
-                              <span>De ingevoerde gebruikersnaam of het ingevoerde wachtwoord is onjuist.</span>
-                            </div>
-                            <a class="orange" href="#" title="Wachtwoord vergeten">Wachtwoord vergeten?</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+
+                <div class="row" data-ng-show="user.radioEmail == 'option2'">
                   <div class="col-xs-12">
                     <br>
-                    <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option1'">Verder naar persoonlijke gegevens <i class="fa fa-arrow-down"></i></button>
-                    <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option2'">Log in en solliciteer <i class="fa fa-arrow-down"></i></button>
+                    <button type="submit" class="btn btn-primary" ng-click="buttonOfForm1CLicked = true;">Inloggen</button>
+                    <a href="javascript:void(0)" class="underline padding-left-10" data-ng-click="user.scenarion='nothing';buttonOfForm1CLicked = false;">terug</a>
+                    <!-- <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option2'">Log in en solliciteer <i class="fa fa-arrow-down"></i></button> -->
+                  </div>
+                </div>
+                <div class="row" data-ng-show="user.radioEmail == 'option1'">
+                  <div class="col-xs-12">
+                    <br>
+                    <button type="submit" class="btn btn-primary" ng-click="buttonOfForm1CLicked = true;">Verder</button>
+                    <a href="javascript:void(0)" class="underline padding-left-10" data-ng-click="user.scenarion='nothing';buttonOfForm1CLicked = false;">terug</a>
+                    <!-- <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option2'">Log in en solliciteer <i class="fa fa-arrow-down"></i></button> -->
+                  </div>
+                </div>
+                <div class="row" data-ng-show="user.radioEmail == 'option2'">
+                  <div class="col-xs-12">
+                    <br>
+                    <a class="underline" href="javascript:void(0)" title="Wachtwoord vergeten">Wachtwoord vergeten</a>
+                  </div>
+                </div>
+                <div class="row padding-top-1x" data-ng-show="user.radioEmail == 'option2'">
+                  <div class="col-xs-12">
+                    <p class="horizontal-line-cut"><span>of</span></p>
+                  </div>
+                </div>
+                <div class="row" data-ng-show="user.radioEmail == 'option2'">
+                  <div class="col-xs-12">
+                    <button class="btn btn-tertiary btn-default blue">log in via facebook</button>
+                    <br>
+                    <button class="btn btn-tertiary btn-default blue">log in via linkedin</button>
                   </div>
                 </div>
               </form>
@@ -356,14 +375,15 @@
                   </div>
                   <div class="col-xs-12">
                     <div class="form-group">
-                      <label>Foto Toevoegen (optioneel)</label>
+                      <label>Profielfoto (optioneel) <i ui-turn-on="fotomessage" class="fa fa-info-circle"></i></label>
                       <p>Upload hier je foto waarmee je jezelf optimaal presenteert aan ons en (potentiële) opdrachtgevers.</p>
-                      <input id="myFileInput" type="file" accept="image/*;capture=camera" data-ng-model="user.foto">
+                      <img src="img/default_profile_image.jpg" width="100" ui-turn-on="fotouploadimage" data-ng-init="user.showSecondPhoto = false;" data-ng-show="!user.showSecondPhoto"/>
+                      <img src="img/parick_image_cropped.jpg" width="100" ui-turn-on="fotouploadimage" data-ng-show="user.showSecondPhoto" class="round-edge-image"/>
                     </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="form-group">
-                      <label>Rijbewijs</label>
+                      <label>Rijbewijs (optioneel) </label>
                       <div class="row">
                         <label class="col-xs-3">
                             <input type="checkbox" id="inlineCheckbox1" value="option1" data-ng-model="user.checkbox1"  data-ng-change="user.checkbox8 = false;"> A
@@ -394,10 +414,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-xs-12">
+                  <div class="col-xs-12">
+                    <div class="form-group">
                       <br>
-                      <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm2CLicked = true;">Verder naar CV & Ervaring <i class="fa fa-arrow-down"></i></button>
+                      <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm2CLicked = true;">Verder naar CV & ervaring <i class="fa fa-arrow-down"></i></button>
                     </div>
                   </div>
                 </div>
@@ -406,31 +426,27 @@
             <div class="panel-body" data-ng-if="$index == 2">
               <div class="row">
                 <div class="col-xs-12">
-                    <label>CV toevoegen</label>
-                    <p>Voeg je CV toe door een bestand te uploaden of maak hieronder een nieuw CV.
-                    <a href="#" id="zoomTextarea" class="website-icons small" data-toggle="modal" data-target="#cvHelp"><i class=" fa fa-question-circle"></i></a></p>
+                    <p>Voeg je CV toe door een bestand te uploaden of maak handmatig een nieuw CV aan.</p>
                 </div>
-                <div class="col-xs-12" data-ng-init="user.cvChoice = 'cvUpload'">
-                  <label class="radio-inline">
-                    <input type="radio" name="user.cvChoice" value="cvUpload" checked="" ng-model="user.cvChoice"> CV uploaden
-                  </label>
-                </div>
-                <div class="col-xs-12">
-                  <label class="radio-inline">
-                    <input type="radio" name="user.cvChoice" value="cvWrite" ng-model="user.cvChoice"> CV aanmaken
-                  </label>
+                <div class="col-xs-12 padding-top-1x">
+                  <label>Ik wil mijn CV:</label>
+                  <div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
+                    <button type="button" value="" ng-model="user.cvChoice" data-ng-init="user.cvChoice = 'cvUpload'" data-ng-click="user.cvChoice = 'cvUpload'" data-ng-class="{'active': user.cvChoice == 'cvUpload'}" class="btn btn-default btn-tertiary new1 blue">Uploaden</button>
+                    <button type="button" value="cvWrite" data-ng-click="user.cvChoice = 'cvWrite'" data-ng-class="{'active': user.cvChoice == 'cvWrite'}" class="btn btn-default btn-tertiary new1 blue">Aanmaken</button>
+                  </div>
                 </div>
                 <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvUpload'">
                   <br>
                   <div id="cvUpload">
                       <div class="row">
                           <div class="col-xs-12">
-                              <label>CV uploaden vanaf</label>
+                              <label>CV uploaden vanaf:</label>
                           </div>
                           <div class="col-xs-12">
                             <div class="well blue" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
                               <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
                             </div>
+                            <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue hidden" href="javascript:void(0)" data-ng-click="deleteCV();"><i class="fa fa-times"></i></a>
                           </div>
                           <div class="col-xs-12">
                             <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick()"><label>Dropbox</label></a>
@@ -439,7 +455,7 @@
                             <a class="btn btn-default" href="javascript:void(0)" data-ng-click="googleButtonClick()"><label>Google Drive</label></a>
                           </div>
                           <div class="col-xs-12">
-                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick()"><label>One Drive</label></a>
+                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick()"><label>Microsoft OneDrive</label></a>
                           </div>
                           <div class="col-xs-12">
                             <button class="btn btn-default">
@@ -455,25 +471,19 @@
                 </div>
                 <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvWrite'">
                   <br>
-                  <div class="well">
-                    <label>CV aanmaken</label>
-                    <p>Maak je CV hier handmatig aan</p>
+                  <div>
                     <div class="row" data-ng-init="user.editingWerkVar = false;">
                       <div class="col-xs-12">
                         <br>
-                        <label>Werk</label>
-                        <div data-ng-repeat="werk in user.cvWrite" >
-                          <strong data-ng-bind="werk.Functie"></strong> <a class="orange pull-right" href="javascript:void(0)" data-ng-click="user.showWorkForm = true;editWerk(werk, $index);user.editingWerkVar = true" style="padding-left: 10px;"><i class="fa fa-pencil"></i> bewerken</a> <a class="orange pull-right" href="javascript:void(0)" data-ng-click="deleteWerk(werk, $index);"><i class="fa fa-times"></i> verwijderen</a>
-                        </div>
-                        <br>
-                        <div class="well well-lg text-center col-xs-12" data-ng-show="user.showWorkForm != true" style="border-style: dashed; border-width: 2px; background:#fff;" data-ng-init="user.showWorkForm = false">
+                        <label>Werkervaring</label>
+                        <div class="padding-top-1x" data-ng-show="user.showWorkForm != true" style="background:#fff;" data-ng-init="user.showWorkForm = false">
                             <i class="glyphicon glyphicon-plus"></i>
-                            <a class="orange" href="javascript:void(0)" data-ng-click="user.showWorkForm = true;user.editingWerkVar = false;buttonOfForm32CLicked = false;"><i class="fa fa-plus"></i> Voeg een werkervaring toe</a>
-                          <br>
+                            <a href="javascript:void(0)" data-ng-click="user.showWorkForm = true;user.editingWerkVar = false;buttonOfForm32CLicked = false;"><i class="fa fa-plus"></i> Voeg een werkervaring toe</a>
+                          <hr class="small-margin">
                         </div>
                         <div class="row" data-ng-show="user.showWorkForm == true" data-ng-init="buttonOfForm32CLicked = false;">
                           <form novalidate id="werkForm" name="werkForm"  scroll-to-error>
-                            <h4 class="col-xs-12">Nieuwe werkervaring toevoegen</h4>
+                            <h5 class="col-xs-12">Nieuwe werkervaring toevoegen</h4>
                             <div class="col-xs-12 form-group">
                                 <label for="Functie" class="col-xs-12">Functie</label>
                                 <div class="col-sm-12">
@@ -488,7 +498,7 @@
                             <div class="col-xs-12 form-group">
                                 <label for="Bedrijf" class="col-xs-12">Bedrijf</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="Bedrijf" name="Bedrijf" daa-ng-model="work.Bedrijf">
+                                    <input type="text" class="form-control" id="Bedrijf" name="Bedrijf" data-ng-model="work.Bedrijf">
                                 </div>
                             </div>
                             <div class="col-xs-12 form-group">
@@ -503,7 +513,7 @@
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatummaand" data-ng-model="work.Startdatummaand" data-ng-init="work.Startdatummaand = '00'" >
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -520,7 +530,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatumjaar" data-ng-model="work.Startdatumjaar" data-ng-init="work.Startdatumjaar = '0'">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -609,7 +619,7 @@
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Einddatummaand" data-ng-model="work.Einddatummaand" data-ng-init="work.Einddatummaand = '00'">
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -626,7 +636,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Einddatumjaar" data-ng-model="work.Einddatumjaar" data-ng-init="work.Einddatumjaar = '0'">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -722,24 +732,35 @@
                                 <button type="button" class="btn btn-primary" data-ng-show="user.editingWerkVar" data-ng-click="buttonOfForm32CLicked = true; updateValuesForWork(work)">Aanmaken</button>
                               </div>
                             </div>
+                            <div class="col-xs-12"><hr></div>
                           </form>
                         </div>
+                        <div data-ng-repeat="werk in user.cvWrite" >
+                          <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="user.showWorkForm = true;editWerk(werk, $index);user.editingWerkVar = true"><i class="fa fa-pencil"></i> bewerken</a> <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="deleteWerk(werk, $index);"><i class="fa fa-times"></i></a>
+                          <div class="padding-top-1x">
+                            <strong data-ng-bind="werk.Functie"></strong><span data-ng-if="werk.Bedrijf"> bij {{werk.Bedrijf}}</span>
+                          </div>
+                          <div>
+                            {{werk.Startdatummaand}}-{{werk.Startdatumjaar}} - {{werk.Einddatummaand == "00" ? "heden" : werk.Einddatummaand}}{{werk.Einddatummaand == "00" ? "" : "-"}}{{werk.Einddatumjaar == "0" ? "" : werk.Einddatumjaar}}
+                          </div>
+                          <div data-ng-show="werk.showmore == true && werk.FuntieBeschrijving" data-ng-init="werk.showmore = false">
+                            <span data-ng-bind="werk.FuntieBeschrijving"></span><br />
+                          </div>
+                          <a href="javascript:void(0)" data-ng-click="werk.showmore = !werk.showmore" data-ng-show="werk.showmore == false && werk.FuntieBeschrijving">+ meer</a>
+                          <a href="javascript:void(0)" data-ng-click="werk.showmore = !werk.showmore" data-ng-show="werk.showmore == true && werk.FuntieBeschrijving">- minder</a>
+                          <hr class="small-margin" />
+                        </div>
+                        <br>
                       </div>
                     </div>
                     <div class="row" data-ng-init="user.editingExpVar = false;">
                       <div class="col-xs-12">
                         <br>
                         <label>Opleiding</label>
-                        <div class="row" data-ng-repeat="exp in user.cvWriteExp" >
-                          <div class="col-xs-12">
-                            <strong data-ng-bind="exp.Opleiding"></strong> <a class="orange pull-right" href="javascript:void(0)" data-ng-click="user.showEducationForm = true;editExp(exp, $index);user.editingExpVar = true" style="padding-left: 10px;"><i class="fa fa-pencil"></i> bewerken</a> <a class="orange pull-right" href="javascript:void(0)" data-ng-click="deleteExp(exp, $index);"><i class="fa fa-times"></i> verwijderen</a>
-                          </div>
-                        </div>
-                        <br>
-                        <div class="well well-lg text-center col-xs-12" data-ng-show="user.showEducationForm != true" style="border-style: dashed; border-width: 2px; background:#fff;" data-ng-init="showEducationForm = false">
+                        <div class="padding-top-1x" data-ng-show="user.showEducationForm != true" style="background:#fff;" data-ng-init="showEducationForm = false">
                             <i class="glyphicon glyphicon-plus"></i>
-                            <a class="orange" href="javascript:void(0)" data-ng-click="user.showEducationForm = true;user.editingExpVar = false;buttonOfForm31CLicked = false"><i class="fa fa-plus"></i> Voeg een opleiding toe</a>
-                          <br>
+                            <a href="javascript:void(0)" data-ng-click="user.showEducationForm = true;user.editingExpVar = false;buttonOfForm31CLicked = false"><i class="fa fa-plus"></i> Voeg een opleiding toe</a>
+                            <hr class="small-margin">
                         </div>
                         <div class="row" data-ng-show="user.showEducationForm == true">
                           <form name="userRegistrationStep31" id="userRegistrationStep31" scroll-to-error  novalidate role="form" data-ng-init="buttonOfForm31CLicked = false">
@@ -756,12 +777,12 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 form-group">
-                              <label for="Startdatummaand" class="col-xs-12">Startdatum werkervaring</label>
+                              <label for="Startdatummaand" class="col-xs-12">Startdatum opleiding</label>
                               <div class="col-xs-12">
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatummaand" data-ng-model="experience.Startdatummaand">
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -778,7 +799,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="Startdatumjaar" data-ng-model="experience.Startdatumjaar">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -862,12 +883,12 @@
                               </div>
                             </div>
                             <div class="col-xs-12 form-group">
-                              <label for="Einddatum" class="col-xs-12 control-label">Einddatum werkervaring</label>
+                              <label for="Einddatum" class="col-xs-12 control-label">Einddatum opleiding</label>
                               <div class="col-xs-12">
                                   <div class="row">
                                       <div class="col-xs-6">
                                           <select class="form-control" id="pop-einddatum-maand-1" data-ng-model="experience.Einddatummaand">
-                                              <option value="00" select="selected">Maand</option>
+                                              <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
                                               <option value="03">Maart</option>
@@ -884,7 +905,7 @@
                                       </div>
                                       <div class="col-xs-6">
                                           <select class="form-control" id="pop-einddatum-jaar-1" data-ng-model="experience.Einddatumjaar">
-                                              <option value="0" select="selected">Jaar</option>
+                                              <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
                                               <option value="2014">2014</option>
@@ -985,24 +1006,39 @@
                                 <button type="button" class="btn btn-primary" data-ng-show="user.editingExpVar" data-ng-click="buttonOfForm31CLicked = true;updateValuesForExp(experience)">Aanmaken</button>
                               </div>
                             </div>
+                            <div class="col-xs-12"><hr></div>
                           </form>
+                        </div>
+                        <div class="row" data-ng-repeat="exp in user.cvWriteExp" >
+                          <div class="col-xs-12">
+                            <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="user.showEducationForm = true;editExp(exp, $index);user.editingExpVar = true"><i class="fa fa-pencil"></i> bewerken</a> <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="deleteExp(exp, $index);"><i class="fa fa-times"></i></a>
+                            <div class="padding-top-1x">
+                              <strong data-ng-bind="exp.Opleiding"></strong>
+                            </div>
+                            <div>
+                              {{exp.Startdatummaand}}-{{exp.Startdatumjaar}} - {{exp.Einddatummaand == "00" ? "heden" : exp.Einddatummaand}}{{exp.Einddatummaand == "00" ? "" : "-"}}{{exp.Einddatumjaar == "0" ? "" : exp.Einddatumjaar}}
+                            </div>
+                            <span>Diploma behaald: {{exp.diploma}}</span><br />
+                            <hr class="small-margin" />
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row hidden">
                       <br>
                       <div class="col-sm-12">
                           <label for="13">Mocht je nog iets willen opmerken over je CV dan kan dat hier (optioneel):</label>
                           <textarea id="13" class="form-control" rows="3"></textarea>
                       </div>
                     </div>
+
                   </div>
                 </div>
                 <div class="col-xs-12">
                   <div class="form-group" data-ng-init="user.opleidingsniveau = '0'">
                     <label for="opleidingsniveau">Wat is uw opleidingsniveau?</label>
                     <select class="form-control" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm3CLicked}">
-                      <option value="0">Geen voorkeur</option>
+                      <option value="0" disabled selected>Kies opleidingsniveau</option>
                       <option value="HAVO">HAVO</option>
                       <option value="HBO">HBO</option>
                       <option value="LBO">LBO</option>
@@ -1021,7 +1057,8 @@
                   <div class="form-group">
                     <div class="row">
                         <div class="col-xs-12">
-                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" id="form-submit" data-ng-click="buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '' && user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvUpload'" data-ng-click="buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '' && user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite'" data-ng-click="buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
                         </div>
                     </div>
                   </div>
@@ -1030,47 +1067,59 @@
             </div>
             <div class="panel-body" data-ng-if="$index == 3">
               <div class="row">
-                <div class="col-xs-12">
-                  <label>Persoonlijke gegevens</label>
+                <div class="col-xs-8">
+                  <label style="padding-top:3px;">Persoonlijke gegevens</label>
                 </div>
-                <div class="col-xs-12">
-                  <ul class="list-style-none">
+                <div class="col-xs-4 padding-right-0 padding-left-0">
+                  <a class="btn btn-quarduple btn-default blue pull-right" href="javascript:void(0)" data-ng-click="moveToPreviousNode(0)"><i class="fa fa-pencil"></i> bewerken</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-5">
+                  <img ng-src="img/parick_image_cropped.jpg" ui-turn-on="fotouploadimage" data-ng-show="user.showSecondPhoto" class="round-edge-image">
+                  <img ng-src="img/default_profile_image.jpg" ui-turn-on="fotouploadimage" data-ng-show="!user.showSecondPhoto" class="round-edge-image" >
+                </div>
+                <div class="col-xs-7">
+                  <ul class="list-style-none data-list">
                     <li>
-                      <strong>Naam</strong><span>{{user.firstname}} {{user.lastname}}</span>
+                      <span>{{user.firstname}} {{user.lastname}}<br>{{user.userEmail}}</span>
                     </li>
                     <li>
-                      <strong>E-mail</strong><span>{{user.userEmail}}</span>
+                      <span>{{user.Straat}} {{user.Huisnummer}}<br>{{user.Postcode}} {{user.Woonplaats}}</span>
                     </li>
                     <li>
-                      <strong>Adres &amp; plaats</strong><span>{{user.Straat}} {{user.Huisnummer}}</span>
-                    </li>
-                    <li>
-                      <strong></strong><span>{{user.Postcode}} {{user.Woonplaats}}</span>
-                    </li>
-                    <li>
-                      <strong>Mobiel/Telefoon</strong><span>{{user.Mobielnummer ? user.Mobielnummer : user.Telefoonnummer}}</span>
+                      <span>{{user.Mobielnummer ? user.Mobielnummer : user.Telefoonnummer}}</span>
                     </li>
                     <li>
                     </li>
                   </ul>
-                  <a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(0)"><i class="fa fa-pencil"></i> Bewerk persoonlijke gegevens </a><img data-ng-if="user.foto" ng-src="{{getSrc(user.foto)}}" width="80" class="round-image">
+                </div>
+                <div class="col-xs-12">
                   <hr/>
-                  <label>Meest recente ervaring &amp; opleiding</label>
-                  <ul class="list-style-none">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-9">
+                  <label style="padding-top:3px;">Recente ervaring &amp; opleiding</label>
+                </div>
+                <div class="col-xs-3 padding-right-0">
+                  <a class="btn btn-quarduple btn-default blue pull-right" href="javascript:void(0)" data-ng-click="moveToPreviousNode(1)"><i class="fa fa-pencil"></i> bewerken</a>
+                </div>
+                <div class="col-xs-12">
+                  <ul class="list-style-none data-list data-list-cv">
                     <li data-ng-if="user.cvChoice == 'cvUpload'">
-                      <strong>Mijn CV</strong><span><a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">Mijn CV wijzigen</a></span>
+                      <strong>Mijn CV</strong><span><a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">{{user.valueOfCV}}</a></span>
                     </li>
                     <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWrite">
-                      <strong>Werkervaring</strong><span>{{user.cvWrite[user.cvWrite.length-1].Functie}}, {{user.cvWrite[user.cvWrite.length-1].bedrijf}}</span>
+                      <strong>Werkervaring</strong><span>{{user.cvWrite[user.cvWrite.length-1].Functie}}<br>{{user.cvWrite[user.cvWrite.length-1].Startdatummaand}}-{{user.cvWrite[user.cvWrite.length-1].Startdatumjaar}} - {{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "heden" : user.cvWrite[user.cvWrite.length-1].Einddatummaand}}{{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "" : "-"}}{{user.cvWrite[user.cvWrite.length-1].Einddatumjaar == "0" ? "" : user.cvWrite[user.cvWrite.length-1].Einddatumjaar}}</span>
                     </li>
                     <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWriteExp">
-                      <strong>Opleiding</strong><span>{{user.cvWriteExp[user.cvWriteExp.length-1].Opleiding}}</span>
+                      <strong>Opleiding</strong><span>{{user.cvWriteExp[user.cvWriteExp.length-1].Opleiding}}<br>{{user.cvWriteExp[user.cvWriteExp.length-1].Startdatummaand}}-{{user.cvWriteExp[user.cvWriteExp.length-1].Startdatumjaar}} - {{user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand == "00" ? "heden" : user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand}}{{user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand == "00" ? "" : "-"}}{{user.cvWriteExp[user.cvWriteExp.length-1].Einddatumjaar == "0" ? "" : user.cvWriteExp[user.cvWriteExp.length-1].Einddatumjaar}}</span>
                     </li>
                     <li>
                       <strong>Opleidingsniveau</strong><span>{{user.opleidingsniveau}}</span>
                     </li>
                   </ul>
-                  <a class="orange" href="javascript:void(0)" data-ng-click="moveToPreviousNode(1)"><i class="fa fa-pencil"></i> Bewerk CV & ervaring</a>
                 </div>
               </div>
               <form name="userRegistrationStep4" id="userRegistrationStep4" novalidate ng-submit="userRegistrationStep4Submits(userRegistrationStep4.$valid, $index)" role="form" data-ng-init="buttonOfForm4CLicked = false">
@@ -1081,111 +1130,17 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <label for="text-content">Motivatie</label>
-                                <p>Klik <a class="orange" href="javascript:void(0)">hier</a> voor tips voor het schrijven van een motivatie.</p>
-
+                                <p>Je sollicitatie wordt beoordeeld door <strong>Anneke van Beersdal</strong>. Leg hieronder uit wat jou geschikt maakt voor deze baan.</p>
                                 <textarea maxlength="4000" data-ng-init="user.motivatie = ''" class="form-control" rows="5" id="motivatie" name="motivatie" data-ng-model="user.motivatie" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep4.motivatie.$error.required && buttonOfForm4CLicked}"></textarea>
                                 <div class="error" data-ng-show="userRegistrationStep4.motivatie.$error.required && buttonOfForm4CLicked">
                                   <span>Motivatie vereist.</spam>
                                 </div>
                                 <p>Aantal karakters: <span id="text-content-count"> {{user.motivatie ? user.motivatie.length : 0}}</span> (max 4000 karakters)</p>
-                                <p><i class="olympia-spell-check"></i><a class="orange" href="javascript:void(0)" id="check-textarea">Spelling Check</a></p>
                             </div>
                         </div>
                     </div>
                   </div>
-                  <div class="col-xs-12">
-                    <div class="form-group" data-ng-init="user.SelectedOfficeDropDown = '149'">
-                      <label for="SelectedOfficeDropDown">Welke vestiging heeft jouw voorkeur?</label>
-                      <select class="form-control" id="SelectedOfficeDropDown" name="SelectedOffice" data-ng-model="user.SelectedOfficeDropDown">
-                        <option value="149">Alkmaar</option>
-                        <option value="183">Almelo</option>
-                        <option value="177">Almere</option>
-                        <option value="185">Alphen a/d Rijn</option>
-                        <option value="154">Amersfoort</option>
-                        <option value="211">Amstelveen</option>
-                        <option value="133">Amsterdam</option>
-                        <option value="172">Apeldoorn</option>
-                        <option value="121">Arnhem</option>
-                        <option value="128">Assen</option>
-                        <option value="143">Barendrecht</option>
-                        <option value="559">Barendrecht - Inhouse Greenery</option>
-                        <option value="131">Bergen op Zoom</option>
-                        <option value="132">Breda</option>
-                        <option value="124">Cuijk</option>
-                        <option value="126">Delfzijl</option>
-                        <option value="117">Den Bosch</option>
-                        <option value="101">Den Haag</option>
-                        <option value="204">Den Helder</option>
-                        <option value="203">Deurne</option>
-                        <option value="168">Deventer</option>
-                        <option value="198">Doetinchem</option>
-                        <option value="155">Dordrecht</option>
-                        <option value="152">Drachten</option>
-                        <option value="187">Ede</option>
-                        <option value="118">Eindhoven</option>
-                        <option value="104">Emmen</option>
-                        <option value="122">Enschede</option>
-                        <option value="148">Etten-leur</option>
-                        <option value="166">Gorinchem</option>
-                        <option value="107">Gouda</option>
-                        <option value="125">Groningen</option>
-                        <option value="194">Haaksbergen</option>
-                        <option value="180">Haarlem</option>
-                        <option value="189">Harderwijk</option>
-                        <option value="186">Heerenveen</option>
-                        <option value="174">Heerhugowaard</option>
-                        <option value="163">Helmond</option>
-                        <option value="147">Hengelo</option>
-                        <option value="160">Hilversum</option>
-                        <option value="520">Honselersdijk</option>
-                        <option value="191">Hoogeveen</option>
-                        <option value="179">Hoorn</option>
-                        <option value="208">Katwijk</option>
-                        <option value="164">Leeuwarden</option>
-                        <option value="159">Leiden</option>
-                        <option value="195">Lichtenvoorde</option>
-                        <option value="103">Maassluis</option>
-                        <option value="144">Maastricht</option>
-                        <option value="192">Meppel</option>
-                        <option value="196">Nieuwegein</option>
-                        <option value="162">Nijmegen</option>
-                        <option value="169">Oosterhout</option>
-                        <option value="115">Oss</option>
-                        <option value="129">Oud-Beijerland</option>
-                        <option value="176">Rijswijk</option>
-                        <option value="123">Roermond</option>
-                        <option value="173">Roosendaal</option>
-                        <option value="106">Rotterdam Coolsingel</option>
-                        <option value="110">Rotterdam Laan op Zuid</option>
-                        <option value="153">Sassenheim</option>
-                        <option value="165">Schiedam</option>
-                        <option value="157">Schijndel</option>
-                        <option value="138">Schiphol</option>
-                        <option value="193">Sneek</option>
-                        <option value="112">Tiel</option>
-                        <option value="156">Tilburg</option>
-                        <option value="119">Uden</option>
-                        <option value="108">Utrecht</option>
-                        <option value="127">Veendam</option>
-                        <option value="161">Veenendaal</option>
-                        <option value="116">Veghel</option>
-                        <option value="171">Veldhoven</option>
-                        <option value="120">Venlo</option>
-                        <option value="167">Venray</option>
-                        <option value="178">Waalwijk</option>
-                        <option value="175">Weert</option>
-                        <option value="130">Wijchen</option>
-                        <option value="215">Woerden</option>
-                        <option value="181">Zaandam</option>
-                        <option value="190">Zaltbommel</option>
-                        <option value="184">Zeist</option>
-                        <option value="151">Zevenaar</option>
-                        <option value="102">Zoetermeer</option>
-                        <option value="188">Zutphen</option>
-                        <option value="150">Zwolle</option>
-                      </select>
-                    </div>
-                  </div>
+
                   <div class="col-xs-12">
                     <div class="form-group" id="botChk">
                         <div class="row">
@@ -1194,13 +1149,13 @@
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" data-ng-model="user.optionsRadios">
-                                        Ja, ik sta open voor heftruckchauffeur vacaturesuggesties en/of gerelateerde functies.
+                                        Ja, ik sta open voor vacaturesuggesties voor deze functie en/of gerelateerde functies.
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="optionsRadios" id="optionsRadios1" value="3" data-ng-model="user.optionsRadios">
-                                        Nee, ik wil dat Olympia mij alleen helpt met deze sollicitatie
+                                        Nee, ik wil dat Olympia mij alleen helpt met deze sollicitatie.
                                     </label>
                                 </div>
                             </div>
@@ -1227,6 +1182,11 @@
     <div ng-include="'footer.html'" class="footer"></div>
     <div ui-content-for="modals">
       <div ng-include="'agemodal.html'"></div>
+      <div ng-include="'agemodalmessage.html'"></div>
+      <div ng-include="'fotomessage.html'"></div>
+      <div ng-include="'emailmessage.html'"></div>
+      <div ng-include="'fotoupload.html'"></div>
+      <div ng-include="'fotouploadimage.html'"></div>
     </div>
   </div>
 </div>

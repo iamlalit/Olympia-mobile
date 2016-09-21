@@ -1,0 +1,37 @@
+<div class="modal modal-overlay scrollable" ui-if='fotouploadimage' ui-state='fotouploadimage'>
+  <div class="modal-dialog scrollable-content">
+    <div class="modal-content new-section">
+      <div class="modal-header">
+        <button class="close"
+                ui-turn-off="fotouploadimage" data-ng-click="user.showSecondPhoto = true">&times;</button>
+        <h4 class="modal-title">{{user.showSecondPhoto ? 'Foto aanpassen' : 'Foto Toevoegen'}}</h4>
+      </div>
+      <div class="modal-body">
+        <label>Kies een foto</label>
+        <p>Je kunt een JPEG, JPG of PNG bestand met een limiet van 5 MB uploaden.</p>
+        <input id="myFileInput" type="file" accept="image/*;capture=camera" data-ng-model="user.foto">
+        <img class="padding-top-1x" src="img/parick_image.jpg" />
+        <div style="height: 10px;"></div>
+        <label>Voorbeeld</label>
+        <p>Zo ziet Olympia je foto.</p>
+        <img src="img/parick_image_cropped.jpg" />
+        <div style="height: 20px;"></div>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="permissionsCheckbox" name="permissionsCheckbox" data-ng-model="user.permissionsCheckbox">
+            <span class="permissions-checkbox-text">Ik verleen toestemming aan Olympia en de aan haar verbonden werkmaatschappijen om de door mij geüploade foto in het systeem op te nemen en zo nodig te verstrekken aan (potentiële) opdrachtgevers.</span>
+        </label>
+        <div class="error" data-ng-show="!user.permissionsCheckbox && user.checkboxButtonCLicked">
+          <span>LET OP: Je hebt Olympia nog geen toestemming gegeven je foto zo nodig aan (potentiële) opdrachtgevers te verstrekken. Alleen als je hiermee akkoord gaat, kun je een foto aan je profiel toevoegen.</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-xs-12">
+              <button ui-turn-off="fotouploadimage" class="btn btn-default new1" data-ng-click="user.showSecondPhoto = false">Annuleren</button>
+              <button class="btn btn-primary" data-ng-click="user.showSecondPhoto = true;user.checkboxButtonCLicked = true;fotouploadimageFunction(user.permissionsCheckbox)">Uploaden</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

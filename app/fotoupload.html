@@ -1,0 +1,30 @@
+<div class="modal modal-overlay scrollable" ui-if='fotoupload' ui-state='fotoupload'>
+  <div class="modal-dialog scrollable-content">
+    <div class="modal-content new-section">
+      <div class="modal-header">
+        <button class="close"
+                ui-turn-off="fotoupload" data-ng-click="user.showSecondPhoto = false;">&times;</button>
+        <h4 class="modal-title">Foto uploaden</h4>
+      </div>
+      <div class="modal-body">
+        <label>Kies een foto</label>
+        <p>Je kunt een JPEG, JPG of PNG bestand met een limiet van 5 MB uploaden.</p>
+        <input id="myFileInput" type="file" accept="image/*;capture=camera" data-ng-model="user.foto">
+        <div style="height: 10px;"></div>
+        <label>Voorbeeld</label>
+        <p>Zo ziet Olympia je foto.</p>
+        <img src="img/default_profile_image_upload.jpg" />
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-xs-4">
+          </div>
+          <div class="col-xs-8">
+              <button ui-turn-off="fotoupload" class="btn btn-default new1" data-ng-click="user.showSecondPhoto = false">Annuleren</button>
+              <button ui-turn-off="fotoupload" ui-turn-on="fotouploadimage" class="btn btn-primary" data-ng-click="user.showSecondPhoto = true">Uploaden</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

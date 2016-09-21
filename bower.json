@@ -36,6 +36,7 @@
     "font-awesome": "4",
     "bootstrap": "3",
     "fastclick": "1",
-    "overthrow": "0.7"
+    "overthrow": "0.7",
+    "ngSmoothScroll": "^2.0.0"
   }
 }

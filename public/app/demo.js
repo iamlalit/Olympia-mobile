@@ -259,7 +259,7 @@ app.directive('dragMe', ['$drag', function($drag){
 // For this trivial demo we have just a unique MainController
 // for everything
 //
-app.controller('MainController', function($rootScope, $scope, $location, $anchorScroll, $filter){
+app.controller('MainController', function($rootScope, $scope, $location, $anchorScroll, $filter, $timeout, $window, $interval){
 
   $scope.swiped = function(direction) {
     alert('Swiped ' + direction);
@@ -399,11 +399,10 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   //
   // Job apply form data
   //
-  $scope.panelHeadingsTitle = ["Vul je emailadres in", "Vul je persoonlijke gegevens in", "Ervaring &amp; Motivatie"]
-
   $scope.panels = [
     {
-      panelHeadingTitle: "E-mail adres",
+      panelHeadingTitle: "Inloggen",
+      panelSubstituteHeading: "E-mail adres",
       isEditable: true,
       isActive: true,
       isDisabled: false,
@@ -412,6 +411,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     },
     {
       panelHeadingTitle: "Persoonlijke gegevens",
+      panelSubstituteHeading: "Persoonlijke gegevens",
       isEditable: true,
       isActive: false,
       isDisabled: true,
@@ -420,6 +420,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     },
     {
       panelHeadingTitle: "CV & ervaring",
+      panelSubstituteHeading: "CV & ervaring",
       isEditable: true,
       isActive: false,
       isDisabled: true,
@@ -428,6 +429,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     },
     {
       panelHeadingTitle: "Samenvatting & motivatie",
+      panelSubstituteHeading: "Samenvatting & motivatie",
       isEditable: true,
       isActive: false,
       isDisabled: true,
@@ -596,54 +598,144 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   $scope.emailRegx = new RegExp('.+@.+\\..+');
   $scope.user.modalPopUpValue = false;
   $scope.previousUser = [{
-    "userEmail": "sander@ignite.online",
-    "password": "password",
+    "userEmail": "patrick.v.d.polder@gmail.com",
+    "password": "patrick123",
     "radioEmail": "option2",
+    "scenarion": "inloggen",
     "terms": true,
-    "firstname": "Sander",
-    "tussenvoegsel": "Mr.",
-    "lastname": "Noteborn",
+    "firstname": "Patrick",
+    "tussenvoegsel": "van de",
+    "lastname": "Polder",
     "Gaslachet": "Man",
-    "dobDay": "12",
-    "dobMonth": "6",
-    "dobYear": "32",
-    "Mobielnummer": "9999999999",
-    "Telefoonnummer": "9999999999",
+    "dobDay": "3",
+    "dobMonth": "4",
+    "dobYear": "30",
+    "Mobielnummer": "0612345678",
+    "Telefoonnummer": "0612345678",
     "Land": "Nederland",
-    "Postcode": "1017 HL",
-    "Huisnummer": "68-78",
-    "Straat": "Vijzelstraat",
-    "Woonplaats": "Amsterdam",
+    "Postcode": "6844 JH",
+    "Huisnummer": "55",
+    "Straat": "Beersdallaan",
+    "Woonplaats": "Kralingen",
     "foto": "Patrick.jpg",
     "checkbox1": false,
     "checkbox2": false,
     "checkbox3": false,
     "checkbox4": false,
-    "checkbox5": false,
+    "checkbox5": true,
     "checkbox6": false,
     "checkbox7": false,
-    "checkbox8": true,
+    "checkbox8": false,
     "cvChoice": "cvUpload",
-    "valueOfCV": "cv.pdf",
+    "valueOfCV": "CV_Patrick.pdf",
     "cvWriteExp": [],
     "cvWrite": [],
-    "opleidingsniveau": "MBO",
+    "opleidingsniveau": "Universitair",
     "SelectedOfficeDropDown": "117",
-    "optionsRadios": "1"
+    "optionsRadios": "1",
+    "showSecondPhoto": true
+  },
+  {
+    "userEmail": "patrick.v.d.polder@live.com",
+    "password": "patrick123",
+    "radioEmail": "option2",
+    "scenarion": "inloggen",
+    "terms": true,
+    "firstname": "Patrick",
+    "tussenvoegsel": "van de",
+    "lastname": "Polder",
+    "Gaslachet": "Man",
+    "dobDay": "3",
+    "dobMonth": "4",
+    "dobYear": "30",
+    "Mobielnummer": "0612345678",
+    "Telefoonnummer": "0612345678",
+    "Land": "Nederland",
+    "Postcode": "6844 JH",
+    "Huisnummer": "55",
+    "Straat": "Beersdallaan",
+    "Woonplaats": "Kralingen",
+    "foto": "Patrick.jpg",
+    "checkbox1": false,
+    "checkbox2": false,
+    "checkbox3": false,
+    "checkbox4": false,
+    "checkbox5": true,
+    "checkbox6": false,
+    "checkbox7": false,
+    "checkbox8": false,
+    "cvChoice": "cvWrite",
+    "valueOfCV": "",
+    "cvWriteExp": [
+      {
+        "Opleiding": "VWO, Van Gastel college",
+        "Startdatummaand": "08",
+        "Startdatumjaar": "1991",
+        "Einddatummaand": "06",
+        "Einddatumjaar": "1998",
+        "diploma": "Ja"
+      },
+      {
+        "Opleiding": "Universiteit Amsterdam",
+        "Startdatummaand": "08",
+        "Startdatumjaar": "1998",
+        "Einddatummaand": "07",
+        "Einddatumjaar": "2014",
+        "diploma": "Ja"
+      }
+    ],
+    "cvWrite": [
+      {
+        "Functie": "Callcenter medewerker",
+        "Bedrijf": "Menzis",
+        "Vestigingsplaats": "Amsterdam",
+        "Startdatummaand": "09",
+        "Startdatumjaar": "1998",
+        "Einddatummaand": "05",
+        "Einddatumjaar": "2002",
+        "FuntieBeschrijving": "Werken voor de klantenservice van zorgverzekeraar Menzis"
+      },
+      {
+        "Functie": "Boukundig opzichter",
+        "Bedrijf": "NEDAM",
+        "Vestigingsplaats": "Haarlem",
+        "Startdatummaand": "09",
+        "Startdatumjaar": "2004",
+        "Einddatummaand": "00",
+        "Einddatumjaar": "0",
+        "FuntieBeschrijving": ""
+      }
+    ],
+    "opleidingsniveau": "Universitair",
+    "SelectedOfficeDropDown": "117",
+    "optionsRadios": "1",
+    "showSecondPhoto": true
   }];
 
   $scope.getSrc = function(src){
     return "img/"+src;
   }
 
-  $scope.invalidUser = false;
+  $scope.invalidUser0 = false;
+  $scope.invalidUser1 = false;
   $scope.saveValueOfModal = function(value){
     if(value){
         $scope.user.modalPopUpValue = value;
         $scope.userRegistrationStep1Submits(true,0);
     }else{
-        $scope.go('jobs');
+        $rootScope.Ui.turnOn('agemodalmessage');
     }
+  }
+
+  $scope.saveValueOfModalAgeMessage = function(value){
+    if(value){
+      $scope.go('');
+    }
+  }
+
+  $scope.fotouploadimageFunction = function(value){
+    if(value)
+      $rootScope.Ui.turnOff('fotouploadimage');
   }
 
   $scope.userRegistrationStep1Submits = function(validityOfForm, i){
@@ -661,14 +753,25 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       }
     }else if($scope.user.radioEmail == 'option2'){
       // make all steps comlete
-      $scope.invalidUser = $scope.previousUser[0].password == $scope.user.password && $scope.previousUser[0].userEmail == $scope.user.userEmail;
-      if(validityOfForm == true && $scope.invalidUser){
-        $scope.previousUser[0].radioEmail = $scope.user.radioEmail;
-        $scope.user = angular.copy($scope.previousUser[0]);
+      $scope.invalidUser0 = $scope.previousUser[0].password == $scope.user.password && $scope.previousUser[0].userEmail == $scope.user.userEmail;
+      $scope.invalidUser1 = $scope.previousUser[1].password == $scope.user.password && $scope.previousUser[1].userEmail == $scope.user.userEmail;
+      if(validityOfForm == true){
+        if($scope.invalidUser0){
+          $scope.previousUser[0].radioEmail = $scope.user.radioEmail;
+          $scope.user = angular.copy($scope.previousUser[0]);
 
-        toMoveToNextFunction(0);
-        toMoveToNextFunction(1);
-        toMoveToNextFunction(2);
+          toMoveToNextFunction(0);
+          toMoveToNextFunction(1);
+          toMoveToNextFunction(2);
+        }else if($scope.invalidUser1){
+          $scope.previousUser[1].radioEmail = $scope.user.radioEmail;
+          $scope.user = angular.copy($scope.previousUser[1]);
+
+          toMoveToNextFunction(0);
+          toMoveToNextFunction(1);
+          toMoveToNextFunction(2);
+        }
+
       }
     }
   }
@@ -717,9 +820,18 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     }
   }
 
+  //first close all tabs
+  function closeAllTabs(){
+    for(var i = 0; i< $scope.panels.length; i++){
+      $scope.panels[i].isActive = false;
+      $scope.panels[i].closed = true;
+    }
+  }
+
   $scope.openAndClosed = function(i, buttonCalling){
 
       if(buttonCalling == true){
+        closeAllTabs();
         $scope.panels[i].isActive = true;
         $scope.panels[i].closed = false;
         $scope.panels[i].isDisabled = false;
@@ -733,22 +845,45 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
         if($scope.panels[i].isDisabled == false){
           $scope.panels[i].isActive = true;
           $scope.panels[i].closed = false;
+          $scope.gotoAnchor('panel'+i);
         }
       }
     }
   }
 
   $scope.gotoAnchor = function(x) {
-    if ($location.hash() !== x) {
-      // set the $location.hash to `newHash` and
-      // $anchorScroll will automatically scroll to it
-      $location.hash(x);
-    } else {
-      // call $anchorScroll() explicitly,
-      // since $location.hash hasn't changed
-      $anchorScroll();
-    }
+    $timeout(function() {
+      var element = angular.element(document.getElementById(x));
+      var location = 0;
+      var scrollableContentController = element.controller('scrollableContent');
+      location = document.getElementById(x).offsetTop;
+      console.log(location);
+      var windowLocation = document.documentElement.scrollTop || document.body.scrollTop;;
+      newlocation = windowLocation;
+      scrollableContentController.scrollTo(location, 10);
+      // while(newlocation < location){
+      //   newlocation = newlocation + 1;
+      //   $interval(anchorScrolling(element, newlocation, scrollableContentController), 2);
+      // }
+    },10)
+
+
   };
+
+  var anchorScrolling = function(element, location, scrollableContentController){
+    $timeout(function() {
+      scrollableContentController.scrollTo(location, 500);
+      // console.log(location);
+    },10)
+  }
+
+  $scope.focunOnInputElements = function(el){
+    // $timeout(function() {
+    //   var element = $window.document.getElementById(el);
+    //   if(element)
+    //     element.focus();
+    // });
+  }
 
   $scope.checkForGeen = function(){
     if($scope.user.checkbox8 == true){
@@ -767,8 +902,19 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
       angular.element(document.getElementById("valueOfCV")).text(value);
       angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+      angular.element(document.getElementById("deleteCV")).removeClass('hidden');
     }
   }
+
+  $scope.deleteCV = function(){
+    $scope.user.valueOfCV = '';
+    angular.element(document.getElementById("file-input")).val('');
+    angular.element(document.getElementById("valueOfCV")).text('');
+    angular.element(document.getElementById("cvValueWell")).addClass('hidden');
+    angular.element(document.getElementById("deleteCV")).addClass('hidden');
+  }
+
+  $scope.deleteCV();
 
   //dropbox
   var options = {
@@ -780,6 +926,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
           });
           angular.element(document.getElementById("valueOfCV")).text(files[0].name);
           angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+          angular.element(document.getElementById("deleteCV")).removeClass('hidden');
       },
 
       // Optional. Called when the user closes the dialog without selecting a file
@@ -882,6 +1029,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
         });
         angular.element(document.getElementById("valueOfCV")).text(fileName);
         angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+        angular.element(document.getElementById("deleteCV")).removeClass('hidden');
       }
     }
 
@@ -903,6 +1051,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
 
       angular.element(document.getElementById("valueOfCV")).text(files.value[0].name);
       angular.element(document.getElementById("cvValueWell")).removeClass('hidden');
+      angular.element(document.getElementById("deleteCV")).removeClass('hidden');
     },
     cancel: function() { /* cancel handler */ },
     error: function(e) { /* error handler */ }
@@ -923,6 +1072,7 @@ app.filter('startFrom', function() {
         return input.slice(start);
     }
 });
+
 /*
 Accordion code
 */
@@ -957,4 +1107,14 @@ app.directive('scrollToError', function() {
       })
     }
   }
+});
+
+//anchor smooth scroll
+app.service('anchorSmoothScroll', function(){
+
+    this.scrollTo = function(eID) {
+        var $elm = document.getElementById(eID);
+        // angular.element("body").animate({scrollTop: $elm.offset().top}, "slow");
+    };
+
 });
