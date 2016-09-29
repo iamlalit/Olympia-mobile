@@ -2,7 +2,7 @@
   <div class="scrollable-content">
     <div class="new-section">
       <h4>Je gaat solliciteren op:</h4>
-      <h2>Fulltime administratief medewerker bedrijfsbureau</h2>
+      <h2>{{jobTitle}}</h2>
       <hr>
       <div style='-webkit-user-drag: none; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;'>
         <ul class='list-style-none'>
@@ -22,12 +22,12 @@
         <hr>
         <div class="panel-group">
           <div class="panel panel-default" ng-repeat="panel in panels" data-ng-class="{'is-active': panel.isActive, 'is-editable': panel.isEditable, 'is-disabled': panel.isDisabled, 'closed': panel.closed, 'is-complete': panel.isComplete}" id="panel{{$index}}">
-            <div class="panel-heading" data-ng-click="openAndClosed($index, false)" >
+            <div class="panel-heading" data-ng-click="openAndClosed($index, false)" data-ng-if="$index !== 4 || (jobUrl === 'secondjob' && $index == 4)">
               <h4 class="panel-title">
-                  <i class="fa fa-check"></i> {{$index+1}}. {{user.radioEmail == 'option1' ? panel.panelSubstituteHeading : panel.panelHeadingTitle}}
+                <a data-toggle="collapse" href="javascript:void(0)" data-target="#collapse{{$index}}" aria-expanded="false" aria-controls="collapse{{$index}}" ><i class="fa fa-check"></i> {{$index+1}}. {{user.radioEmail == 'option1' ? panel.panelSubstituteHeading : panel.panelHeadingTitle}}</a>
               </h4>
             </div>
-            <div class="panel-body" data-ng-if="$index == 0">
+            <div class="panel-body panel-collapse collapse in " role="tabpanel" aria-labelledby="panel{{$index}}" id="collapse{{$index}}" data-ng-if="$index == 0">
               <div class="row" data-ng-show="user.scenarion == 'nothing'" data-ng-init="user.scenarion = 'nothing'">
                 <div class="col-xs-12">
                   <h5>Heb je al eerder gesolliciteerd via Olympia?</h5>
@@ -114,7 +114,7 @@
                 <div class="row" data-ng-show="user.radioEmail == 'option2'">
                   <div class="col-xs-12">
                     <br>
-                    <a class="underline" href="javascript:void(0)" title="Wachtwoord vergeten">Wachtwoord vergeten</a>
+                    <a class="underline" href="javascript:void(0)" title="Wachtwoord vergeten" data-ng-click="go('RequestLostPassword')">Wachtwoord vergeten</a>
                   </div>
                 </div>
                 <div class="row padding-top-1x" data-ng-show="user.radioEmail == 'option2'">
@@ -131,7 +131,7 @@
                 </div>
               </form>
             </div>
-            <div class="panel-body" data-ng-if="$index == 1">
+            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 1">
               <form name="userRegistrationStep2" id="userRegistrationStep2" scroll-to-error  novalidate ng-submit="userRegistrationStep2Submits(userRegistrationStep2.$valid, $index)" role="form" data-ng-init="buttonOfForm2CLicked = false">
                 <div class="row">
                   <div class="col-xs-12">
@@ -423,7 +423,7 @@
                 </div>
               </form>
             </div>
-            <div class="panel-body" data-ng-if="$index == 2">
+            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 2">
               <div class="row">
                 <div class="col-xs-12">
                     <p>Voeg je CV toe door een bestand te uploaden of maak handmatig een nieuw CV aan.</p>
@@ -1065,7 +1065,7 @@
                 </div>
               </div>
             </div>
-            <div class="panel-body" data-ng-if="$index == 3">
+            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 3">
               <div class="row">
                 <div class="col-xs-8">
                   <label style="padding-top:3px;">Persoonlijke gegevens</label>
@@ -1122,7 +1122,7 @@
                   </ul>
                 </div>
               </div>
-              <form name="userRegistrationStep4" id="userRegistrationStep4" novalidate ng-submit="userRegistrationStep4Submits(userRegistrationStep4.$valid, $index)" role="form" data-ng-init="buttonOfForm4CLicked = false">
+              <form name="userRegistrationStep4" id="userRegistrationStep4" novalidate ng-submit="userRegistrationStep4Submits(userRegistrationStep4.$valid, $index, jobUrl)" role="form" data-ng-init="buttonOfForm4CLicked = false">
                 <div class="row">
                   <div class="col-xs-12">
                     <hr/>
@@ -1130,11 +1130,10 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <label for="text-content">Motivatie</label>
-                                <p>Je sollicitatie wordt beoordeeld door <strong>Anneke van Beersdal</strong>. Leg hieronder uit wat jou geschikt maakt voor deze baan.</p>
-                                <textarea maxlength="4000" data-ng-init="user.motivatie = ''" class="form-control" rows="5" id="motivatie" name="motivatie" data-ng-model="user.motivatie" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep4.motivatie.$error.required && buttonOfForm4CLicked}"></textarea>
-                                <div class="error" data-ng-show="userRegistrationStep4.motivatie.$error.required && buttonOfForm4CLicked">
-                                  <span>Motivatie vereist.</spam>
-                                </div>
+                                <p>Leg hieronder uit wat jou geschikt maakt voor deze baan.</p>
+                                <textarea maxlength="4000" data-ng-init="user.motivatie = ''" class="form-control textarea" id="motivatie" data-ng-keyup="autoExpand($event)" name="motivatie" data-ng-model="user.motivatie"></textarea>
+                                <!-- <div class="growing-area" data-ng-init="user.motivatie = ''" strip-br="true" contenteditable="true" id="motivatie" name="motivatie" data-ng-model="user.motivatie"></div> -->
+                                <!-- <textarea ng-model="user.motivatie" class="hidden"></textarea> -->
                                 <p>Aantal karakters: <span id="text-content-count"> {{user.motivatie ? user.motivatie.length : 0}}</span> (max 4000 karakters)</p>
                             </div>
                         </div>
@@ -1166,13 +1165,22 @@
                     <div class="form-group">
                       <div class="row">
                           <div class="col-xs-12">
-                              <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-click="buttonOfForm4CLicked = true;">Verstuur sollicitatie</button>
+                              <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-click="buttonOfForm4CLicked = true;">{{jobUrl !== 'secondjob'? 'Verstuur sollicitatie': 'Naar Contact Center Experience'}}</button>
                           </div>
                       </div>
                     </div>
                   </div>
               </div>
               </form>
+            </div>
+            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 4 && jobUrl === 'secondjob'" data-ng-init="showMoreDescription = false">
+              <h4 class="orange">Je sollicitatie afronden met de Contact Center Experience</h4>
+              <p>Bedankt voor jouw interesse in onze vacature <a href="javascript:void(0)">{{jobTitle}}</a>! Een vast onderdeel van onze sollicitatieprocedure voor deze vacature is de Contact Center Experience. <span data-ng-show="showMoreDescription == true"><br><br>De Contact Center Experience is een vast onderdeel van deze sollicitatie en duurt een uur. Kies een rustige plek waar je geconcentreerd kunt werken. Je volgt klantgesprekken en doet verschillende tests. Als je de Experience hebt afgerond ontvang je een persoonlijke rapportage van je resultaten. Dan zie je meteen waar jouw talenten liggen! Bekijk ook onderstaande video over de Contact Center Experience:<br><br><iframe src="https://player.vimeo.com/video/149858767?color=fd4f00&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" height="130"></iframe></span></p>
+              <a class="blue" href="javascript:void(0)" data-ng-click="showMoreDescription = true" data-ng-show="showMoreDescription == false">+ meer</a>
+              <a class="blue" href="javascript:void(0)" data-ng-click="showMoreDescription = false" data-ng-show="showMoreDescription == true">- minder</a>
+              <br><br>
+              <p><strong>Belangrijk<br><br>De Olympia intercedent kan jouw solliciatie alleen in behandeling nemen als je de Contact Center Experience hebt afgerond. <br><br>Helaas is de Contact Center Experience niet toegankelijk vanaf een mobiel apparaat. Gebruik een vaste computer om jouw sollicitatie voort te zetten via onderstaande link. Je ontvangt deze link ook per e-mail. <br><br>Wij wensen je veel succes en plezier toe met het maken van de Contact Center Experience</strong></strong></p>
+              <a href="www.olympia.nl/ga-verder-met-cce">www.olympia.nl/ga-verder-met-cce</a>
             </div>
           </div>
         </div>

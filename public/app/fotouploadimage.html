@@ -3,7 +3,7 @@
     <div class="modal-content new-section">
       <div class="modal-header">
         <button class="close"
-                ui-turn-off="fotouploadimage" data-ng-click="user.showSecondPhoto = true">&times;</button>
+                ui-turn-off="fotouploadimage">&times;</button>
         <h4 class="modal-title">{{user.showSecondPhoto ? 'Foto aanpassen' : 'Foto Toevoegen'}}</h4>
       </div>
       <div class="modal-body">
@@ -23,12 +23,15 @@
         <div class="error" data-ng-show="!user.permissionsCheckbox && user.checkboxButtonCLicked">
           <span>LET OP: Je hebt Olympia nog geen toestemming gegeven je foto zo nodig aan (potentiële) opdrachtgevers te verstrekken. Alleen als je hiermee akkoord gaat, kun je een foto aan je profiel toevoegen.</span>
         </div>
+        <div class="padding-top-1x">
+          <a href="javascript:void(0)" ui-turn-off="fotouploadimage" data-ng-click="user.showSecondPhoto = false">verwijderen</a>
+        </div>
       </div>
       <div class="modal-footer">
         <div class="row">
           <div class="col-xs-12">
-              <button ui-turn-off="fotouploadimage" class="btn btn-default new1" data-ng-click="user.showSecondPhoto = false">Annuleren</button>
               <button class="btn btn-primary" data-ng-click="user.showSecondPhoto = true;user.checkboxButtonCLicked = true;fotouploadimageFunction(user.permissionsCheckbox)">Uploaden</button>
+              <a href="javascript:void(0)" ui-turn-off="fotouploadimage" class="underline padding-left-10">Annuleren</a>
           </div>
         </div>
       </div>

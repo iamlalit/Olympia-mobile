@@ -40,6 +40,7 @@ app.config(function($routeProvider) {
 //  $routeProvider.when('/drag2',         {templateUrl: 'drag2.html', reloadOnSearch: false});
 //  $routeProvider.when('/carousel',      {templateUrl: 'carousel.html', reloadOnSearch: false});
 //
+  $routeProvider.when('/nieuwpassword',        {templateUrl: 'password.html', reloadOnSearch: false});
   $routeProvider.when('/search',        {templateUrl: 'search.html', reloadOnSearch: false});
   $routeProvider.when('/job',           {templateUrl: 'job.html', reloadOnSearch: false});
   $routeProvider.when('/jobApply',           {templateUrl: 'jobApply.html', reloadOnSearch: false});
@@ -304,14 +305,16 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       jobLocatie: 'Groningen',
       jobAantal: '40',
       jobWerk: 'MBO werk- en denkniveau',
+      url: 'firstjob',
       jobDescription: 'Voor een relatie in Veenendaal zijn wij op zoek naar schoonmaakmedewerker voor 29 en 30 augustus. Werktijden:Maandag 15.30-20.30 uur Dinsdag 7.30-20.30 uur ivm uitbraak van een virus dient een ver...'
     });
     jobs.push({
-      jobTitle: 'Heftruckchauffeur (m/v)',
+      jobTitle: 'Customer Service Expert bij een bank in Leeuwarden',
       jobDienstverband: 'Avondwerk',
       jobLocatie: 'S-Gravenhage',
       jobAantal: '40',
       jobWerk: 'HBO werk- en denkniveau',
+      url: 'secondjob',
       jobDescription: 'Wij zijn op zoek naar servicegerichte medewerkers voor een project van Tele2 in Groningen. Het betreft een tijdelijke vacature vanaf 12 september voor de duur van 2 maanden. Tijdens deze gehele peri...'
     });
     jobs.push({
@@ -320,6 +323,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       jobLocatie: 'Veldhoven',
       jobAantal: '20',
       jobWerk: 'HBO werk- en denkniveau',
+      url: 'firstjob',
       jobDescription: 'Voor onze opdrachtgever zijn wij op zoek naar een timmerman, welke op diverse (grotere) klussen (zelfstandig) aan de slag kan. Als timmerman verricht je onder andere de volgende werkzaamheden: * Best...'
     })
   }
@@ -328,6 +332,25 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   $scope.getData = function () {
       // needed for the pagination calc
       return $filter('filter')($scope.jobs, $scope.q)
+  }
+
+
+  $scope.getJObsValue = function(job){
+    $scope.jobTitle = job.jobTitle;
+    $scope.jobUrl = job.url;
+  }
+  if(typeof $scope.jobTitle == "undefined"){
+    $scope.jobTitle = 'Fulltime administratief medewerker bedrijfsbureau';
+    $scope.jobUrl = 'firstjob';
+  }
+
+  $scope.submitNewPassword = function(){
+    if(typeof $scope.user.password2 == 'undefined' || typeof $scope.user.password1 == 'undefined'){
+      return false;
+    }
+    if($scope.user.password1 == $scope.user.password2){
+      $scope.user.passwordUpdated = true;
+    }
   }
 
   $scope.numberOfPages=function(){
@@ -431,6 +454,15 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     {
       panelHeadingTitle: "Samenvatting & motivatie",
       panelSubstituteHeading: "Samenvatting & motivatie",
+      isEditable: true,
+      isActive: false,
+      isDisabled: true,
+      closed: true,
+      isComplete: false
+    },
+    {
+      panelHeadingTitle: "Contact Center Experience",
+      panelSubstituteHeading: "Contact Center Experience",
       isEditable: true,
       isActive: false,
       isDisabled: true,
@@ -810,14 +842,22 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     }
   }
 
-  $scope.userRegistrationStep4Submits = function(validityOfForm, i){
+  $scope.userRegistrationStep4Submits = function(validityOfForm, i, url){
     $scope.buttonOfForm4CLicked = true;
     if(validityOfForm == true){
       console.log($scope.user);
-      $scope.panels[i].isComplete = true;
-      $scope.panels[i].isActive = false;
-      $scope.panels[i].closed = true;
-      $scope.go('bevestiging');
+      if(url=='secondjob'){
+        $scope.panels[i].isComplete = true;
+        $scope.panels[i].isActive = false;
+        $scope.panels[i].closed = true;
+        $scope.openAndClosed(i+1, true);
+      }else{
+
+        $scope.panels[i].isComplete = true;
+        $scope.panels[i].isActive = false;
+        $scope.panels[i].closed = true;
+        $scope.go('bevestiging');
+      }
     }
   }
 
@@ -853,20 +893,20 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   }
 
   $scope.gotoAnchor = function(x) {
-    $timeout(function() {
-      var element = angular.element(document.getElementById(x));
-      var location = 0;
-      var scrollableContentController = element.controller('scrollableContent');
-      location = document.getElementById(x).offsetTop;
-      console.log(location);
-      var windowLocation = document.documentElement.scrollTop || document.body.scrollTop;;
-      newlocation = windowLocation;
-      scrollableContentController.scrollTo(location, 10);
-      // while(newlocation < location){
-      //   newlocation = newlocation + 1;
-      //   $interval(anchorScrolling(element, newlocation, scrollableContentController), 2);
-      // }
-    },10)
+    // $timeout(function() {
+    //   var element = angular.element(document.getElementById(x));
+    //   var location = 0;
+    //   var scrollableContentController = element.controller('scrollableContent');
+    //   location = document.getElementById(x).offsetTop;
+    //   console.log(location);
+    //   var windowLocation = document.documentElement.scrollTop || document.body.scrollTop;;
+    //   newlocation = windowLocation;
+    //   scrollableContentController.scrollTo(location, 10);
+    //   // while(newlocation < location){
+    //   //   newlocation = newlocation + 1;
+    //   //   $interval(anchorScrolling(element, newlocation, scrollableContentController), 2);
+    //   // }
+    // },10)
 
 
   };
@@ -1064,6 +1104,16 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     launchOneDrivePicker();
   }
   //one drive ends
+
+  $scope.autoExpand = function(e) {
+        var element = typeof e === 'object' ? e.target : document.getElementById(e);
+    		var scrollHeight = element.scrollHeight - 8;
+        element.style.height =  scrollHeight + "px";
+    };
+
+  function expand() {
+    $scope.autoExpand('TextArea');
+  }
 });
 //We already have a limitTo filter built-in to angular,
 //let's make a startFrom filter
@@ -1119,3 +1169,35 @@ app.service('anchorSmoothScroll', function(){
     };
 
 });
+
+app.directive('contenteditable', ['$sce', function($sce) {
+  return {
+    restrict: 'A', // only activate on element attribute
+    require: '?ngModel', // get a hold of NgModelController
+    link: function(scope, element, attrs, ngModel) {
+      if (!ngModel) return; // do nothing if no ng-model
+
+      // Specify how UI should be updated
+      ngModel.$render = function() {
+        element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
+      };
+
+      // Listen for change events to enable binding
+      element.on('blur keyup change', function() {
+        scope.$evalAsync(read);
+      });
+      read(); // initialize
+
+      // Write data to the model
+      function read() {
+        var html = element.html();
+        // When we clear the content editable the browser leaves a <br> behind
+        // If strip-br attribute is provided then we strip this out
+        if ( attrs.stripBr && html == '<br>' ) {
+          html = '';
+        }
+        ngModel.$setViewValue(html);
+      }
+    }
+  };
+}]);

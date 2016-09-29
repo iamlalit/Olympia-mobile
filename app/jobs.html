@@ -21,7 +21,7 @@
       </div>
       <hr>
       <div class="list-group">
-        <a ng-repeat="job in jobs | startFrom:currentPage*pageSize | limitTo:pageSize" href="#/job" class="list-group-item">
+        <a ng-repeat="job in jobs | startFrom:currentPage*pageSize | limitTo:pageSize" data-ng-click="getJObsValue(job);go('job')" class="list-group-item">
           <div class="row">
             <div class="col-xs-12">
               <h4 class="orange" data-ng-bind="job.jobTitle"></h4>
