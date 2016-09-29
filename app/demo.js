@@ -393,6 +393,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     password: "sander"
   }];
   $scope.user = [];
+  $scope.olympia = [];
 
   //
   // 'Forms' screen
@@ -916,6 +917,18 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       scrollableContentController.scrollTo(location, 500);
       // console.log(location);
     },10)
+  }
+
+  $scope.callJobLoginSection = function(){
+    debugger;
+    $timeout(function() {
+      if($scope.olympia.setTerugTrue == true){
+        $scope.user.radioEmail = 'option2';
+        $scope.user.scenarion='inloggen';
+        $scope.gotoAnchor('panel0');
+        $scope.focunOnInputElements('userEmail');
+      }
+    });
   }
 
   $scope.focunOnInputElements = function(el){
