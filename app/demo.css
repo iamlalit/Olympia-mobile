@@ -273,20 +273,26 @@ ul.olympia-static1 li {
   color: #333;
 }
 .panel .panel-body{
-  /*-webkit-transition: .5s ease-in-out;
+  -webkit-transition: .5s ease-in-out;
   -moz-transition: .5s ease-in-out;
   -o-transition: .5s ease-in-out;
   transition: .5s ease-in-out;
-  display: none;
-  height: 0;*/
 }
-/*.panel.closed .panel-body{
-  display: block;
-}*/
+.panel.closed .panel-body{
+  display: none;
+}
 .panel.is-active.is-editable > .panel-heading,
 .panel.is-editable.is-complete.is-active > .panel-heading  {
   background: #07368b;
   color: #ffffff;
+}
+.panel.is-active.is-editable > .panel-heading a:hover,
+.panel.is-editable.is-active > .panel-heading a:focus,
+.panel.is-editable.is-active > .panel-heading a:visited,
+.panel.is-editable.is-active > .panel-heading a:active{
+  background: #07368b;
+  color: #ffffff;
+  text-decoration: none;
 }
 .panel > .panel-heading .fa-check,
 .panel.is-editable.is-complete.is-active > .panel-heading .fa-check{

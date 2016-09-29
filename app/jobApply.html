@@ -24,10 +24,10 @@
           <div class="panel panel-default" ng-repeat="panel in panels" data-ng-class="{'is-active': panel.isActive, 'is-editable': panel.isEditable, 'is-disabled': panel.isDisabled, 'closed': panel.closed, 'is-complete': panel.isComplete}" id="panel{{$index}}">
             <div class="panel-heading" data-ng-click="openAndClosed($index, false)" data-ng-if="$index !== 4 || (jobUrl === 'secondjob' && $index == 4)">
               <h4 class="panel-title">
-                <a data-toggle="collapse" href="javascript:void(0)" data-target="#collapse{{$index}}" aria-expanded="false" aria-controls="collapse{{$index}}" ><i class="fa fa-check"></i> {{$index+1}}. {{user.radioEmail == 'option1' ? panel.panelSubstituteHeading : panel.panelHeadingTitle}}</a>
+                <a href="javascript:void(0)" ><i class="fa fa-check"></i> {{$index+1}}. {{user.radioEmail == 'option1' ? panel.panelSubstituteHeading : panel.panelHeadingTitle}}</a>
               </h4>
             </div>
-            <div class="panel-body panel-collapse collapse in " role="tabpanel" aria-labelledby="panel{{$index}}" id="collapse{{$index}}" data-ng-if="$index == 0">
+            <div class="panel-body" role="tabpanel" aria-labelledby="panel{{$index}}" data-ng-if="$index == 0">
               <div class="row" data-ng-show="user.scenarion == 'nothing'" data-ng-init="user.scenarion = 'nothing'">
                 <div class="col-xs-12">
                   <h5>Heb je al eerder gesolliciteerd via Olympia?</h5>
@@ -131,7 +131,7 @@
                 </div>
               </form>
             </div>
-            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 1">
+            <div class="panel-body" data-ng-if="$index == 1">
               <form name="userRegistrationStep2" id="userRegistrationStep2" scroll-to-error  novalidate ng-submit="userRegistrationStep2Submits(userRegistrationStep2.$valid, $index)" role="form" data-ng-init="buttonOfForm2CLicked = false">
                 <div class="row">
                   <div class="col-xs-12">
@@ -423,7 +423,7 @@
                 </div>
               </form>
             </div>
-            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 2">
+            <div class="panel-body" data-ng-if="$index == 2">
               <div class="row">
                 <div class="col-xs-12">
                     <p>Voeg je CV toe door een bestand te uploaden of maak handmatig een nieuw CV aan.</p>
@@ -1065,7 +1065,7 @@
                 </div>
               </div>
             </div>
-            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 3">
+            <div class="panel-body" data-ng-if="$index == 3">
               <div class="row">
                 <div class="col-xs-8">
                   <label style="padding-top:3px;">Persoonlijke gegevens</label>
@@ -1173,7 +1173,7 @@
               </div>
               </form>
             </div>
-            <div class="panel-body panel-collapse collapse " id="collapse{{$index}}" data-ng-if="$index == 4 && jobUrl === 'secondjob'" data-ng-init="showMoreDescription = false">
+            <div class="panel-body" data-ng-if="$index == 4 && jobUrl === 'secondjob'" data-ng-init="showMoreDescription = false">
               <h4 class="orange">Je sollicitatie afronden met de Contact Center Experience</h4>
               <p>Bedankt voor jouw interesse in onze vacature <a href="javascript:void(0)">{{jobTitle}}</a>! Een vast onderdeel van onze sollicitatieprocedure voor deze vacature is de Contact Center Experience. <span data-ng-show="showMoreDescription == true"><br><br>De Contact Center Experience is een vast onderdeel van deze sollicitatie en duurt een uur. Kies een rustige plek waar je geconcentreerd kunt werken. Je volgt klantgesprekken en doet verschillende tests. Als je de Experience hebt afgerond ontvang je een persoonlijke rapportage van je resultaten. Dan zie je meteen waar jouw talenten liggen! Bekijk ook onderstaande video over de Contact Center Experience:<br><br><iframe src="https://player.vimeo.com/video/149858767?color=fd4f00&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" height="130"></iframe></span></p>
               <a class="blue" href="javascript:void(0)" data-ng-click="showMoreDescription = true" data-ng-show="showMoreDescription == false">+ meer</a>
