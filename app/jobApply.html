@@ -20,14 +20,14 @@
           </li>
         </ul>
         <hr>
-        <div class="panel-group">
-          <div class="panel panel-default" ng-repeat="panel in panels" data-ng-class="{'is-active': panel.isActive, 'is-editable': panel.isEditable, 'is-disabled': panel.isDisabled, 'closed': panel.closed, 'is-complete': panel.isComplete}" id="panel{{$index}}">
+        <div class="panel-group" data-ng-init="olympia.panel0Change = false; olympia.panel1Change = false; olympia.panel2Change = false;olympia.panel3Change = false;olympia.panel4Change = false;">
+          <div class="panel panel-default" ng-repeat="panel in panels" data-ng-class="{'is-active': panel.isActive, 'is-editable': panel.isEditable, 'is-disabled': panel.isDisabled || (olympia.panel0Change && $index !=0) || (olympia.panel1Change && $index != 1) || (olympia.panel2Change && $index != 2) || (olympia.panel3Change && $index != 3), 'closed': panel.closed, 'is-complete': panel.isComplete}" id="panel{{$index}}">
             <div class="panel-heading" data-ng-click="openAndClosed($index, false)" data-ng-if="$index !== 4 || (jobUrl === 'secondjob' && $index == 4)">
               <h4 class="panel-title">
                 <a href="javascript:void(0)" ><i class="fa fa-check"></i> {{$index+1}}. {{user.radioEmail == 'option1' ? panel.panelSubstituteHeading : panel.panelHeadingTitle}}</a>
               </h4>
             </div>
-            <div class="panel-body" role="tabpanel" aria-labelledby="panel{{$index}}" data-ng-if="$index == 0">
+            <div class="panel-body open-it-up" role="tabpanel" aria-labelledby="panel{{$index}}" data-ng-if="$index == 0">
               <div class="row" data-ng-show="user.scenarion == 'nothing'" data-ng-init="user.scenarion = 'nothing'">
                 <div class="col-xs-12">
                   <h5>Heb je al eerder gesolliciteerd via Olympia?</h5>
@@ -57,7 +57,7 @@
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label for="userEmail">E-mailadres <i data-ng-show="user.radioEmail == 'option1'" ui-turn-on="emailmessage" class="fa fa-info-circle"></i></label>
-                            <input type="text" name="userEmail" class="form-control" id="userEmail" data-required="true" data-ng-pattern="emailRegx" data-ng-model="user.userEmail" data-ng-required="true" data-ng-class="{'validation-error': (userRegistrationStep1.userEmail.$error.required || userRegistrationStep1.userEmail.$error.pattern) && buttonOfForm1CLicked}">
+                            <input type="text" name="userEmail" class="form-control" id="userEmail" data-required="true" data-ng-pattern="emailRegx" data-ng-change="olympia.panel0Change = true;olympia.saveThePanelValue = 0;" data-ng-model="user.userEmail" data-ng-required="true" data-ng-class="{'validation-error': (userRegistrationStep1.userEmail.$error.required || userRegistrationStep1.userEmail.$error.pattern) && buttonOfForm1CLicked}">
                             <div class="error" data-ng-show="userRegistrationStep1.userEmail.$error.required && buttonOfForm1CLicked">
                               <span>E-mail adres is verplicht</span>
                             </div>
@@ -71,7 +71,7 @@
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label for="password">Wachtwoord</label>
-                            <input type="password" name="password" class="form-control wdith-494" id="password" data-ng-required="user.radioEmail == 'option2'" data-ng-model="user.password" data-ng-class="{'validation-error': userRegistrationStep1.password.$error.required && buttonOfForm1CLicked}">
+                            <input type="password" name="password" class="form-control wdith-494" id="password" data-ng-required="user.radioEmail == 'option2'" data-ng-change="olympia.panel0Change = true;olympia.saveThePanelValue = 0;" data-ng-model="user.password" data-ng-class="{'validation-error': userRegistrationStep1.password.$error.required && buttonOfForm1CLicked}">
                             <div class="error" data-ng-show="userRegistrationStep1.password.$error.required && buttonOfForm1CLicked">
                               <span>Wachtwoord is verplicht.</span>
                             </div>
@@ -85,7 +85,7 @@
                   <div class="col-xs-12">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" id="terms" name="terms" value="1" data-ng-model="user.terms" data-ng-required="user.radioEmail == 'option1'">
+                            <input type="checkbox" id="terms" data-ng-change="olympia.panel0Change = true;olympia.saveThePanelValue = 0;" name="terms" value="1" data-ng-model="user.terms" data-ng-required="user.radioEmail == 'option1'">
                             Ik verleen hierbij toestemming om de door mij verstrekte gegevens op te slaan en verklaar mij akkoord met de  <a class="orange" href="javascript:void(0)">privacyverklaring</a>
                         </label>
                     </div>
@@ -98,7 +98,7 @@
                 <div class="row" data-ng-show="user.radioEmail == 'option2'">
                   <div class="col-xs-12">
                     <br>
-                    <button type="submit" class="btn btn-primary" ng-click="buttonOfForm1CLicked = true;">Inloggen</button>
+                    <button type="submit" class="btn btn-primary" ng-click="buttonOfForm1CLicked = true;olympia.panel0Change = false">Inloggen</button>
                     <a href="javascript:void(0)" class="underline padding-left-10" data-ng-click="user.scenarion='nothing';buttonOfForm1CLicked = false;">terug</a>
                     <!-- <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option2'">Log in en solliciteer <i class="fa fa-arrow-down"></i></button> -->
                   </div>
@@ -106,7 +106,7 @@
                 <div class="row" data-ng-show="user.radioEmail == 'option1'">
                   <div class="col-xs-12">
                     <br>
-                    <button type="submit" class="btn btn-primary" ng-click="buttonOfForm1CLicked = true;">Verder</button>
+                    <button type="submit" class="btn btn-primary" ng-click="buttonOfForm1CLicked = true;olympia.panel0Change = false">Verder</button>
                     <a href="javascript:void(0)" class="underline padding-left-10" data-ng-click="user.scenarion='nothing';buttonOfForm1CLicked = false;">terug</a>
                     <!-- <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm1CLicked = true;" data-ng-show="user.radioEmail == 'option2'">Log in en solliciteer <i class="fa fa-arrow-down"></i></button> -->
                   </div>
@@ -131,13 +131,13 @@
                 </div>
               </form>
             </div>
-            <div class="panel-body" data-ng-if="$index == 1">
+            <div class="panel-body open-it-up" data-ng-if="$index == 1">
               <form name="userRegistrationStep2" id="userRegistrationStep2" scroll-to-error  novalidate ng-submit="userRegistrationStep2Submits(userRegistrationStep2.$valid, $index)" role="form" data-ng-init="buttonOfForm2CLicked = false">
                 <div class="row">
                   <div class="col-xs-12">
                       <div class="form-group">
                           <label for="firstname">Voornaam</label>
-                          <input type="text" class="form-control" name="firstname" id="firstname" data-ng-model="user.firstname" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.firstname.$error.required && buttonOfForm2CLicked}">
+                          <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" class="form-control" name="firstname" id="firstname" data-ng-model="user.firstname" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.firstname.$error.required && buttonOfForm2CLicked}">
                           <div class="error" data-ng-show="userRegistrationStep2.firstname.$error.required && buttonOfForm2CLicked">
                             <span>Voornaam is verplicht</span>
                           </div>
@@ -146,13 +146,13 @@
                   <div class="col-xs-12">
                       <div class="form-group">
                           <label for="3">Tussenvoegsel (optioneel)</label>
-                          <input type="text" class="form-control" id="3" data-ng-model="user.tussenvoegsel">
+                          <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" class="form-control" id="3" data-ng-model="user.tussenvoegsel">
                       </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="form-group">
                         <label for="lastname">Achternaam</label>
-                        <input type="text" name="lastname" class="form-control" id="lastname" data-ng-model="user.lastname" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.lastname.$error.required && buttonOfForm2CLicked}">
+                        <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="lastname" class="form-control" id="lastname" data-ng-model="user.lastname" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.lastname.$error.required && buttonOfForm2CLicked}">
                         <div class="error" data-ng-show="userRegistrationStep2.lastname.$error.required && buttonOfForm2CLicked">
                           <span>Achternaam is verplicht</span>
                         </div>
@@ -163,10 +163,10 @@
                         <label>Geslacht</label>
                         <br>
                         <label class="radio-inline">
-                            <input type="radio" name="Gaslachet" value="Man" data-ng-model="user.Gaslachet" data-ng-required="true"> Man
+                            <input type="radio" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="Gaslachet" value="Man" data-ng-model="user.Gaslachet" data-ng-required="true"> Man
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="Gaslachet" value="Vrouw" data-ng-model="user.Gaslachet" data-ng-required="true"> Vrouw
+                            <input type="radio" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="Gaslachet" value="Vrouw" data-ng-model="user.Gaslachet" data-ng-required="true"> Vrouw
                         </label>
                         <div class="error" data-ng-show="userRegistrationStep2.Gaslachet.$error.required && buttonOfForm2CLicked">
                           <span>Geslacht is verplicht</span>
@@ -178,7 +178,7 @@
                       <label for="month">Geboortedatum</label>
                       <div class="row">
                           <div class="col-xs-3 padding-right-0" data-ng-init="user.dobDay = '0'">
-                              <select class="form-control" id="dobDay" name="dobDay" data-ng-model="user.dobDay" data-ng-required="true" data-ng-class="{'validation-error': user.dobDay == '0' && buttonOfForm2CLicked}">
+                              <select class="form-control" id="dobDay" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="dobDay" data-ng-model="user.dobDay" data-ng-required="true" data-ng-class="{'validation-error': user.dobDay == '0' && buttonOfForm2CLicked}">
                                   <option value="0" select="selected">Dag</option>
                                   <option value="1">1</option>
                                   <option value="2">2</option>
@@ -214,7 +214,7 @@
                               </select>
                           </div>
                           <div class="col-xs-5 padding-right-0" data-ng-init="user.dobMonth = '0'">
-                              <select class="form-control" id="dobMonth" name="dobMonth" data-ng-model="user.dobMonth" data-ng-required="true" data-ng-class="{'validation-error': user.dobMonth == '0' && buttonOfForm2CLicked}">
+                              <select class="form-control" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" id="dobMonth" name="dobMonth" data-ng-model="user.dobMonth" data-ng-required="true" data-ng-class="{'validation-error': user.dobMonth == '0' && buttonOfForm2CLicked}">
                                   <option value="0" select="selected">Maand</option>
                                   <option value="1">Januari</option>
                                   <option value="2">Februari</option>
@@ -231,7 +231,7 @@
                               </select>
                           </div>
                           <div class="col-xs-4" data-ng-init="user.dobYear = '0'">
-                              <select class="form-control" id="dobYear" name="dobYear" data-ng-model="user.dobYear" data-ng-required="true" data-ng-class="{'validation-error': user.dobYear == '0' && buttonOfForm2CLicked}">
+                              <select class="form-control" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" id="dobYear" name="dobYear" data-ng-model="user.dobYear" data-ng-required="true" data-ng-class="{'validation-error': user.dobYear == '0' && buttonOfForm2CLicked}">
                                   <option value="0" select="selected">Jaar</option>
                                   <option value="17">1998</option>
                                   <option value="18">1997</option>
@@ -303,7 +303,7 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <label for="Mobielnummer">Mobiel telefoonnummer</label>
-                      <input type="tel" name="Mobielnummer" class="form-control" id="Mobielnummer" data-ng-model="user.Mobielnummer" data-ng-required="user.Telefoonnummer == undefined || user.Telefoonnummer == ''" data-ng-class="{'validation-error': (userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required) && buttonOfForm2CLicked}">
+                      <input type="tel" name="Mobielnummer" data-ng-change="olympia.panel1Change = true;" class="form-control" id="Mobielnummer" data-ng-model="user.Mobielnummer" data-ng-required="user.Telefoonnummer == undefined || user.Telefoonnummer == ''" data-ng-class="{'validation-error': (userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required) && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required && buttonOfForm2CLicked">
                         <span>Telefoonnummer is verplicht</span>
                       </div>
@@ -312,7 +312,7 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <label for="Telefoonnummer">Vast telefoonnummer</label>
-                      <input type="tel" name="Telefoonnummer" class="form-control" id="Telefoonnummer"  data-ng-model="user.Telefoonnummer" data-ng-required="user.Mobielnummer == undefined || user.Mobielnummer == ''" data-ng-class="{'validation-error': (userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required) && buttonOfForm2CLicked}">
+                      <input type="tel" name="Telefoonnummer" data-ng-change="olympia.panel1Change = true;" class="form-control" id="Telefoonnummer"  data-ng-model="user.Telefoonnummer" data-ng-required="user.Mobielnummer == undefined || user.Mobielnummer == ''" data-ng-class="{'validation-error': (userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required) && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Telefoonnummer.$error.required && userRegistrationStep2.Mobielnummer.$error.required && buttonOfForm2CLicked">
                         <span>Telefoonnummer is verplicht</span>
                       </div>
@@ -321,7 +321,7 @@
                   <div class="col-xs-12">
                     <div class="form-group" data-ng-init="user.Land = 'Nederland'">
                       <label for="Land">Land</label>
-                      <select class="form-control" id="Land" name="Land" data-ng-model="user.Land" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Land.$error.required && buttonOfForm2CLicked}">
+                      <select class="form-control" data-ng-change="olympia.panel1Change = true;" id="Land" name="Land" data-ng-model="user.Land" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Land.$error.required && buttonOfForm2CLicked}">
                           <option>Nederland</option>
                           <option>België</option>
                           <option>Duitsland</option>
@@ -334,7 +334,7 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <label for="Postcode">Postcode</label>
-                      <input type="text" name="Postcode" class="form-control" id="Postcode" data-ng-model="user.Postcode" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Postcode.$error.required && buttonOfForm2CLicked}">
+                      <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="Postcode" class="form-control" id="Postcode" data-ng-model="user.Postcode" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Postcode.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Postcode.$error.required && buttonOfForm2CLicked">
                         <span>Postcode is verplicht</span>
                       </div>
@@ -343,7 +343,7 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <label for="8">Huisnummer</label>
-                      <input type="text" name="Huisnummer" class="form-control" id="Huisnummer" data-ng-model="user.Huisnummer" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Huisnummer.$error.required && buttonOfForm2CLicked}">
+                      <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="Huisnummer" class="form-control" id="Huisnummer" data-ng-model="user.Huisnummer" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Huisnummer.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Huisnummer.$error.required && buttonOfForm2CLicked">
                         <span>Huisnummer is verplicht</span>
                       </div>
@@ -352,13 +352,13 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <label for="9">Toevoeging (optioneel)</label>
-                      <input type="text" class="form-control" id="9" data-ng-model="user.Toevoeging">
+                      <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" class="form-control" id="9" data-ng-model="user.Toevoeging">
                     </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="form-group">
                       <label for="7">Straat</label>
-                      <input type="text" name="Straat" class="form-control" id="Straat" data-ng-model="user.Straat" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Straat.$error.required && buttonOfForm2CLicked}">
+                      <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="Straat" class="form-control" id="Straat" data-ng-model="user.Straat" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Straat.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Straat.$error.required && buttonOfForm2CLicked">
                         <span>Straat is verplicht</span>
                       </div>
@@ -367,7 +367,7 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <label for="11">Woonplaats</label>
-                      <input type="text" name="Woonplaats" class="form-control" id="Woonplaats" data-ng-model="user.Woonplaats" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Woonplaats.$error.required && buttonOfForm2CLicked}">
+                      <input type="text" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" name="Woonplaats" class="form-control" id="Woonplaats" data-ng-model="user.Woonplaats" data-ng-required="true" data-ng-class="{'validation-error': userRegistrationStep2.Woonplaats.$error.required && buttonOfForm2CLicked}">
                       <div class="error" data-ng-show="userRegistrationStep2.Woonplaats.$error.required && buttonOfForm2CLicked">
                         <span>Woonplaats is verplicht</span>
                       </div>
@@ -386,30 +386,30 @@
                       <label>Rijbewijs (optioneel) </label>
                       <div class="row">
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox1" value="option1" data-ng-model="user.checkbox1"  data-ng-change="user.checkbox8 = false;"> A
+                            <input type="checkbox" id="inlineCheckbox1" value="option1" data-ng-model="user.checkbox1"  data-ng-change="user.checkbox8 = false;olympia.panel1Change = true;olympia.saveThePanelValue = 1;"> A
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox2" value="option2" data-ng-model="user.checkbox2"  data-ng-change="user.checkbox8 = false;"> BE
+                            <input type="checkbox" id="inlineCheckbox2" value="option2" data-ng-model="user.checkbox2"  data-ng-change="user.checkbox8 = false;olympia.panel1Change = true;olympia.saveThePanelValue = 1;"> BE
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox3" value="option3" data-ng-model="user.checkbox3"  data-ng-change="user.checkbox8 = false;"> CE
+                            <input type="checkbox" id="inlineCheckbox3" value="option3" data-ng-model="user.checkbox3"  data-ng-change="user.checkbox8 = false;olympia.panel1Change = true;olympia.saveThePanelValue = 1;"> CE
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox4" value="option4" data-ng-model="user.checkbox4"  data-ng-change="user.checkbox8 = false;"> DE
+                            <input type="checkbox" id="inlineCheckbox4" value="option4" data-ng-model="user.checkbox4"  data-ng-change="user.checkbox8 = false;olympia.panel1Change = true;olympia.saveThePanelValue = 1;"> DE
                         </label>
                       </div>
                       <div class="row">
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox5" value="option5" data-ng-model="user.checkbox5"  data-ng-change="user.checkbox8 = false;"> B
+                            <input type="checkbox" id="inlineCheckbox5" value="option5" data-ng-model="user.checkbox5"  data-ng-change="user.checkbox8 = false;olympia.panel1Change = true;olympia.saveThePanelValue = 1;"> B
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox6" value="option6" data-ng-model="user.checkbox6"  data-ng-change="user.checkbox8 = false;"> C
+                            <input type="checkbox" id="inlineCheckbox6" value="option6" data-ng-model="user.checkbox6"  data-ng-change="user.checkbox8 = false;olympia.panel1Change = true;olympia.saveThePanelValue = 1;"> C
                         </label>
                         <label class="col-xs-3">
-                            <input type="checkbox" id="inlineCheckbox7" value="option7" data-ng-model="user.checkbox7"  data-ng-change="user.checkbox8 = false;"> D
+                            <input type="checkbox" id="inlineCheckbox7" value="option7" data-ng-model="user.checkbox7"  data-ng-change="user.checkbox8 = false;olympia.panel1Change = true;olympia.saveThePanelValue = 1;"> D
                         </label>
                         <label class="col-xs-3 padding-right-0">
-                            <input type="checkbox" id="inlineCheckbox8" value="option8" data-ng-model="user.checkbox8" data-ng-change="user.checkbox1 = false;user.checkbox2 = false;user.checkbox3 = false;user.checkbox4 = false;user.checkbox5 = false;user.checkbox6 = false;user.checkbox7 = false;"> Geen
+                            <input type="checkbox" id="inlineCheckbox8" value="option8" data-ng-model="user.checkbox8" data-ng-change="olympia.saveThePanelValue = 1;olympia.panel1Change = true;user.checkbox1 = false;user.checkbox2 = false;user.checkbox3 = false;user.checkbox4 = false;user.checkbox5 = false;user.checkbox6 = false;user.checkbox7 = false;"> Geen
                         </label>
                       </div>
                     </div>
@@ -417,13 +417,13 @@
                   <div class="col-xs-12">
                     <div class="form-group">
                       <br>
-                      <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm2CLicked = true;">Verder naar CV & ervaring <i class="fa fa-arrow-down"></i></button>
+                      <button type="submit" class="btn btn-primary btn-block" ng-click="buttonOfForm2CLicked = true;olympia.panel1Change = false;">Verder naar CV & ervaring <i class="fa fa-arrow-down"></i></button>
                     </div>
                   </div>
                 </div>
               </form>
             </div>
-            <div class="panel-body" data-ng-if="$index == 2">
+            <div class="panel-body open-it-up" data-ng-if="$index == 2">
               <div class="row">
                 <div class="col-xs-12">
                     <p>Voeg je CV toe door een bestand te uploaden of maak handmatig een nieuw CV aan.</p>
@@ -431,8 +431,8 @@
                 <div class="col-xs-12 padding-top-1x">
                   <label>Ik wil mijn CV:</label>
                   <div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
-                    <button type="button" value="" ng-model="user.cvChoice" data-ng-init="user.cvChoice = 'cvUpload'" data-ng-click="user.cvChoice = 'cvUpload'" data-ng-class="{'active': user.cvChoice == 'cvUpload'}" class="btn btn-default btn-tertiary new1 blue">Uploaden</button>
-                    <button type="button" value="cvWrite" data-ng-click="user.cvChoice = 'cvWrite'" data-ng-class="{'active': user.cvChoice == 'cvWrite'}" class="btn btn-default btn-tertiary new1 blue">Aanmaken</button>
+                    <button type="button" value="" ng-model="user.cvChoice" data-ng-init="user.cvChoice = 'cvUpload'" data-ng-click="user.cvChoice = 'cvUpload';olympia.panel2Change = true;olympia.saveThePanelValue = 2;" data-ng-class="{'active': user.cvChoice == 'cvUpload'}" class="btn btn-default btn-tertiary new1 blue">Uploaden</button>
+                    <button type="button" value="cvWrite" data-ng-click="user.cvChoice = 'cvWrite';olympia.panel2Change = true;olympia.saveThePanelValue = 2;" data-ng-class="{'active': user.cvChoice == 'cvWrite'}" class="btn btn-default btn-tertiary new1 blue">Aanmaken</button>
                   </div>
                 </div>
                 <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvUpload'">
@@ -446,22 +446,22 @@
                             <div class="well blue" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
                               <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
                             </div>
-                            <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue hidden" href="javascript:void(0)" data-ng-click="deleteCV();"><i class="fa fa-times"></i></a>
+                            <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue hidden" href="javascript:void(0)" data-ng-click="deleteCV();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><i class="fa fa-times"></i></a>
                           </div>
                           <div class="col-xs-12">
-                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick()"><label>Dropbox</label></a>
+                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Dropbox</label></a>
                           </div>
                           <div class="col-xs-12">
-                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="googleButtonClick()"><label>Google Drive</label></a>
+                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="googleButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Google Drive</label></a>
                           </div>
                           <div class="col-xs-12">
-                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick()"><label>Microsoft OneDrive</label></a>
+                            <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Microsoft OneDrive</label></a>
                           </div>
                           <div class="col-xs-12">
                             <button class="btn btn-default">
                               <label for="file-input">Dit apparaat</label>
                             </button>
-                            <input id="file-input" style="display:none" type="file" onchange="angular.element(this).scope().fileValueChange()" data-ng-model="user.uploadCV">
+                            <input id="file-input" style="display:none" type="file" onchange="angular.element(this).scope().fileValueChange();olympia.panel2Change = true;olympia.saveThePanelValue = 2;" data-ng-model="user.uploadCV">
                             <div class="error" data-ng-show="user.valueOfCV == '' && buttonOfForm3CLicked == true">
                               <span>Upload een CV-bestand</span>
                             </div>
@@ -483,11 +483,11 @@
                         </div>
                         <div class="row" data-ng-show="user.showWorkForm == true" data-ng-init="buttonOfForm32CLicked = false;">
                           <form novalidate id="werkForm" name="werkForm"  scroll-to-error>
-                            <h5 class="col-xs-12">Nieuwe werkervaring toevoegen</h4>
+                            <h5 class="col-xs-12">Nieuwe werkervaring toevoegen</h5>
                             <div class="col-xs-12 form-group">
                                 <label for="Functie" class="col-xs-12">Functie</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="Functie" name="Functie" data-ng-model="work.Functie" data-ng-required="user.showWorkForm == true" data-ng-class="{'validation-error': werkForm.Functie.$error.required && buttonOfForm32CLicked}">
+                                    <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="Functie" name="Functie" data-ng-model="work.Functie" data-ng-required="user.showWorkForm == true" data-ng-class="{'validation-error': werkForm.Functie.$error.required && buttonOfForm32CLicked}">
                                 </div>
                                 <div class="col-xs-12" data-ng-show="werkForm.Functie.$error.required && buttonOfForm32CLicked">
                                   <div class="error" >
@@ -498,13 +498,13 @@
                             <div class="col-xs-12 form-group">
                                 <label for="Bedrijf" class="col-xs-12">Bedrijf</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="Bedrijf" name="Bedrijf" data-ng-model="work.Bedrijf">
+                                    <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="Bedrijf" name="Bedrijf" data-ng-model="work.Bedrijf">
                                 </div>
                             </div>
                             <div class="col-xs-12 form-group">
                                 <label for="Vestigingsplaats" class="col-xs-12 control-label">Vestigingsplaats bedrijf</label>
                                 <div class="col-xs-12">
-                                    <input type="text" class="form-control" id="pop-Vestigingsplaats" data-ng-model="work.Vestigingsplaats">
+                                    <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="pop-Vestigingsplaats" data-ng-model="work.Vestigingsplaats">
                                 </div>
                             </div>
                             <div class="col-xs-12 form-group">
@@ -512,7 +512,7 @@
                               <div class="col-xs-12">
                                   <div class="row">
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="Startdatummaand" data-ng-model="work.Startdatummaand" data-ng-init="work.Startdatummaand = '00'" >
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatummaand" data-ng-model="work.Startdatummaand" data-ng-init="work.Startdatummaand = '00'" >
                                               <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
@@ -529,7 +529,7 @@
                                           </select>
                                       </div>
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="Startdatumjaar" data-ng-model="work.Startdatumjaar" data-ng-init="work.Startdatumjaar = '0'">
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatumjaar" data-ng-model="work.Startdatumjaar" data-ng-init="work.Startdatumjaar = '0'">
                                               <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
@@ -618,7 +618,7 @@
                               <div class="col-xs-12">
                                   <div class="row">
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="Einddatummaand" data-ng-model="work.Einddatummaand" data-ng-init="work.Einddatummaand = '00'">
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Einddatummaand" data-ng-model="work.Einddatummaand" data-ng-init="work.Einddatummaand = '00'">
                                               <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
@@ -635,7 +635,7 @@
                                           </select>
                                       </div>
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="Einddatumjaar" data-ng-model="work.Einddatumjaar" data-ng-init="work.Einddatumjaar = '0'">
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Einddatumjaar" data-ng-model="work.Einddatumjaar" data-ng-init="work.Einddatumjaar = '0'">
                                               <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
@@ -722,7 +722,7 @@
                             <div class="col-xs-12 form-group">
                               <label class="col-xs-12" for="FuntieBeschrijving">Funtie beschrijving</label><br><br>
                               <div class="col-xs-12">
-                                  <textarea id="FuntieBeschrijving" class="form-control" rows="3" data-ng-model="work.FuntieBeschrijving"></textarea>
+                                  <textarea id="FuntieBeschrijving" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" rows="3" data-ng-model="work.FuntieBeschrijving"></textarea>
                               </div>
                             </div>
                             <div class="col-xs-12 form-group">
@@ -768,7 +768,7 @@
                             <div class="col-xs-12 form-group">
                                 <label for="Opleiding" class="col-xs-12">Opleiding</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="Opleiding" name="Opleiding" data-ng-model="experience.Opleiding" data-ng-required="user.showEducationForm == true" data-ng-class="{'validation-error': userRegistrationStep31.Opleiding.$error.required && buttonOfForm31CLicked}">
+                                    <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="Opleiding" name="Opleiding" data-ng-model="experience.Opleiding" data-ng-required="user.showEducationForm == true" data-ng-class="{'validation-error': userRegistrationStep31.Opleiding.$error.required && buttonOfForm31CLicked}">
                                 </div>
                                 <div class="col-xs-12">
                                   <div class="error" data-ng-show="userRegistrationStep31.Opleiding.$error.required && buttonOfForm31CLicked">
@@ -781,7 +781,7 @@
                               <div class="col-xs-12">
                                   <div class="row">
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="Startdatummaand" data-ng-model="experience.Startdatummaand">
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatummaand" data-ng-model="experience.Startdatummaand">
                                               <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
@@ -798,7 +798,7 @@
                                           </select>
                                       </div>
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="Startdatumjaar" data-ng-model="experience.Startdatumjaar">
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatumjaar" data-ng-model="experience.Startdatumjaar">
                                               <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
@@ -887,7 +887,7 @@
                               <div class="col-xs-12">
                                   <div class="row">
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="pop-einddatum-maand-1" data-ng-model="experience.Einddatummaand">
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="pop-einddatum-maand-1" data-ng-model="experience.Einddatummaand">
                                               <option value="00" select="selected">-</option>
                                               <option value="01">Januari</option>
                                               <option value="02">Februari</option>
@@ -904,7 +904,7 @@
                                           </select>
                                       </div>
                                       <div class="col-xs-6">
-                                          <select class="form-control" id="pop-einddatum-jaar-1" data-ng-model="experience.Einddatumjaar">
+                                          <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="pop-einddatum-jaar-1" data-ng-model="experience.Einddatumjaar">
                                               <option value="0" select="selected">-</option>
                                               <option value="2016">2016</option>
                                               <option value="2015">2015</option>
@@ -992,10 +992,10 @@
                 							<label for="opleiding" class="col-xs-12 control-label">Diploma behaald</label>
                 							<div class="col-xs-12">
                 								<label class="radio-inline">
-                									<input type="radio" name="pop-diploma" id="inlineradio1" value="Ja" data-ng-model="experience.diploma"> Ja
+                									<input type="radio" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" name="pop-diploma" id="inlineradio1" value="Ja" data-ng-model="experience.diploma"> Ja
                 								</label>
                 								<label class="radio-inline">
-                									<input type="radio" name="pop-diploma" id="inlineradio2" value="Nee" data-ng-model="experience.diploma"> Nee
+                									<input type="radio" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" name="pop-diploma" id="inlineradio2" value="Nee" data-ng-model="experience.diploma"> Nee
                 								</label>
                 							</div>
                 						</div>
@@ -1037,7 +1037,7 @@
                 <div class="col-xs-12">
                   <div class="form-group" data-ng-init="user.opleidingsniveau = '0'">
                     <label for="opleidingsniveau">Wat is uw opleidingsniveau?</label>
-                    <select class="form-control" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm3CLicked}">
+                    <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm3CLicked}">
                       <option value="0" disabled selected>Kies opleidingsniveau</option>
                       <option value="HAVO">HAVO</option>
                       <option value="HBO">HBO</option>
@@ -1057,15 +1057,15 @@
                   <div class="form-group">
                     <div class="row">
                         <div class="col-xs-12">
-                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvUpload'" data-ng-click="buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '' && user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
-                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite'" data-ng-click="buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvUpload'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '' && user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
                         </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="panel-body" data-ng-if="$index == 3">
+            <div class="panel-body open-it-up" data-ng-if="$index == 3">
               <div class="row">
                 <div class="col-xs-8">
                   <label style="padding-top:3px;">Persoonlijke gegevens</label>
@@ -1131,7 +1131,7 @@
                             <div class="col-xs-12">
                                 <label for="text-content">Motivatie</label>
                                 <p>Leg hieronder uit wat jou geschikt maakt voor deze baan.</p>
-                                <textarea maxlength="4000" data-ng-init="user.motivatie = ''" class="form-control textarea" id="motivatie" data-ng-keyup="autoExpand($event)" name="motivatie" data-ng-model="user.motivatie"></textarea>
+                                <textarea data-ng-change="olympia.panel3Change = false;olympia.saveThePanelValue = 3;" maxlength="4000" data-ng-init="user.motivatie = ''" class="form-control textarea" id="motivatie" data-ng-keyup="autoExpand($event)" name="motivatie" data-ng-model="user.motivatie"></textarea>
                                 <!-- <div class="growing-area" data-ng-init="user.motivatie = ''" strip-br="true" contenteditable="true" id="motivatie" name="motivatie" data-ng-model="user.motivatie"></div> -->
                                 <!-- <textarea ng-model="user.motivatie" class="hidden"></textarea> -->
                                 <p>Aantal karakters: <span id="text-content-count"> {{user.motivatie ? user.motivatie.length : 0}}</span> (max 4000 karakters)</p>
@@ -1147,13 +1147,13 @@
                                 <label>Wil je automatische updates ontvangen?</label>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" data-ng-model="user.optionsRadios">
+                                        <input type="radio" data-ng-change="olympia.panel3Change = false;olympia.saveThePanelValue = 3;" name="optionsRadios" id="optionsRadios1" value="1" data-ng-model="user.optionsRadios">
                                         Ja, ik sta open voor vacaturesuggesties voor deze functie en/of gerelateerde functies.
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="3" data-ng-model="user.optionsRadios">
+                                        <input type="radio" data-ng-change="olympia.panel3Change = false;olympia.saveThePanelValue = 3;" name="optionsRadios" id="optionsRadios1" value="3" data-ng-model="user.optionsRadios">
                                         Nee, ik wil dat Olympia mij alleen helpt met deze sollicitatie.
                                     </label>
                                 </div>
@@ -1165,7 +1165,7 @@
                     <div class="form-group">
                       <div class="row">
                           <div class="col-xs-12">
-                              <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-click="buttonOfForm4CLicked = true;">{{jobUrl !== 'secondjob'? 'Verstuur sollicitatie': 'Naar Contact Center Experience'}}</button>
+                              <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-click="buttonOfForm4CLicked = true;olympia.panel3Change = true;">{{jobUrl !== 'secondjob'? 'Verstuur sollicitatie': 'Naar Contact Center Experience'}}</button>
                           </div>
                       </div>
                     </div>
@@ -1173,13 +1173,13 @@
               </div>
               </form>
             </div>
-            <div class="panel-body" data-ng-if="$index == 4 && jobUrl === 'secondjob'" data-ng-init="showMoreDescription = false">
+            <div class="panel-body open-it-up" data-ng-if="$index == 4 && jobUrl === 'secondjob'" data-ng-init="showMoreDescription = false">
               <h4 class="orange">Je sollicitatie afronden met de Contact Center Experience</h4>
               <p>Bedankt voor jouw interesse in onze vacature <a href="javascript:void(0)">{{jobTitle}}</a>! Een vast onderdeel van onze sollicitatieprocedure voor deze vacature is de Contact Center Experience. <span data-ng-show="showMoreDescription == true"><br><br>De Contact Center Experience is een vast onderdeel van deze sollicitatie en duurt een uur. Kies een rustige plek waar je geconcentreerd kunt werken. Je volgt klantgesprekken en doet verschillende tests. Als je de Experience hebt afgerond ontvang je een persoonlijke rapportage van je resultaten. Dan zie je meteen waar jouw talenten liggen! Bekijk ook onderstaande video over de Contact Center Experience:<br><br><iframe src="https://player.vimeo.com/video/149858767?color=fd4f00&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" height="130"></iframe></span></p>
               <a class="blue" href="javascript:void(0)" data-ng-click="showMoreDescription = true" data-ng-show="showMoreDescription == false">+ meer</a>
               <a class="blue" href="javascript:void(0)" data-ng-click="showMoreDescription = false" data-ng-show="showMoreDescription == true">- minder</a>
               <br><br>
-              <p><strong>Belangrijk<br><br>De Olympia intercedent kan jouw solliciatie alleen in behandeling nemen als je de Contact Center Experience hebt afgerond. <br><br>Helaas is de Contact Center Experience niet toegankelijk vanaf een mobiel apparaat. Gebruik een vaste computer om jouw sollicitatie voort te zetten via onderstaande link. Je ontvangt deze link ook per e-mail. <br><br>Wij wensen je veel succes en plezier toe met het maken van de Contact Center Experience</strong></strong></p>
+              <p><strong>Belangrijk<br><br>De Olympia intercedent kan jouw solliciatie alleen in behandeling nemen als je de Contact Center Experience hebt afgerond. <br><br>Helaas is de Contact Center Experience niet toegankelijk vanaf een mobiel apparaat. Gebruik een vaste computer om jouw sollicitatie voort te zetten via onderstaande link. Je ontvangt deze link ook per e-mail. <br><br>Wij wensen je veel succes en plezier toe met het maken van de Contact Center Experience</strong></p>
               <a href="www.olympia.nl/ga-verder-met-cce">www.olympia.nl/ga-verder-met-cce</a>
             </div>
           </div>

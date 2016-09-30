@@ -393,6 +393,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     password: "sander"
   }];
   $scope.user = [];
+  $scope.olympia = [];
 
   //
   // 'Forms' screen
@@ -868,37 +869,50 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       $scope.panels[i].closed = true;
     }
   }
-
+  $scope.olympia.saveThePanelValue = "";
   $scope.openAndClosed = function(i, buttonCalling){
 
       if(buttonCalling == true){
-        closeAllTabs();
-        $scope.panels[i].isActive = true;
-        $scope.panels[i].closed = false;
-        $scope.panels[i].isDisabled = false;
-        $scope.gotoAnchor('panel'+i);
+        $timeout(function () {
+          closeAllTabs();
+            $scope.panels[i].isActive = true;
+            $scope.panels[i].closed = false;
+            $scope.panels[i].isDisabled = false;
+            $scope.gotoAnchor('panel'+i);
+        }, 400);
+
       }else{
         if($scope.panels[i].isDisabled == false){
+          if(($scope.olympia.panel0Change == true && i != 0) || ($scope.olympia.panel1Change == true && i != 1) || ($scope.olympia.panel2Change == true && i != 2) || ($scope.olympia.panel3Change == true && i != 3) ){
+            $scope.gotoAnchor('panel'+$scope.olympia.saveThePanelValue);
+            return false;
+          }
+          if($scope.panels[i].isActive == true){
+            $scope.gotoAnchor('panel'+i);
+            return false;
+          }
           angular.forEach($scope.panels, function(value, key) {
             value.isActive = false;
             value.closed = true;
           });
-        if($scope.panels[i].isDisabled == false){
-          $scope.panels[i].isActive = true;
-          $scope.panels[i].closed = false;
-          $scope.gotoAnchor('panel'+i);
-        }
+          if($scope.panels[i].isDisabled == false){
+            $timeout(function () {
+              $scope.panels[i].isActive = true;
+              $scope.panels[i].closed = false;
+              $scope.gotoAnchor('panel'+i);
+            }, 400);
+          }
       }
     }
   }
 
   $scope.gotoAnchor = function(x) {
     $timeout(function() {
+      // debugger;
       var element = angular.element(document.getElementById(x));
       var location = 0;
       var scrollableContentController = element.controller('scrollableContent');
       location = document.getElementById(x).offsetTop;
-      console.log(location);
       var windowLocation = document.documentElement.scrollTop || document.body.scrollTop;;
       newlocation = windowLocation;
       scrollableContentController.scrollTo(location, 10);
@@ -906,7 +920,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       //   newlocation = newlocation + 1;
       //   $interval(anchorScrolling(element, newlocation, scrollableContentController), 2);
       // }
-    },10)
+    },900)
 
 
   };
@@ -916,6 +930,17 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       scrollableContentController.scrollTo(location, 500);
       // console.log(location);
     },10)
+  }
+
+  $scope.callJobLoginSection = function(){
+    $timeout(function() {
+      if($scope.olympia.setTerugTrue == true){
+        $scope.user.radioEmail = 'option2';
+        $scope.user.scenarion='inloggen';
+        $scope.gotoAnchor('panel0');
+        $scope.focunOnInputElements('userEmail');
+      }
+    });
   }
 
   $scope.focunOnInputElements = function(el){
@@ -1169,35 +1194,3 @@ app.service('anchorSmoothScroll', function(){
     };
 
 });
-
-app.directive('contenteditable', ['$sce', function($sce) {
-  return {
-    restrict: 'A', // only activate on element attribute
-    require: '?ngModel', // get a hold of NgModelController
-    link: function(scope, element, attrs, ngModel) {
-      if (!ngModel) return; // do nothing if no ng-model
-
-      // Specify how UI should be updated
-      ngModel.$render = function() {
-        element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
-      };
-
-      // Listen for change events to enable binding
-      element.on('blur keyup change', function() {
-        scope.$evalAsync(read);
-      });
-      read(); // initialize
-
-      // Write data to the model
-      function read() {
-        var html = element.html();
-        // When we clear the content editable the browser leaves a <br> behind
-        // If strip-br attribute is provided then we strip this out
-        if ( attrs.stripBr && html == '<br>' ) {
-          html = '';
-        }
-        ngModel.$setViewValue(html);
-      }
-    }
-  };
-}]);
