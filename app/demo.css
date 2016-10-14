@@ -248,6 +248,13 @@ a.orange:hover,
 a.orange:focus{
   color: #ff4400;
 }
+a.grey{
+  color: #bbbbbb;
+}
+a.grey:hover,
+a.grey:focus{
+  color: #bbbbbb;
+}
 a:hover,
 a:focus{
   color: #07368b;

@@ -427,7 +427,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   $scope.panels = [
     {
       panelHeadingTitle: "Inloggen",
-      panelSubstituteHeading: "E-mail adres",
+      panelSubstituteHeading: "E-mailadres",
       isEditable: true,
       isActive: true,
       isDisabled: false,

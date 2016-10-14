@@ -34,13 +34,13 @@
                   <p>Heb je al een Mijn Olympia account, omdat je al eens via Olympia gesolliciteerd of gewerkt hebt? Gebruik dan je account om in te loggen en sneller te solliciteren.</p>
                   <div class="row padding-top-1x">
                     <div class="col-xs-5 padding-right-0">
-                      <button class="btn btn-primary width-100" data-ng-click="user.radioEmail = 'option2';user.scenarion='inloggen';gotoAnchor('panel0');focunOnInputElements('userEmail');">inloggen</button>
+                      <button class="btn btn-primary width-100" data-ng-click="user.radioEmail = 'option2';user.scenarion='inloggen';gotoAnchor('panel0');focunOnInputElements('userEmail');">Inloggen</button>
                     </div>
                     <div class="col-xs-2 padding-left-0 padding-right-0 text-center padding-top-1x">
                       <span> - of - </span>
                     </div>
                     <div class="col-xs-5 padding-left-0">
-                      <button class="btn btn-tertiary btn-default blue width-100" data-ng-click="user.radioEmail = 'option1';user.scenarion='neuw';gotoAnchor('panel0');focunOnInputElements('userEmail')">ik ben nieuw</button>
+                      <button class="btn btn-tertiary btn-default blue width-100" data-ng-click="user.radioEmail = 'option1';user.scenarion='neuw';gotoAnchor('panel0');focunOnInputElements('userEmail')">Ik ben nieuw</button>
                     </div>
                   </div>
                 </div>
@@ -50,7 +50,7 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <h5 data-ng-show="user.radioEmail == 'option2'">Log in met je Mijn Olympia account</h5>
-                    <p data-ng-show="user.radioEmail == 'option1'">Vul het e-mail adres in waarop wij jou kunnen bereiken naar aanleiding van je inschrijving en sollicitatie.</p>
+                    <p data-ng-show="user.radioEmail == 'option1'">Vul het e-mailadres in waarop wij jou kunnen bereiken naar aanleiding van je inschrijving en sollicitatie.</p>
                   </div>
                 </div>
                 <div class="row">
@@ -59,7 +59,7 @@
                             <label for="userEmail">E-mailadres <i data-ng-show="user.radioEmail == 'option1'" ui-turn-on="emailmessage" class="fa fa-info-circle"></i></label>
                             <input type="text" name="userEmail" class="form-control" id="userEmail" data-required="true" data-ng-pattern="emailRegx" data-ng-change="olympia.panel0Change = true;olympia.saveThePanelValue = 0;" data-ng-model="user.userEmail" data-ng-required="true" data-ng-class="{'validation-error': (userRegistrationStep1.userEmail.$error.required || userRegistrationStep1.userEmail.$error.pattern) && buttonOfForm1CLicked}">
                             <div class="error" data-ng-show="userRegistrationStep1.userEmail.$error.required && buttonOfForm1CLicked">
-                              <span>E-mail adres is verplicht</span>
+                              <span>E-mailadres is verplicht</span>
                             </div>
                             <div class="error" data-ng-show="userRegistrationStep1.userEmail.$error.pattern && buttonOfForm1CLicked">
                               <span>Het e-mailadres staat niet in een geldig formaat</span>
@@ -124,9 +124,9 @@
                 </div>
                 <div class="row" data-ng-show="user.radioEmail == 'option2'">
                   <div class="col-xs-12">
-                    <button class="btn btn-tertiary btn-default blue">log in via facebook</button>
+                    <button class="btn btn-tertiary btn-default blue">Log in via Facebook</button>
                     <br>
-                    <button class="btn btn-tertiary btn-default blue">log in via linkedin</button>
+                    <button class="btn btn-tertiary btn-default blue">Log in via Linkedin</button>
                   </div>
                 </div>
               </form>
@@ -446,7 +446,7 @@
                             <div class="well blue" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
                               <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
                             </div>
-                            <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue hidden" href="javascript:void(0)" data-ng-click="deleteCV();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><i class="fa fa-times"></i></a>
+                            <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue hidden" data-ng-class="{'hidden': !user.valueOfCV}" href="javascript:void(0)" data-ng-click="deleteCV();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><i class="fa fa-times"></i></a>
                           </div>
                           <div class="col-xs-12">
                             <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Dropbox</label></a>
