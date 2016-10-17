@@ -880,12 +880,32 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
             $scope.panels[i].isDisabled = false;
             $scope.gotoAnchor('panel'+i);
         }, 400);
-
       }else{
         if($scope.panels[i].isDisabled == false){
           if(($scope.olympia.panel0Change == true && i != 0) || ($scope.olympia.panel1Change == true && i != 1) || ($scope.olympia.panel2Change == true && i != 2) || ($scope.olympia.panel3Change == true && i != 3) ){
-            $scope.gotoAnchor('panel'+$scope.olympia.saveThePanelValue);
+            if($scope.olympia.saveThePanelValue == 1){
+              $scope.gotoB('panel'+($scope.olympia.saveThePanelValue+1));
+              $scope.olympia.showPersoonlijkeGegevens = true;
+            }else if($scope.olympia.saveThePanelValue == 2){
+              $scope.gotoB('panel'+($scope.olympia.saveThePanelValue+1));
+              $scope.olympia.showCVNErvaring = true;
+            }else if($scope.olympia.saveThePanelValue == 3){
+              $scope.gotoB('panel'+($scope.olympia.saveThePanelValue+1));
+              $scope.olympia.showSamenvatting = true;
+            }else{
+              $scope.gotoAnchor('panel'+$scope.olympia.saveThePanelValue);
+            }
             return false;
+          }
+          if(($scope.olympia.panel0Change == false && i != 0) || ($scope.olympia.panel1Change == false && i != 1) || ($scope.olympia.panel2Change == false && i != 2) || ($scope.olympia.panel3Change == false && i != 3) ){
+            $scope.gotoAnchor('panel'+$scope.olympia.saveThePanelValue);
+            if($scope.olympia.saveThePanelValue == 1){
+              $scope.olympia.showPersoonlijkeGegevens = false;
+            }else if($scope.olympia.saveThePanelValue == 2){
+              $scope.olympia.showCVNErvaring = false;
+            }else if($scope.olympia.saveThePanelValue == 3){
+              $scope.olympia.showSamenvatting = false;
+            }
           }
           if($scope.panels[i].isActive == true){
             $scope.gotoAnchor('panel'+i);
@@ -916,6 +936,24 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       var windowLocation = document.documentElement.scrollTop || document.body.scrollTop;;
       newlocation = windowLocation;
       scrollableContentController.scrollTo(location, 10);
+      // while(newlocation < location){
+      //   newlocation = newlocation + 1;
+      //   $interval(anchorScrolling(element, newlocation, scrollableContentController), 2);
+      // }
+    },900)
+
+
+  };
+
+  $scope.gotoB = function(x) {
+    $timeout(function() {
+      var element = angular.element(document.getElementById(x));
+      var location = 0;
+      var scrollableContentController = element.controller('scrollableContent');
+      location = document.getElementById(x).offsetTop;
+      var windowLocation = document.documentElement.scrollTop || document.body.scrollTop;;
+      newlocation = windowLocation;
+      scrollableContentController.scrollTo(location, 400);
       // while(newlocation < location){
       //   newlocation = newlocation + 1;
       //   $interval(anchorScrolling(element, newlocation, scrollableContentController), 2);
@@ -1184,6 +1222,7 @@ app.directive('scrollToError', function() {
     }
   }
 });
+
 
 //anchor smooth scroll
 app.service('anchorSmoothScroll', function(){
