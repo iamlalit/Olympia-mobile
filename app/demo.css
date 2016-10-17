@@ -362,6 +362,9 @@ ul.olympia-static1 li {
 .padding-left-0{
   padding-left: 0;
 }
+.padding-bottom-7{
+  padding-bottom: 7px;
+}
 .padding-top-8{
   padding-top: 8px;
 }
@@ -582,5 +585,5 @@ hr.small-margin{
   margin-bottom: 0;
 }
 .popover .popover-content{
-  
+
 }
