@@ -404,6 +404,25 @@
                     </div>
                   </div>
                   <div class="col-xs-12">
+                    <div class="form-group" data-ng-init="user.opleidingsniveau = '0'">
+                      <label for="opleidingsniveau">Wat is uw opleidingsniveau?</label>
+                      <select class="form-control" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm2CLicked}">
+                        <option value="0" disabled selected>Kies opleidingsniveau</option>
+                        <option value="HAVO">HAVO</option>
+                        <option value="HBO">HBO</option>
+                        <option value="LBO">LBO</option>
+                        <option value="MAVO">MAVO</option>
+                        <option value="MBO">MBO</option>
+                        <option value="Ongeschoold">Ongeschoold</option>
+                        <option value="Universitair">Universitair</option>
+                        <option value="VWO">VWO</option>
+                      </select>
+                      <div class="error" data-ng-show="user.opleidingsniveau == '0' && buttonOfForm2CLicked">
+                        <span>Selecteer alsjeblieft een opleidingsniveau</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
                     <div class="form-group">
                       <div class="popover" data-ng-class="{'fade top in': olympia.showPersoonlijkeGegevens}">
                         <div class="arrow"></div>
@@ -1029,25 +1048,6 @@
                       </div>
                     </div>
 
-                  </div>
-                </div>
-                <div class="col-xs-12">
-                  <div class="form-group" data-ng-init="user.opleidingsniveau = '0'">
-                    <label for="opleidingsniveau">Wat is uw opleidingsniveau?</label>
-                    <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm3CLicked}">
-                      <option value="0" disabled selected>Kies opleidingsniveau</option>
-                      <option value="HAVO">HAVO</option>
-                      <option value="HBO">HBO</option>
-                      <option value="LBO">LBO</option>
-                      <option value="MAVO">MAVO</option>
-                      <option value="MBO">MBO</option>
-                      <option value="Ongeschoold">Ongeschoold</option>
-                      <option value="Universitair">Universitair</option>
-                      <option value="VWO">VWO</option>
-                    </select>
-                    <div class="error" data-ng-show="user.opleidingsniveau == '0' && buttonOfForm3CLicked">
-                      <span>Selecteer alsjeblieft een opleidingsniveau</span>
-                    </div>
                   </div>
                 </div>
                 <div class="col-xs-12">
