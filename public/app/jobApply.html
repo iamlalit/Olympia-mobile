@@ -120,7 +120,7 @@
               </form>
             </div>
             <div class="panel-body open-it-up" data-ng-if="$index == 1">
-              <form name="userRegistrationStep2" id="userRegistrationStep2" scroll-to-error  novalidate ng-submit="userRegistrationStep2Submits(userRegistrationStep2.$valid, $index)" role="form" data-ng-init="buttonOfForm2CLicked = false">
+              <form name="userRegistrationStep2" id="userRegistrationStep2" scroll-to-error  novalidate ng-submit="userRegistrationStep2Submits(userRegistrationStep2.$valid && user.opleidingsniveau !== '0', $index)" role="form" data-ng-init="buttonOfForm2CLicked = false">
                 <div class="row">
                   <div class="col-xs-12">
                       <div class="form-group">
@@ -404,6 +404,25 @@
                     </div>
                   </div>
                   <div class="col-xs-12">
+                    <div class="form-group" data-ng-init="user.opleidingsniveau = '0'">
+                      <label for="opleidingsniveau">Wat is uw opleidingsniveau?</label>
+                      <select class="form-control" data-ng-change="olympia.panel1Change = true;olympia.saveThePanelValue = 1;" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm2CLicked}">
+                        <option value="0" disabled selected>Kies opleidingsniveau</option>
+                        <option value="HAVO">HAVO</option>
+                        <option value="HBO">HBO</option>
+                        <option value="LBO">LBO</option>
+                        <option value="MAVO">MAVO</option>
+                        <option value="MBO">MBO</option>
+                        <option value="Ongeschoold">Ongeschoold</option>
+                        <option value="Universitair">Universitair</option>
+                        <option value="VWO">VWO</option>
+                      </select>
+                      <div class="error" data-ng-show="user.opleidingsniveau == '0' && buttonOfForm2CLicked">
+                        <span>Selecteer alsjeblieft een opleidingsniveau</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
                     <div class="form-group">
                       <div class="popover" data-ng-class="{'fade top in': olympia.showPersoonlijkeGegevens}">
                         <div class="arrow"></div>
@@ -414,7 +433,7 @@
                           <p>Klik op onderstaande knop om je wijziging(en) op te slaan en verder te gaan met je sollicitatie.</p>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-primary btn-block" id="panelsButton1"  data-ng-click="buttonOfForm2CLicked = true;olympia.panel1Change = false;">Verder naar CV & ervaring <i class="fa fa-arrow-down"></i></button>
+                      <button type="submit" class="btn btn-primary btn-block" id="panelsButton1"  data-ng-click="buttonOfForm2CLicked = true;olympia.panel1Change = false;">Verder naar CV <i class="fa fa-arrow-down"></i></button>
                     </div>
                   </div>
                 </div>
@@ -1032,22 +1051,8 @@
                   </div>
                 </div>
                 <div class="col-xs-12">
-                  <div class="form-group" data-ng-init="user.opleidingsniveau = '0'">
-                    <label for="opleidingsniveau">Wat is uw opleidingsniveau?</label>
-                    <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" data-ng-model="user.opleidingsniveau" id="opleidingsniveau" name="opleidingsniveau" data-ng-class="{'validation-error': user.opleidingsniveau == '0' && buttonOfForm3CLicked}">
-                      <option value="0" disabled selected>Kies opleidingsniveau</option>
-                      <option value="HAVO">HAVO</option>
-                      <option value="HBO">HBO</option>
-                      <option value="LBO">LBO</option>
-                      <option value="MAVO">MAVO</option>
-                      <option value="MBO">MBO</option>
-                      <option value="Ongeschoold">Ongeschoold</option>
-                      <option value="Universitair">Universitair</option>
-                      <option value="VWO">VWO</option>
-                    </select>
-                    <div class="error" data-ng-show="user.opleidingsniveau == '0' && buttonOfForm3CLicked">
-                      <span>Selecteer alsjeblieft een opleidingsniveau</span>
-                    </div>
+                  <div data-ng-if="user.cvWriteExp.length == 0 && user.cvWrite.length == 0 && user.cvChoice == 'cvWrite' && buttonOfForm3CLicked == true" class="error">
+                    <span>Vul ervaring of opleiding in</span>
                   </div>
                 </div>
                 <div class="col-xs-12">
@@ -1063,8 +1068,8 @@
                               <p>Klik op onderstaande knop om je wijziging(en) op te slaan en verder te gaan met je sollicitatie.</p>
                             </div>
                           </div>
-                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvUpload'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '' && user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
-                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.opleidingsniveau !== '0', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvUpload'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                            <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.cvWriteExp.length != 0 || user.cvWrite.length != 0, 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
                         </div>
                     </div>
                   </div>
@@ -1116,10 +1121,10 @@
                     <li data-ng-if="user.cvChoice == 'cvUpload'">
                       <strong>Mijn CV</strong><span><a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">{{user.valueOfCV}}</a></span>
                     </li>
-                    <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWrite">
+                    <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWrite.length != 0">
                       <strong>Werkervaring</strong><span>{{user.cvWrite[user.cvWrite.length-1].Functie}}<br>{{user.cvWrite[user.cvWrite.length-1].Startdatummaand}}-{{user.cvWrite[user.cvWrite.length-1].Startdatumjaar}} - {{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "heden" : user.cvWrite[user.cvWrite.length-1].Einddatummaand}}{{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "" : "-"}}{{user.cvWrite[user.cvWrite.length-1].Einddatumjaar == "0" ? "" : user.cvWrite[user.cvWrite.length-1].Einddatumjaar}}</span>
                     </li>
-                    <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWriteExp">
+                    <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWriteExp.length != 0">
                       <strong>Opleiding</strong><span>{{user.cvWriteExp[user.cvWriteExp.length-1].Opleiding}}<br>{{user.cvWriteExp[user.cvWriteExp.length-1].Startdatummaand}}-{{user.cvWriteExp[user.cvWriteExp.length-1].Startdatumjaar}} - {{user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand == "00" ? "heden" : user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand}}{{user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand == "00" ? "" : "-"}}{{user.cvWriteExp[user.cvWriteExp.length-1].Einddatumjaar == "0" ? "" : user.cvWriteExp[user.cvWriteExp.length-1].Einddatumjaar}}</span>
                     </li>
                     <li>
@@ -1187,7 +1192,6 @@
               <a class="blue" href="javascript:void(0)" data-ng-click="showMoreDescription = false" data-ng-show="showMoreDescription == true">- minder</a>
               <br><br>
               <p><strong>Belangrijk<br><br>De Olympia intercedent kan jouw solliciatie alleen in behandeling nemen als je de Contact Center Experience hebt afgerond. <br><br>Helaas is de Contact Center Experience niet toegankelijk vanaf een mobiel apparaat. Gebruik een vaste computer om jouw sollicitatie voort te zetten via onderstaande link. Je ontvangt deze link ook per e-mail. <br><br>Wij wensen je veel succes en plezier toe met het maken van de Contact Center Experience</strong></p>
-              <a href="www.olympia.nl/ga-verder-met-cce">www.olympia.nl/ga-verder-met-cce</a>
             </div>
           </div>
         </div>

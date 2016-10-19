@@ -444,8 +444,8 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       isComplete: false
     },
     {
-      panelHeadingTitle: "CV & ervaring",
-      panelSubstituteHeading: "CV & ervaring",
+      panelHeadingTitle: "CV",
+      panelSubstituteHeading: "CV",
       isEditable: true,
       isActive: false,
       isDisabled: true,
