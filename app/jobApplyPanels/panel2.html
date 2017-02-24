@@ -1,0 +1,663 @@
+<div class="panel-body open-it-up">
+    <div class="row">
+        <div class="col-xs-12">
+            <p>Voeg je CV toe door een bestand te uploaden of maak handmatig een nieuw CV aan.</p>
+        </div>
+        <div class="col-xs-12 padding-top-1x">
+            <label>Ik wil mijn CV:</label>
+            <div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
+                <button type="button" value="" ng-model="user.cvChoice" data-ng-init="user.cvChoice = 'cvUpload'" data-ng-click="user.cvChoice = 'cvUpload';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
+                    data-ng-class="{'active': user.cvChoice == 'cvUpload'}" class="btn btn-default btn-tertiary new1 blue">Uploaden</button>
+                <button type="button" value="cvWrite" data-ng-click="user.cvChoice = 'cvWrite';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
+                        data-ng-class="{'active': user.cvChoice == 'cvWrite'}" class="btn btn-default btn-tertiary new1 blue">Aanmaken</button>
+            </div>
+        </div>
+        <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvUpload'">
+            <br>
+            <div id="cvUpload">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>CV uploaden vanaf:</label>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="well blue" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
+                            <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
+                        </div>
+                        <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue hidden" data-ng-class="{'hidden': !user.valueOfCV}" href="javascript:void(0)"
+                            data-ng-click="deleteCV();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><i class="fa fa-times"></i></a>
+                    </div>
+                    <div class="col-xs-12">
+                        <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Dropbox</label></a>
+                    </div>
+                    <div class="col-xs-12">
+                        <a class="btn btn-default" href="javascript:void(0)" data-ng-click="googleButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Google Drive</label></a>
+                    </div>
+                    <div class="col-xs-12">
+                        <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Microsoft OneDrive</label></a>
+                    </div>
+                    <div class="col-xs-12">
+                        <button class="btn btn-default">
+                              <label for="file-input">Dit apparaat</label>
+                            </button>
+                        <input id="file-input" style="display:none" type="file" onchange="angular.element(this).scope().fileValueChange();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
+                            data-ng-model="user.uploadCV">
+                            <div class="error" data-ng-show="user.valueOfCV == '' && buttonOfForm3CLicked == true">
+                                <span>Upload een CV-bestand</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvWrite'">
+            <br>
+            <div>
+                <div class="row" data-ng-init="user.editingWerkVar = false;">
+                    <div class="col-xs-12">
+                        <br>
+                        <label>Werkervaring</label>
+                        <div class="padding-top-1x" data-ng-show="user.showWorkForm != true" style="background:#fff;" data-ng-init="user.showWorkForm = false">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <a href="javascript:void(0)" data-ng-click="user.showWorkForm = true;user.editingWerkVar = false;buttonOfForm32CLicked = false;"><i class="fa fa-plus"></i> Voeg een werkervaring toe</a>
+                            <hr class="small-margin">
+                        </div>
+                        <div class="row" data-ng-show="user.showWorkForm == true" data-ng-init="buttonOfForm32CLicked = false;">
+                            <form novalidate id="werkForm" name="werkForm" scroll-to-error>
+                                <h5 class="col-xs-12">Nieuwe werkervaring toevoegen</h5>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Functie" class="col-xs-12">Functie</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="Functie"
+                                            name="Functie" data-ng-model="work.Functie" data-ng-required="user.showWorkForm == true"
+                                            data-ng-class="{'validation-error': werkForm.Functie.$error.required && buttonOfForm32CLicked}">
+                                    </div>
+                                    <div class="col-xs-12" data-ng-show="werkForm.Functie.$error.required && buttonOfForm32CLicked">
+                                        <div class="error">
+                                            <span>Vul alsjeblieft een geldige functie in</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Bedrijf" class="col-xs-12">Bedrijf</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="Bedrijf"
+                                            name="Bedrijf" data-ng-model="work.Bedrijf">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Vestigingsplaats" class="col-xs-12 control-label">Vestigingsplaats bedrijf</label>
+                                    <div class="col-xs-12">
+                                        <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="pop-Vestigingsplaats"
+                                            data-ng-model="work.Vestigingsplaats">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Startdatum" class="col-xs-12">Startdatum werkervaring</label>
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatummaand"
+                                                    data-ng-model="work.Startdatummaand" data-ng-init="work.Startdatummaand = '00'">
+                                                    <option value="00" select="selected">-</option>
+                                                    <option value="01">Januari</option>
+                                                    <option value="02">Februari</option>
+                                                    <option value="03">Maart</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">Mei</option>
+                                                    <option value="06">Juni</option>
+                                                    <option value="07">Juli</option>
+                                                    <option value="08">Augustus</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                    </select>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatumjaar"
+                                                    data-ng-model="work.Startdatumjaar" data-ng-init="work.Startdatumjaar = '0'">
+                                                    <option value="0" select="selected">-</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2015">2015</option>
+                                                    <option value="2014">2014</option>
+                                                    <option value="2013">2013</option>
+                                                    <option value="2012">2012</option>
+                                                    <option value="2011">2011</option>
+                                                    <option value="2010">2010</option>
+                                                    <option value="2009">2009</option>
+                                                    <option value="2008">2008</option>
+                                                    <option value="2007">2007</option>
+                                                    <option value="2006">2006</option>
+                                                    <option value="2005">2005</option>
+                                                    <option value="2004">2004</option>
+                                                    <option value="2003">2003</option>
+                                                    <option value="2002">2002</option>
+                                                    <option value="2001">2001</option>
+                                                    <option value="2000">2000</option>
+                                                    <option value="1999">1999</option>
+                                                    <option value="1998">1998</option>
+                                                    <option value="1997">1997</option>
+                                                    <option value="1996">1996</option>
+                                                    <option value="1995">1995</option>
+                                                    <option value="1994">1994</option>
+                                                    <option value="1993">1993</option>
+                                                    <option value="1992">1992</option>
+                                                    <option value="1991">1991</option>
+                                                    <option value="1990">1990</option>
+                                                    <option value="1989">1989</option>
+                                                    <option value="1988">1988</option>
+                                                    <option value="1987">1987</option>
+                                                    <option value="1986">1986</option>
+                                                    <option value="1985">1985</option>
+                                                    <option value="1984">1984</option>
+                                                    <option value="1983">1983</option>
+                                                    <option value="1982">1982</option>
+                                                    <option value="1981">1981</option>
+                                                    <option value="1980">1980</option>
+                                                    <option value="1979">1979</option>
+                                                    <option value="1978">1978</option>
+                                                    <option value="1977">1977</option>
+                                                    <option value="1976">1976</option>
+                                                    <option value="1975">1975</option>
+                                                    <option value="1974">1974</option>
+                                                    <option value="1973">1973</option>
+                                                    <option value="1972">1972</option>
+                                                    <option value="1971">1971</option>
+                                                    <option value="1970">1970</option>
+                                                    <option value="1969">1969</option>
+                                                    <option value="1968">1968</option>
+                                                    <option value="1967">1967</option>
+                                                    <option value="1966">1966</option>
+                                                    <option value="1965">1965</option>
+                                                    <option value="1964">1964</option>
+                                                    <option value="1963">1963</option>
+                                                    <option value="1962">1962</option>
+                                                    <option value="1961">1961</option>
+                                                    <option value="1960">1960</option>
+                                                    <option value="1959">1959</option>
+                                                    <option value="1958">1958</option>
+                                                    <option value="1957">1957</option>
+                                                    <option value="1956">1956</option>
+                                                    <option value="1955">1955</option>
+                                                    <option value="1954">1954</option>
+                                                    <option value="1953">1953</option>
+                                                    <option value="1952">1952</option>
+                                                    <option value="1951">1951</option>
+                                                    <option value="1950">1950</option>
+                                                    <option value="1949">1949</option>
+                                                    <option value="1948">1948</option>
+                                                    <option value="1947">1947</option>
+                                                    <option value="1946">1946</option>
+                                                    <option value="1945">1945</option>
+                                                    <option value="1944">1944</option>
+                                                    <option value="1943">1943</option>
+                                                    <option value="1942">1942</option>
+                                                    <option value="1941">1941</option>
+                                                    <option value="1940">1940</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Einddatum" class="col-xs-12 control-label">Einddatum werkervaring</label>
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Einddatummaand"
+                                                    data-ng-model="work.Einddatummaand" data-ng-init="work.Einddatummaand = '00'">
+                                                    <option value="00" select="selected">-</option>
+                                                    <option value="01">Januari</option>
+                                                    <option value="02">Februari</option>
+                                                    <option value="03">Maart</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">Mei</option>
+                                                    <option value="06">Juni</option>
+                                                    <option value="07">Juli</option>
+                                                    <option value="08">Augustus</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                    </select>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Einddatumjaar"
+                                                    data-ng-model="work.Einddatumjaar" data-ng-init="work.Einddatumjaar = '0'">
+                                                    <option value="0" select="selected">-</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2015">2015</option>
+                                                    <option value="2014">2014</option>
+                                                    <option value="2013">2013</option>
+                                                    <option value="2012">2012</option>
+                                                    <option value="2011">2011</option>
+                                                    <option value="2010">2010</option>
+                                                    <option value="2009">2009</option>
+                                                    <option value="2008">2008</option>
+                                                    <option value="2007">2007</option>
+                                                    <option value="2006">2006</option>
+                                                    <option value="2005">2005</option>
+                                                    <option value="2004">2004</option>
+                                                    <option value="2003">2003</option>
+                                                    <option value="2002">2002</option>
+                                                    <option value="2001">2001</option>
+                                                    <option value="2000">2000</option>
+                                                    <option value="1999">1999</option>
+                                                    <option value="1998">1998</option>
+                                                    <option value="1997">1997</option>
+                                                    <option value="1996">1996</option>
+                                                    <option value="1995">1995</option>
+                                                    <option value="1994">1994</option>
+                                                    <option value="1993">1993</option>
+                                                    <option value="1992">1992</option>
+                                                    <option value="1991">1991</option>
+                                                    <option value="1990">1990</option>
+                                                    <option value="1989">1989</option>
+                                                    <option value="1988">1988</option>
+                                                    <option value="1987">1987</option>
+                                                    <option value="1986">1986</option>
+                                                    <option value="1985">1985</option>
+                                                    <option value="1984">1984</option>
+                                                    <option value="1983">1983</option>
+                                                    <option value="1982">1982</option>
+                                                    <option value="1981">1981</option>
+                                                    <option value="1980">1980</option>
+                                                    <option value="1979">1979</option>
+                                                    <option value="1978">1978</option>
+                                                    <option value="1977">1977</option>
+                                                    <option value="1976">1976</option>
+                                                    <option value="1975">1975</option>
+                                                    <option value="1974">1974</option>
+                                                    <option value="1973">1973</option>
+                                                    <option value="1972">1972</option>
+                                                    <option value="1971">1971</option>
+                                                    <option value="1970">1970</option>
+                                                    <option value="1969">1969</option>
+                                                    <option value="1968">1968</option>
+                                                    <option value="1967">1967</option>
+                                                    <option value="1966">1966</option>
+                                                    <option value="1965">1965</option>
+                                                    <option value="1964">1964</option>
+                                                    <option value="1963">1963</option>
+                                                    <option value="1962">1962</option>
+                                                    <option value="1961">1961</option>
+                                                    <option value="1960">1960</option>
+                                                    <option value="1959">1959</option>
+                                                    <option value="1958">1958</option>
+                                                    <option value="1957">1957</option>
+                                                    <option value="1956">1956</option>
+                                                    <option value="1955">1955</option>
+                                                    <option value="1954">1954</option>
+                                                    <option value="1953">1953</option>
+                                                    <option value="1952">1952</option>
+                                                    <option value="1951">1951</option>
+                                                    <option value="1950">1950</option>
+                                                    <option value="1949">1949</option>
+                                                    <option value="1948">1948</option>
+                                                    <option value="1947">1947</option>
+                                                    <option value="1946">1946</option>
+                                                    <option value="1945">1945</option>
+                                                    <option value="1944">1944</option>
+                                                    <option value="1943">1943</option>
+                                                    <option value="1942">1942</option>
+                                                    <option value="1941">1941</option>
+                                                    <option value="1940">1940</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <label class="col-xs-12" for="FuntieBeschrijving">Funtie beschrijving</label><br><br>
+                                    <div class="col-xs-12">
+                                        <textarea id="FuntieBeschrijving" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control"
+                                            rows="3" data-ng-model="work.FuntieBeschrijving"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <div class="col-xs-12">
+                                        <button type="button" class="btn btn-primary" data-ng-show="!user.editingWerkVar" data-ng-click="buttonOfForm32CLicked = true; addValuesForWork(work)">Aanmaken</button>
+                                        <button type="button" class="btn btn-primary" data-ng-show="user.editingWerkVar" data-ng-click="buttonOfForm32CLicked = true; updateValuesForWork(work)">Aanmaken</button>
+                                        <a href="javascript:void(0)" class="underline padding-left-10" data-ng-click="user.showWorkForm = false;buttonOfForm32CLicked = false;removeValueForWork()">Annuleren</a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <hr>
+                                </div>
+                            </form>
+                        </div>
+                        <div data-ng-repeat="werk in user.cvWrite">
+                            <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="user.showWorkForm = true;editWerk(werk, $index);user.editingWerkVar = true"><i class="fa fa-pencil"></i> bewerken</a>                            <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="deleteWerk(werk, $index);"><i class="fa fa-times"></i></a>
+                            <div class="padding-top-1x">
+                                <strong data-ng-bind="werk.Functie"></strong><span data-ng-if="werk.Bedrijf"> bij {{werk.Bedrijf}}</span>
+                            </div>
+                            <div>
+                                {{werk.Startdatummaand}}-{{werk.Startdatumjaar}} - {{werk.Einddatummaand == "00" ? "heden" : werk.Einddatummaand}}{{werk.Einddatummaand
+                                == "00" ? "" : "-"}}{{werk.Einddatumjaar == "0" ? "" : werk.Einddatumjaar}}
+                            </div>
+                            <div data-ng-show="werk.showmore == true && werk.FuntieBeschrijving" data-ng-init="werk.showmore = false">
+                                <span data-ng-bind="werk.FuntieBeschrijving"></span><br />
+                            </div>
+                            <a href="javascript:void(0)" data-ng-click="werk.showmore = !werk.showmore" data-ng-show="werk.showmore == false && werk.FuntieBeschrijving">+ meer</a>
+                            <a href="javascript:void(0)" data-ng-click="werk.showmore = !werk.showmore" data-ng-show="werk.showmore == true && werk.FuntieBeschrijving">- minder</a>
+                            <hr class="small-margin" />
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="row" data-ng-init="user.editingExpVar = false;">
+                    <div class="col-xs-12">
+                        <br>
+                        <label>Opleiding</label>
+                        <div class="padding-top-1x" data-ng-show="user.showEducationForm != true" style="background:#fff;" data-ng-init="showEducationForm = false">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <a href="javascript:void(0)" data-ng-click="user.showEducationForm = true;user.editingExpVar = false;buttonOfForm31CLicked = false"><i class="fa fa-plus"></i> Voeg een opleiding toe</a>
+                            <hr class="small-margin">
+                        </div>
+                        <div class="row" data-ng-show="user.showEducationForm == true">
+                            <form name="userRegistrationStep31" id="userRegistrationStep31" scroll-to-error novalidate role="form" data-ng-init="buttonOfForm31CLicked = false">
+                                <h4 class="col-xs-12">Nieuwe opleiding toevoegen</h4>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Opleiding" class="col-xs-12">Opleiding</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" class="form-control" id="Opleiding"
+                                            name="Opleiding" data-ng-model="experience.Opleiding" data-ng-required="user.showEducationForm == true"
+                                            data-ng-class="{'validation-error': userRegistrationStep31.Opleiding.$error.required && buttonOfForm31CLicked}">
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="error" data-ng-show="userRegistrationStep31.Opleiding.$error.required && buttonOfForm31CLicked">
+                                            <span>Vul hier alsjeblieft een opleiding in</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Startdatummaand" class="col-xs-12">Startdatum opleiding</label>
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatummaand"
+                                                    data-ng-model="experience.Startdatummaand">
+                                                    <option value="00" select="selected">-</option>
+                                                    <option value="01">Januari</option>
+                                                    <option value="02">Februari</option>
+                                                    <option value="03">Maart</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">Mei</option>
+                                                    <option value="06">Juni</option>
+                                                    <option value="07">Juli</option>
+                                                    <option value="08">Augustus</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                    </select>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="Startdatumjaar"
+                                                    data-ng-model="experience.Startdatumjaar">
+                                                    <option value="0" select="selected">-</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2015">2015</option>
+                                                    <option value="2014">2014</option>
+                                                    <option value="2013">2013</option>
+                                                    <option value="2012">2012</option>
+                                                    <option value="2011">2011</option>
+                                                    <option value="2010">2010</option>
+                                                    <option value="2009">2009</option>
+                                                    <option value="2008">2008</option>
+                                                    <option value="2007">2007</option>
+                                                    <option value="2006">2006</option>
+                                                    <option value="2005">2005</option>
+                                                    <option value="2004">2004</option>
+                                                    <option value="2003">2003</option>
+                                                    <option value="2002">2002</option>
+                                                    <option value="2001">2001</option>
+                                                    <option value="2000">2000</option>
+                                                    <option value="1999">1999</option>
+                                                    <option value="1998">1998</option>
+                                                    <option value="1997">1997</option>
+                                                    <option value="1996">1996</option>
+                                                    <option value="1995">1995</option>
+                                                    <option value="1994">1994</option>
+                                                    <option value="1993">1993</option>
+                                                    <option value="1992">1992</option>
+                                                    <option value="1991">1991</option>
+                                                    <option value="1990">1990</option>
+                                                    <option value="1989">1989</option>
+                                                    <option value="1988">1988</option>
+                                                    <option value="1987">1987</option>
+                                                    <option value="1986">1986</option>
+                                                    <option value="1985">1985</option>
+                                                    <option value="1984">1984</option>
+                                                    <option value="1983">1983</option>
+                                                    <option value="1982">1982</option>
+                                                    <option value="1981">1981</option>
+                                                    <option value="1980">1980</option>
+                                                    <option value="1979">1979</option>
+                                                    <option value="1978">1978</option>
+                                                    <option value="1977">1977</option>
+                                                    <option value="1976">1976</option>
+                                                    <option value="1975">1975</option>
+                                                    <option value="1974">1974</option>
+                                                    <option value="1973">1973</option>
+                                                    <option value="1972">1972</option>
+                                                    <option value="1971">1971</option>
+                                                    <option value="1970">1970</option>
+                                                    <option value="1969">1969</option>
+                                                    <option value="1968">1968</option>
+                                                    <option value="1967">1967</option>
+                                                    <option value="1966">1966</option>
+                                                    <option value="1965">1965</option>
+                                                    <option value="1964">1964</option>
+                                                    <option value="1963">1963</option>
+                                                    <option value="1962">1962</option>
+                                                    <option value="1961">1961</option>
+                                                    <option value="1960">1960</option>
+                                                    <option value="1959">1959</option>
+                                                    <option value="1958">1958</option>
+                                                    <option value="1957">1957</option>
+                                                    <option value="1956">1956</option>
+                                                    <option value="1955">1955</option>
+                                                    <option value="1954">1954</option>
+                                                    <option value="1953">1953</option>
+                                                    <option value="1952">1952</option>
+                                                    <option value="1951">1951</option>
+                                                    <option value="1950">1950</option>
+                                                    <option value="1949">1949</option>
+                                                    <option value="1948">1948</option>
+                                                    <option value="1947">1947</option>
+                                                    <option value="1946">1946</option>
+                                                    <option value="1945">1945</option>
+                                                    <option value="1944">1944</option>
+                                                    <option value="1943">1943</option>
+                                                    <option value="1942">1942</option>
+                                                    <option value="1941">1941</option>
+                                                    <option value="1940">1940</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <label for="Einddatum" class="col-xs-12 control-label">Einddatum opleiding</label>
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="pop-einddatum-maand-1"
+                                                    data-ng-model="experience.Einddatummaand">
+                                                    <option value="00" select="selected">-</option>
+                                                    <option value="01">Januari</option>
+                                                    <option value="02">Februari</option>
+                                                    <option value="03">Maart</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">Mei</option>
+                                                    <option value="06">Juni</option>
+                                                    <option value="07">Juli</option>
+                                                    <option value="08">Augustus</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                    </select>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <select class="form-control" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" id="pop-einddatum-jaar-1"
+                                                    data-ng-model="experience.Einddatumjaar">
+                                                    <option value="0" select="selected">-</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2015">2015</option>
+                                                    <option value="2014">2014</option>
+                                                    <option value="2013">2013</option>
+                                                    <option value="2012">2012</option>
+                                                    <option value="2011">2011</option>
+                                                    <option value="2010">2010</option>
+                                                    <option value="2009">2009</option>
+                                                    <option value="2008">2008</option>
+                                                    <option value="2007">2007</option>
+                                                    <option value="2006">2006</option>
+                                                    <option value="2005">2005</option>
+                                                    <option value="2004">2004</option>
+                                                    <option value="2003">2003</option>
+                                                    <option value="2002">2002</option>
+                                                    <option value="2001">2001</option>
+                                                    <option value="2000">2000</option>
+                                                    <option value="1999">1999</option>
+                                                    <option value="1998">1998</option>
+                                                    <option value="1997">1997</option>
+                                                    <option value="1996">1996</option>
+                                                    <option value="1995">1995</option>
+                                                    <option value="1994">1994</option>
+                                                    <option value="1993">1993</option>
+                                                    <option value="1992">1992</option>
+                                                    <option value="1991">1991</option>
+                                                    <option value="1990">1990</option>
+                                                    <option value="1989">1989</option>
+                                                    <option value="1988">1988</option>
+                                                    <option value="1987">1987</option>
+                                                    <option value="1986">1986</option>
+                                                    <option value="1985">1985</option>
+                                                    <option value="1984">1984</option>
+                                                    <option value="1983">1983</option>
+                                                    <option value="1982">1982</option>
+                                                    <option value="1981">1981</option>
+                                                    <option value="1980">1980</option>
+                                                    <option value="1979">1979</option>
+                                                    <option value="1978">1978</option>
+                                                    <option value="1977">1977</option>
+                                                    <option value="1976">1976</option>
+                                                    <option value="1975">1975</option>
+                                                    <option value="1974">1974</option>
+                                                    <option value="1973">1973</option>
+                                                    <option value="1972">1972</option>
+                                                    <option value="1971">1971</option>
+                                                    <option value="1970">1970</option>
+                                                    <option value="1969">1969</option>
+                                                    <option value="1968">1968</option>
+                                                    <option value="1967">1967</option>
+                                                    <option value="1966">1966</option>
+                                                    <option value="1965">1965</option>
+                                                    <option value="1964">1964</option>
+                                                    <option value="1963">1963</option>
+                                                    <option value="1962">1962</option>
+                                                    <option value="1961">1961</option>
+                                                    <option value="1960">1960</option>
+                                                    <option value="1959">1959</option>
+                                                    <option value="1958">1958</option>
+                                                    <option value="1957">1957</option>
+                                                    <option value="1956">1956</option>
+                                                    <option value="1955">1955</option>
+                                                    <option value="1954">1954</option>
+                                                    <option value="1953">1953</option>
+                                                    <option value="1952">1952</option>
+                                                    <option value="1951">1951</option>
+                                                    <option value="1950">1950</option>
+                                                    <option value="1949">1949</option>
+                                                    <option value="1948">1948</option>
+                                                    <option value="1947">1947</option>
+                                                    <option value="1946">1946</option>
+                                                    <option value="1945">1945</option>
+                                                    <option value="1944">1944</option>
+                                                    <option value="1943">1943</option>
+                                                    <option value="1942">1942</option>
+                                                    <option value="1941">1941</option>
+                                                    <option value="1940">1940</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="opleiding" class="col-xs-12 control-label">Diploma behaald</label>
+                                    <div class="col-xs-12">
+                                        <label class="radio-inline">
+                									<input type="radio" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" name="pop-diploma" id="inlineradio1" value="Ja" data-ng-model="experience.diploma"> Ja
+                								</label>
+                                        <label class="radio-inline">
+                									<input type="radio" data-ng-change="olympia.panel2Change = true;olympia.saveThePanelValue = 2;" name="pop-diploma" id="inlineradio2" value="Nee" data-ng-model="experience.diploma"> Nee
+                								</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-group">
+                                    <div class="col-xs-12">
+                                        <button type="button" class="btn btn-primary" data-ng-show="!user.editingExpVar" data-ng-click="buttonOfForm31CLicked = true;addValuesForExp(experience)">Aanmaken</button>
+                                        <button type="button" class="btn btn-primary" data-ng-show="user.editingExpVar" data-ng-click="buttonOfForm31CLicked = true;updateValuesForExp(experience)">Aanmaken</button>
+                                        <a href="javascript:void(0)" class="underline padding-left-10" data-ng-click="user.showEducationForm = false;buttonOfForm31CLicked = false;removeValueForExp()">Annuleren</a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <hr>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row" data-ng-repeat="exp in user.cvWriteExp">
+                            <div class="col-xs-12">
+                                <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="user.showEducationForm = true;editExp(exp, $index);user.editingExpVar = true"><i class="fa fa-pencil"></i> bewerken</a>                                <a class="btn btn-tertiary btn-default new1 blue squeez" href="javascript:void(0)" data-ng-click="deleteExp(exp, $index);"><i class="fa fa-times"></i></a>
+                                <div class="padding-top-1x">
+                                    <strong data-ng-bind="exp.Opleiding"></strong>
+                                </div>
+                                <div>
+                                    {{exp.Startdatummaand}}-{{exp.Startdatumjaar}} - {{exp.Einddatummaand == "00" ? "heden" : exp.Einddatummaand}}{{exp.Einddatummaand
+                                    == "00" ? "" : "-"}}{{exp.Einddatumjaar == "0" ? "" : exp.Einddatumjaar}}
+                                </div>
+                                <span>Diploma behaald: {{exp.diploma}}</span><br />
+                                <hr class="small-margin" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hidden">
+                    <br>
+                    <div class="col-sm-12">
+                        <label for="13">Mocht je nog iets willen opmerken over je CV dan kan dat hier (optioneel):</label>
+                        <textarea id="13" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div data-ng-if="user.cvWriteExp.length == 0 && user.cvWrite.length == 0 && user.cvChoice == 'cvWrite' && buttonOfForm3CLicked == true"
+                class="error">
+                <span>Vul ervaring of opleiding in</span>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="popover" data-ng-class="{'fade top in': olympia.showCVNErvaring}">
+                            <div class="arrow"></div>
+                            <div class="popover-title">
+                                <p><strong>Je hebt je CV gewijzigd.</strong></p>
+                            </div>
+                            <div class="popover-content">
+                                <p>Klik op onderstaande knop om je wijziging(en) op te slaan en verder te gaan met je sollicitatie.</p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvUpload'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                        <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.cvWriteExp.length != 0 || user.cvWrite.length != 0, 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

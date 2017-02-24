@@ -1,0 +1,114 @@
+<div class="panel-body open-it-up">
+    <div class="row">
+        <div class="col-xs-8">
+            <label style="padding-top:3px;">Persoonlijke gegevens</label>
+        </div>
+        <div class="col-xs-4 padding-right-0 padding-left-0">
+            <a class="btn btn-quarduple btn-default blue pull-right" href="javascript:void(0)" data-ng-click="moveToPreviousNode(0)"><i class="fa fa-pencil"></i> bewerken</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <img ng-src="img/parick_image_cropped.jpg" ui-turn-on="fotouploadimage" data-ng-show="user.showSecondPhoto" class="round-edge-image">
+            <img ng-src="img/default_profile_image.jpg" ui-turn-on="fotouploadimage" data-ng-show="!user.showSecondPhoto" class="round-edge-image">
+        </div>
+        <div class="col-xs-7">
+            <ul class="list-style-none data-list">
+                <li>
+                    <span>{{user.firstname}} {{user.lastname}}<br>{{user.userEmail}}</span>
+                </li>
+                <li>
+                    <span>{{user.Straat}} {{user.Huisnummer}}<br>{{user.Postcode}} {{user.Woonplaats}}</span>
+                </li>
+                <li>
+                    <span>{{user.Mobielnummer ? user.Mobielnummer : user.Telefoonnummer}}</span>
+                </li>
+                <li>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12">
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-9">
+            <label style="padding-top:3px;">Recente ervaring &amp; opleiding</label>
+        </div>
+        <div class="col-xs-3 padding-right-0">
+            <a class="btn btn-quarduple btn-default blue pull-right" href="javascript:void(0)" data-ng-click="moveToPreviousNode(1)"><i class="fa fa-pencil"></i> bewerken</a>
+        </div>
+        <div class="col-xs-12">
+            <ul class="list-style-none data-list data-list-cv">
+                <li data-ng-if="user.cvChoice == 'cvUpload'">
+                    <strong>Mijn CV</strong><span><a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">{{user.valueOfCV}}</a></span>
+                </li>
+                <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWrite.length != 0">
+                    <strong>Werkervaring</strong><span>{{user.cvWrite[user.cvWrite.length-1].Functie}}<br>{{user.cvWrite[user.cvWrite.length-1].Startdatummaand}}-{{user.cvWrite[user.cvWrite.length-1].Startdatumjaar}} - {{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "heden" : user.cvWrite[user.cvWrite.length-1].Einddatummaand}}{{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "" : "-"}}{{user.cvWrite[user.cvWrite.length-1].Einddatumjaar == "0" ? "" : user.cvWrite[user.cvWrite.length-1].Einddatumjaar}}</span>
+                </li>
+                <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWriteExp.length != 0">
+                    <strong>Opleiding</strong><span>{{user.cvWriteExp[user.cvWriteExp.length-1].Opleiding}}<br>{{user.cvWriteExp[user.cvWriteExp.length-1].Startdatummaand}}-{{user.cvWriteExp[user.cvWriteExp.length-1].Startdatumjaar}} - {{user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand == "00" ? "heden" : user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand}}{{user.cvWriteExp[user.cvWriteExp.length-1].Einddatummaand == "00" ? "" : "-"}}{{user.cvWriteExp[user.cvWriteExp.length-1].Einddatumjaar == "0" ? "" : user.cvWriteExp[user.cvWriteExp.length-1].Einddatumjaar}}</span>
+                </li>
+                <li>
+                    <strong>Opleidingsniveau</strong><span>{{user.opleidingsniveau}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <form name="userRegistrationStep4" id="userRegistrationStep4" novalidate ng-submit="userRegistrationStep4Submits(userRegistrationStep4.$valid, $index, jobUrl)"
+        role="form" data-ng-init="buttonOfForm4CLicked = false">
+        <div class="row">
+            <div class="col-xs-12">
+                <hr/>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="text-content">Motivatie</label>
+                            <p>Leg hieronder uit wat jou geschikt maakt voor deze baan.</p>
+                            <textarea data-ng-change="olympia.panel3Change = false;olympia.saveThePanelValue = 3;" maxlength="4000" data-ng-init="user.motivatie = ''"
+                                class="form-control textarea" id="motivatie" data-ng-keyup="autoExpand($event)" name="motivatie"
+                                data-ng-model="user.motivatie"></textarea>
+                                <!-- <div class="growing-area" data-ng-init="user.motivatie = ''" strip-br="true" contenteditable="true" id="motivatie" name="motivatie" data-ng-model="user.motivatie"></div> -->
+                                <!-- <textarea ng-model="user.motivatie" class="hidden"></textarea> -->
+                                <p>Aantal karakters: <span id="text-content-count"> {{user.motivatie ? user.motivatie.length : 0}}</span>                                    (max 4000 karakters)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="form-group" id="botChk">
+                    <div class="row">
+                        <div class="col-xs-12" data-ng-init="user.optionsRadios = '1'">
+                            <label>Wil je automatische updates ontvangen?</label>
+                            <div class="radio">
+                                <label>
+                                        <input type="radio" data-ng-change="olympia.panel3Change = false;olympia.saveThePanelValue = 3;" name="optionsRadios" id="optionsRadios1" value="1" data-ng-model="user.optionsRadios">
+                                        Ja, ik sta open voor vacaturesuggesties voor deze functie en/of gerelateerde functies.
+                                    </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                        <input type="radio" data-ng-change="olympia.panel3Change = false;olympia.saveThePanelValue = 3;" name="optionsRadios" id="optionsRadios1" value="3" data-ng-model="user.optionsRadios">
+                                        Nee, ik wil dat Olympia mij alleen helpt met deze sollicitatie.
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="submit" id="panelsButton2" data-ng-if="jobUrl === 'secondjob'" class="btn btn-block margin-top-5 btn-primary"
+                                data-ng-click="buttonOfForm4CLicked = true;olympia.panel3Change = false;">{{jobUrl !== 'secondjob'? 'Verstuur sollicitatie': 'Naar Contact Center Experience'}}</button>
+                                <button type="submit" id="panelsButton2" data-ng-if="jobUrl !== 'secondjob'" class="btn btn-block margin-top-5 btn-primary"
+                                    data-ng-click="buttonOfForm4CLicked = true;olympia.panel3Change = true;">{{jobUrl !== 'secondjob'? 'Verstuur sollicitatie': 'Naar Contact Center Experience'}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
