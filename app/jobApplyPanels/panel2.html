@@ -1,49 +1,59 @@
 <div class="panel-body open-it-up">
     <div class="row">
         <div class="col-xs-12">
-            <p>Voeg je CV toe door een bestand te uploaden of maak handmatig een nieuw CV aan.</p>
+            <p>Je kunt je CV direct toevoegen door een bestand te uploaden, per e-mail te versturen of door een nieuw CV aan te maken. Je kunt er ook voor kiezen om je CV later toe te voegen. Je krijgt dan een e-mailadres waar je je CV naartoe kunt sturen.</p>
         </div>
         <div class="col-xs-12 padding-top-1x">
             <label>Ik wil mijn CV:</label>
-            <div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
+            <!--<div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
                 <button type="button" value="" ng-model="user.cvChoice" data-ng-init="user.cvChoice = 'cvUpload'" data-ng-click="user.cvChoice = 'cvUpload';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
                     data-ng-class="{'active': user.cvChoice == 'cvUpload'}" class="btn btn-default btn-tertiary new1 blue">Uploaden</button>
                 <button type="button" value="cvWrite" data-ng-click="user.cvChoice = 'cvWrite';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
                         data-ng-class="{'active': user.cvChoice == 'cvWrite'}" class="btn btn-default btn-tertiary new1 blue">Aanmaken</button>
+            </div>-->
+            <div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
+                <button type="button" value="now" data-ng-model="user.userCallCV" data-ng-init="user.userCallCV = 'now'" data-ng-click="user.userCallCV = 'now';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
+                    data-ng-class="{'active': user.userCallCV == 'now'}" class="btn btn-default btn-tertiary new1 blue">Nu toevoegen</button>
+                <button type="button" value="later" data-ng-click="user.userCallCV = 'later';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
+                        data-ng-class="{'active': user.userCallCV == 'later'}" class="btn btn-default btn-tertiary new1 blue">Later toevoegen</button>
             </div>
         </div>
-        <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvUpload'">
+        <div class="col-xs-12" data-ng-show="user.userCallCV == 'now'">
+            <div class="row padding-top-2x">
+                <div class="col-xs-12">
+                    <a class="btn btn-default" href="javascript:void(0)" ui-turn-on="cvUploaden" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvChoice = 'cvUpload'"><label>CV uploaden</label></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>CV sturen per e-mail</label></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>CV aanmaken</label></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" data-ng-show="user.userCallCV == 'later'">
+            <div class="row padding-top-2x">
+                <div class="col-xs-12">
+                    <p>Je hebt ervoor gekozen om je CV later toe te voegen. Je kunt dit doen door je CV per e-mail te versturen naar onderstaand e-mail adres (je ontvangt dit adres ook per e-mail) of door je CV te uploaden vanuit je Mijn Olympia account. Zodra wij je CV ontvangen hebben nemen we je sollicitatie in behandeling.</p>
+                    <label>Stuur je CV naar: <span>cv4362545@olympia.nl</span></label>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvUpload' && user.userCallCV == 'now' && user.valueOfCV">
             <br>
             <div id="cvUpload">
                 <div class="row">
                     <div class="col-xs-12">
-                        <label>CV uploaden vanaf:</label>
+                        <label>Jouw CV:</label>
                     </div>
                     <div class="col-xs-12">
-                        <div class="well blue" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
+                        <div class="well blue width-100" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
                             <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
                         </div>
-                        <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue hidden" data-ng-class="{'hidden': !user.valueOfCV}" href="javascript:void(0)"
-                            data-ng-click="deleteCV();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><i class="fa fa-times"></i></a>
-                    </div>
-                    <div class="col-xs-12">
-                        <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Dropbox</label></a>
-                    </div>
-                    <div class="col-xs-12">
-                        <a class="btn btn-default" href="javascript:void(0)" data-ng-click="googleButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Google Drive</label></a>
-                    </div>
-                    <div class="col-xs-12">
-                        <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Microsoft OneDrive</label></a>
-                    </div>
-                    <div class="col-xs-12">
-                        <button class="btn btn-default">
-                              <label for="file-input">Dit apparaat</label>
-                            </button>
-                        <input id="file-input" style="display:none" type="file" onchange="angular.element(this).scope().fileValueChange();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
-                            data-ng-model="user.uploadCV">
-                            <div class="error" data-ng-show="user.valueOfCV == '' && buttonOfForm3CLicked == true">
-                                <span>Upload een CV-bestand</span>
-                            </div>
                     </div>
                 </div>
             </div>

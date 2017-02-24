@@ -1,0 +1,62 @@
+<div class="modal modal-overlay" ui-if='cvUploaden' ui-state='cvUploaden'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" ui-turn-off="cvUploaden">&times;</button>
+                <h4 class="modal-title">CV uploaden vanaf</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <br>
+                        <div id="cvUpload">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="dropboxButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Dropbox</label></a>
+                                </div>
+                                <div class="col-xs-12">
+                                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="googleButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Google Drive</label></a>
+                                </div>
+                                <div class="col-xs-12">
+                                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="oneDriveButtonClick();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Microsoft OneDrive</label></a>
+                                </div>
+                                <div class="col-xs-12">
+                                    <button class="btn btn-default">
+                                        <label for="file-input">Dit apparaat</label>
+                                    </button>
+                                    <input id="file-input" style="display:none" type="file" onchange="angular.element(this).scope().fileValueChange();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
+                                        data-ng-model="user.uploadCV">
+                                    <div class="error" data-ng-show="user.valueOfCV == '' && buttonOfForm3CLicked == true">
+                                        <span>Upload een CV-bestand</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 padding-top-2x">
+                                    <div class="row">
+                                        <div class="col-xs-12 padding-top-2x">
+                                            <label data-ng-class="{'hidden': !user.valueOfCV}">Onderstaand CV gebruiken:</label>
+                                        </div>
+                                    </div>
+                                    <div class="well blue" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
+                                        <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
+                                    </div>
+                                    <a id="deleteCV" class="btn btn-tertiary btn-default new1 blue" data-ng-class="{'hidden': !user.valueOfCV}" href="javascript:void(0)"
+                                        data-ng-click="deleteCV();olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-4">
+                    </div>
+                    <div class="col-xs-8">
+                        <button ui-turn-off="cvUploaden" class="btn btn-primary" data-ng-class="{'hidden': !user.valueOfCV}">Ok</button>
+                        <button ui-turn-off="cvUploaden" class="btn btn-default new1">Annuleren</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
