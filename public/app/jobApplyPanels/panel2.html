@@ -12,7 +12,7 @@
                         data-ng-class="{'active': user.cvChoice == 'cvWrite'}" class="btn btn-default btn-tertiary new1 blue">Aanmaken</button>
             </div>-->
             <div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
-                <button type="button" value="now" data-ng-model="user.userCallCV" data-ng-init="user.userCallCV = 'now'" data-ng-click="user.userCallCV = 'now';user.cvLaterBy = '';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
+                <button type="button" value="now" data-ng-model="user.userCallCV" data-ng-init="user.userCallCV = 'now'" data-ng-click="user.userCallCV = 'now';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
                     data-ng-class="{'active': user.userCallCV == 'now'}" class="btn btn-default btn-tertiary new1 blue">Nu toevoegen</button>
                 <button type="button" value="later" data-ng-click="user.userCallCV = 'later';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
                         data-ng-class="{'active': user.userCallCV == 'later'}" class="btn btn-default btn-tertiary new1 blue">Later toevoegen</button>
@@ -36,14 +36,10 @@
             </div>
         </div>
         <div class="col-xs-12" data-ng-show="user.userCallCV == 'later'">
-            <div class="row padding-top-2x" data-ng-init="user.cvLaterBy = ''">
+            <div class="row padding-top-2x">
                 <div class="col-xs-12">
-                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvLaterBy = 'mijnolympia'"><label>Later uploaden via Mijn Olympia</label></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvLaterBy = 'email'"><label>Later sturen per e-mail</label></a>
+                    <p>Je hebt ervoor gekozen om je CV later toe te voegen. Je kunt dit doen door je CV per e-mail te versturen naar onderstaand e-mail adres (je ontvangt dit adres ook per e-mail) of door je CV te uploaden vanuit je Mijn Olympia account. Zodra wij je CV ontvangen hebben nemen we je sollicitatie in behandeling.</p>
+                    <label>Stuur je CV naar: <span>cv4362545@olympia.nl</span></label>
                 </div>
             </div>
         </div>
@@ -647,17 +643,6 @@
                 </div>
 
             </div>
-        </div>
-        <div class="col-xs-12" data-ng-show="user.userCallCV == 'later' && user.cvLaterBy == 'mijnolympia'">
-            <p>Je kunt je CV later uploaden via je Mijn Olympia account of je stuurt je CV wanneer het jou uitkomt per e-mail (voeg je CV toe als bijlage) naar: <strong>cv35265@olympia.nl</strong></p>
-            <p>We sturen je ook een e-mail ter herinnering met dit e-mailadres erin.</p>
-            <p>Je kunt hieronder je sollicitatie afronden. Zodra we je CV ontvangen hebben nemen we je sollicitatie in behandeling.</p>
-        </div>
-        <div class="col-xs-12" data-ng-show="user.userCallCV == 'later' && user.cvLaterBy == 'email'">
-            <p>Je kunt je CV wanneer het jou uitkomt per e-mail (voeg je CV toe als bijlage) naar: <strong>cv35265@olympia.nl</strong></p>
-            <p>Je kunt je CV ook later uploaden via je Mijn Olympia account.</p>
-            <p>We sturen je ook een e-mail ter herinnering met dit e-mailadres erin.</p>
-            <p>Je kunt hieronder je sollicitatie afronden. Zodra we je CV ontvangen hebben nemen we je sollicitatie in behandeling.</p>
         </div>
         <div class="col-xs-12">
             <div data-ng-if="user.cvWriteExp.length == 0 && user.cvWrite.length == 0 && user.cvChoice == 'cvWrite' && buttonOfForm3CLicked == true"
