@@ -1,0 +1,54 @@
+<div class="modal modal-overlay" ui-if='cvUploadenviaEmail' ui-state='cvUploadenviaEmail'>
+    <div class="modal-dialog" data-ng-init="olympia.copiedtoboard = false; olympia.emailisontheway = false;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" ui-turn-off="cvUploadenviaEmail">&times;</button>
+                <h4 class="modal-title">CV sturen per e-mail</h4>
+            </div>
+            <div class="modal-body" data-ng-show="!olympia.emailisontheway">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>In de volgende stap kun je je CV als bijlage per e-mail versturen naar: <strong id="foo">cv353764@olympia.nl</strong></p>
+                        <p>Druk op onderstaande knop om dit e-mailadres te kopieren naar je klembord, zodat je het niet hoeft te onthouden.</p>
+                        <p>Druk vervolgens op "Verder"</p>
+                    </div>
+                </div>
+                <div class="row padding-top-2x">
+                    <div class="col-xs-12">
+                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;olympia.copiedtoboard = true"><label>kopieer e-mailadres</label></a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" data-ng-show="olympia.emailisontheway">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>Verstuur nu een e--mail met je CV als bijlage naar het e-mailadres:</p>
+                        <p><strong id="foo">cv353764@olympia.nl</strong></p>
+                        <p>Nadat je de e-mail verstuurd hebt kun je terugkeren naar dit scherm. Het kan enkele minuten duren voordat je CV ontvangen is.</p>
+                    </div>
+                </div>
+                <div class="row padding-top-2x">
+                    <div class="col-xs-12">
+                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;olympia.copiedtoboard = true"><label>kopieer e-mailadres</label></a>
+                    </div>
+                </div>
+                <div class="row padding-top-2x">
+                    <div class="col-xs-12 text-center">
+                        <img src="img/loading-circle.gif" width="50"/><br/>
+                        <label class="blue">wachten op cv...</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"  data-ng-show="!olympia.emailisontheway">
+                <div class="row padding-top-2x">
+                    <div class="col-xs-4">
+                    </div>
+                    <div class="col-xs-8">
+                        <button class="btn btn-primary" data-ng-click="olympia.emailisontheway = true;movetoNextOverlay()" data-ng-class="{'hidden': olympia.copiedtoboard != true}">Verder</button>
+                        <button ui-turn-off="cvUploadenviaEmail" class="btn btn-default new1">Annuleren</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

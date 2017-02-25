@@ -27,9 +27,9 @@
                 <a href="javascript:void(0)" ><i class="fa fa-check"></i> {{$index+1}}. {{user.radioEmail == 'option1' ? panel.panelSubstituteHeading : panel.panelHeadingTitle}}</a>
               </h4>
             </div>
-            <div data-ng-include="'jobApplyPanels/panel0.html'" data-ng-if="$index == 1"></div>
+            <div data-ng-include="'jobApplyPanels/panel0.html'" data-ng-if="$index == 0"></div>
             <div data-ng-include="'jobApplyPanels/panel1.html'" data-ng-if="$index == 1"></div>
-            <div data-ng-include="'jobApplyPanels/panel2.html'" data-ng-if="$index == 0"></div>
+            <div data-ng-include="'jobApplyPanels/panel2.html'" data-ng-if="$index == 2"></div>
             <div data-ng-include="'jobApplyPanels/panel3.html'" data-ng-if="$index == 3"></div>
             
             <div class="panel-body open-it-up" data-ng-if="$index == 4 && jobUrl === 'secondjob'" data-ng-init="showMoreDescription = false">
@@ -54,6 +54,8 @@
       <div ng-include="'fotoupload.html'"></div>
       <div ng-include="'fotouploadimage.html'"></div>
       <div ng-include="'jobApplyPanels/cvUploaden.html'"></div>
+      <div ng-include="'jobApplyPanels/cvEmail1.html'"></div>
+      <div ng-include="'jobApplyPanels/cvEmail2.html'"></div>
     </div>
   </div>
 </div>

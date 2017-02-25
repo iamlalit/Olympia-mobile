@@ -929,6 +929,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   }
 
   $scope.gotoAnchor = function(x) {
+
     $timeout(function() {
       // debugger;
       var element = angular.element(document.getElementById(x));

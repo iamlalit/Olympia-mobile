@@ -1,0 +1,36 @@
+<div class="modal modal-overlay" ui-if='cvUploadenviaEmail2' ui-state='cvUploadenviaEmail2'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" ui-turn-off="cvUploadenviaEmail2">&times;</button>
+                <h4 class="modal-title">CV sturen per e-mail</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>We hebben je e-mail met CV succesvol ontvangen.</p>
+                        <p>Druk op OK om onderstaand CV toe te voegen aan je sollicitatie.</p>
+                    </div>
+                </div>
+                <div class="row padding-top-2x">
+                    <div class="col-xs-12">
+                        <label class="padding-top-2x">Onderstaand CV gebruiken:</label>
+                        <div class="well blue width-100" id="cvValueWell">
+                            <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row padding-top-2x">
+                    <div class="col-xs-4">
+                    </div>
+                    <div class="col-xs-8">
+                        <button ui-turn-off="cvUploadenviaEmail2" class="btn btn-primary">OK</button>
+                        <button ui-turn-off="cvUploadenviaEmail2" class="btn btn-default new1">Annuleren</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

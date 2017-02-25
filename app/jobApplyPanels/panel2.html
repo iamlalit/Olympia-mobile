@@ -3,7 +3,7 @@
         <div class="col-xs-12">
             <p>Je kunt je CV direct toevoegen door een bestand te uploaden, per e-mail te versturen of door een nieuw CV aan te maken. Je kunt er ook voor kiezen om je CV later toe te voegen. Je krijgt dan een e-mailadres waar je je CV naartoe kunt sturen.</p>
         </div>
-        <div class="col-xs-12 padding-top-1x">
+        <div class="col-xs-12 padding-top-1x" id="mainCV">
             <label>Ik wil mijn CV:</label>
             <!--<div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
                 <button type="button" value="" ng-model="user.cvChoice" data-ng-init="user.cvChoice = 'cvUpload'" data-ng-click="user.cvChoice = 'cvUpload';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>CV sturen per e-mail</label></a>
+                    <a class="btn btn-default" href="javascript:void(0)" ui-turn-on="cvUploadenviaEmail" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvChoice = 'viaEmail';"><label>CV sturen per e-mail</label></a>
                 </div>
             </div>
             <div class="row">
@@ -38,12 +38,12 @@
         <div class="col-xs-12" data-ng-show="user.userCallCV == 'later'">
             <div class="row padding-top-2x" data-ng-init="user.cvLaterBy = ''">
                 <div class="col-xs-12">
-                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvLaterBy = 'mijnolympia'"><label>Later uploaden via Mijn Olympia</label></a>
+                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvLaterBy = 'mijnolympia';gotoAnchor('mainCV')"><label>Later uploaden via Mijn Olympia</label></a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvLaterBy = 'email'"><label>Later sturen per e-mail</label></a>
+                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvLaterBy = 'email';gotoAnchor('mainCV')"><label>Later sturen per e-mail</label></a>
                 </div>
             </div>
         </div>
@@ -62,7 +62,22 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12" data-ng-show="user.cvChoice == 'cvWrite'">
+        <div class="col-xs-12" data-ng-show="user.userCallCV == 'now' && user.cvChoice == 'viaEmail' && user.valueOfCV">
+            <br>
+            <div id="cvUpload">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Jouw CV:</label>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="well blue width-100" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
+                            <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" data-ng-show="user.userCallCV == 'now' && user.cvChoice == 'cvWrite'">
             <br>
             <div>
                 <div class="row" data-ng-init="user.editingWerkVar = false;">
