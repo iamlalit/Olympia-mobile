@@ -355,6 +355,10 @@ ul.olympia-static1 li {
 .well.blue + .btn{
     width: 11%;
 }
+.well.width-100{
+  width: 100%;
+  margin-right: 0;
+}
 
 .padding-right-0{
   padding-right: 0;
@@ -478,6 +482,7 @@ select.validation-error{
 }
 .btn.btn-default label{
   margin-bottom: 0;
+  cursor: pointer;
 }
 .btn.btn-tertiary{
   height: 36px;

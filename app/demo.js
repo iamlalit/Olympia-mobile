@@ -661,6 +661,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     "checkbox7": false,
     "checkbox8": false,
     "cvChoice": "cvUpload",
+    "userCallCV": "now",
     "valueOfCV": "CV_Patrick.pdf",
     "cvWriteExp": [],
     "cvWrite": [],
@@ -699,6 +700,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     "checkbox7": false,
     "checkbox8": false,
     "cvChoice": "cvWrite",
+    "userCallCV": "now",
     "valueOfCV": "",
     "cvWriteExp": [
       {
