@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <a class="btn btn-default" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvChoice = 'viaEmail';"><label>CV sturen per e-mail</label></a>
+                    <a class="btn btn-default" href="javascript:void(0)" ui-turn-on="cvUploadenviaEmail" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;user.cvChoice = 'viaEmail';"><label>CV sturen per e-mail</label></a>
                 </div>
             </div>
             <div class="row">
@@ -62,8 +62,20 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12" data-ng-show="user.userCallCV == 'now' && user.cvChoice == 'viaEmail'">
-            
+        <div class="col-xs-12" data-ng-show="user.userCallCV == 'now' && user.cvChoice == 'viaEmail' && user.valueOfCV">
+            <br>
+            <div id="cvUpload">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Jouw CV:</label>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="well blue width-100" id="cvValueWell" data-ng-class="{'hidden': !user.valueOfCV}">
+                            <i class="fa fa-check"></i> <span id="valueOfCV" data-ng-model="user.valueOfCV" data-ng-bind="user.valueOfCV"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-xs-12" data-ng-show="user.userCallCV == 'now' && user.cvChoice == 'cvWrite'">
             <br>

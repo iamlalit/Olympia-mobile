@@ -527,6 +527,9 @@ label i.fa{
 label .orange i.fa{
   color: #ff4400;
 }
+label.blue{
+  color: #07368b;;
+}
 span.orange{
   color: #ff4400;
 }

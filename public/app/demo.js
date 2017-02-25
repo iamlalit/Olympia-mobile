@@ -267,6 +267,8 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     alert('Swiped ' + direction);
   };
 
+  new Clipboard('.copier');
+
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
 
@@ -334,6 +336,13 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
       return $filter('filter')($scope.jobs, $scope.q)
   }
 
+  $scope.movetoNextOverlay = function(){
+    $timeout(function(){
+      $rootScope.Ui.turnOff('cvUploadenviaEmail');
+      $rootScope.Ui.turnOn('cvUploadenviaEmail2');
+      $scope.user.valueOfCV = "CV_Patrick.pdf";
+    }, 5000)
+  }
 
   $scope.getJObsValue = function(job){
     $scope.jobTitle = job.jobTitle;
