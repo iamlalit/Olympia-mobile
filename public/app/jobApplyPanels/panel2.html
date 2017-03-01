@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvUpload' || user.cvChoice == 'viaEmail' || user.userCallCV == 'later' " data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.valueOfCV !== '', 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
-                        <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.cvWriteExp.length != 0 || user.cvWrite.length != 0, 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
+                        <button type="submit" class="btn btn-block margin-top-5 btn-primary" data-ng-show="user.cvChoice == 'cvWrite' && user.userCallCV == 'now'" data-ng-click="olympia.panel2Change = false;buttonOfForm3CLicked = true;userRegistrationStep3Submits(user.cvWriteExp.length != 0 || user.cvWrite.length != 0, 2)">Verder naar Motivatie <i class="fa fa-arrow-down"></i></button>
                     </div>
                 </div>
             </div>
