@@ -38,10 +38,14 @@
         <div class="col-xs-3 padding-right-0">
             <a class="btn btn-quarduple btn-default blue pull-right" href="javascript:void(0)" data-ng-click="moveToPreviousNode(1)"><i class="fa fa-pencil"></i> bewerken</a>
         </div>
-        <div class="col-xs-12">
+        <div class="col-xs-12"> 
             <ul class="list-style-none data-list data-list-cv">
-                <li data-ng-if="user.cvChoice == 'cvUpload'">
-                    <strong>Mijn CV</strong><span><a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">{{user.valueOfCV}}</a></span>
+                <li data-ng-if="user.cvChoice == 'cvUpload' || user.cvChoice == 'viaEmail' || user.userCallCV == 'later'">
+                    <strong>Mijn CV</strong>
+                    <span data-ng-show="(user.cvChoice == 'cvUpload' || user.cvChoice == 'viaEmail') && user.userCallCV == 'now'">
+                        <a ng-href="{{getSrc(user.valueOfCV)}}" target="_blank" class="orange">{{user.valueOfCV}}</a>
+                    </span>
+                    <span data-ng-show="user.userCallCV == 'later'">Later toevoegen</span>
                 </li>
                 <li data-ng-if="user.cvChoice == 'cvWrite' && user.cvWrite.length != 0">
                     <strong>Werkervaring</strong><span>{{user.cvWrite[user.cvWrite.length-1].Functie}}<br>{{user.cvWrite[user.cvWrite.length-1].Startdatummaand}}-{{user.cvWrite[user.cvWrite.length-1].Startdatumjaar}} - {{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "heden" : user.cvWrite[user.cvWrite.length-1].Einddatummaand}}{{user.cvWrite[user.cvWrite.length-1].Einddatummaand == "00" ? "" : "-"}}{{user.cvWrite[user.cvWrite.length-1].Einddatumjaar == "0" ? "" : user.cvWrite[user.cvWrite.length-1].Einddatumjaar}}</span>

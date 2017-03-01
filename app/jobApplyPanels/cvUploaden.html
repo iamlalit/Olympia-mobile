@@ -2,7 +2,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" ui-turn-off="cvUploaden">&times;</button>
                 <h4 class="modal-title">CV uploaden vanaf</h4>
             </div>
             <div class="modal-body">
@@ -49,11 +48,9 @@
             </div>
             <div class="modal-footer">
                 <div class="row">
-                    <div class="col-xs-4">
-                    </div>
-                    <div class="col-xs-8">
-                        <button ui-turn-off="cvUploaden" class="btn btn-primary" data-ng-class="{'hidden': !user.valueOfCV}">Ok</button>
-                        <button ui-turn-off="cvUploaden" class="btn btn-default new1">Annuleren</button>
+                    <div class="col-xs-9 col-xs-offset-3 text-right">
+                        <button ui-turn-off="cvUploaden" class="btn btn-primary width-100px" data-ng-class="{'hidden': !user.valueOfCV}">Ok</button>
+                        <button ui-turn-off="cvUploaden" class="blue btn btn-tertiary">Annuleren</button>
                     </div>
                 </div>
             </div>

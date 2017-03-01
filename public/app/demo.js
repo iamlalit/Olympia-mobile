@@ -344,6 +344,32 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     }, 5000)
   }
 
+  $scope.movetoBackToScreen = function(){
+    $rootScope.Ui.turnOff('cvUploadenviaEmail');
+    $scope.user.valueOfCV = "CV_Patrick.pdf";
+    angular.element(document.getElementById('moveprogress')).css({ width: 0 + '%' });
+    animateProgressbar();
+    $timeout(function(){
+      $scope.olympia.emailisontheway2 = false;
+    }, 1000)
+  }
+
+  function animateProgressbar(){
+    timeout = $interval(doLoop, 0);
+  }
+  var counting = 0;
+  function doLoop() {
+        angular.element(document.getElementById('moveprogress')).css({ width: counting + '%' });
+        counting = counting + 0.9;
+        if(counting < 100) {
+            //timeout = $interval(doLoop, 100);
+        }
+        else {
+          console.log('here');
+          $interval.cancel(timeout)
+        }
+    }
+
   $scope.getJObsValue = function(job){
     $scope.jobTitle = job.jobTitle;
     $scope.jobUrl = job.url;
@@ -710,7 +736,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     "checkbox8": false,
     "cvChoice": "cvWrite",
     "userCallCV": "now",
-    "valueOfCV": "",
+    "valueOfCV": "AangemaaktCV_27-02-2017",
     "cvWriteExp": [
       {
         "Opleiding": "VWO, Van Gastel college",

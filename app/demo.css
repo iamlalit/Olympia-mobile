@@ -592,6 +592,12 @@ hr.small-margin{
 .popover p{
   margin-bottom: 0;
 }
-.popover .popover-content{
-
+.modal-header{
+  border-bottom: 0;
+}
+.modal-footer{
+  border-top: 0;
+}
+.width-100px{
+  width: 100px;
 }
