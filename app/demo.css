@@ -601,3 +601,12 @@ hr.small-margin{
 .width-100px{
   width: 100px;
 }
+.progress-bar-info{
+  background-color: #fff;
+  border: solid 1px #afafaf;
+}
+.progress-striped .progress-bar, .progress-bar-striped{
+  background-image: -webkit-linear-gradient(45deg,rgba((0,0,0,.5))25%,transparent 25%,transparent 50%,rgba((0,0,0,.5))50%,rgba((0,0,0,.5))75%,transparent 75%,transparent);
+  background-image: -o-linear-gradient(45deg,rgba((0,0,0,.5))25%,transparent 25%,transparent 50%,rgba((0,0,0,.5))50%,rgba((0,0,0,.5))75%,transparent 75%,transparent);
+  background-image: linear-gradient(45deg,rgba(0,0,0,.5)25%,transparent 25%,transparent 50%,rgba(0,0,0,.5)50%,rgba(0,0,0,.5)75%,transparent 75%,transparent);
+}

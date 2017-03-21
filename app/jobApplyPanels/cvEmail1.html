@@ -1,5 +1,5 @@
-<div class="modal modal-overlay" ui-if='cvUploadenviaEmail' ui-state='cvUploadenviaEmail'>
-    <div class="modal-dialog" data-ng-init="olympia.copiedtoboard = false; olympia.emailisontheway = false;olympia.emailisontheway2 = false;">
+<div class="modal modal-overlay scrollable" ui-if='cvUploadenviaEmail' ui-state='cvUploadenviaEmail'>
+    <div class="modal-dialog scrollable-content" data-ng-init="olympia.copiedtoboard = false; olympia.emailisontheway = false;olympia.emailisontheway2 = false;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">CV sturen per e-mail</h4>
@@ -7,17 +7,23 @@
             <div class="modal-body" data-ng-show="!olympia.emailisontheway">
                 <div class="row">
                     <div class="col-xs-12">
-                        <p>In de volgende stap kun je je CV als bijlage per e-mail versturen naar: <strong id="foo">cv353764@olympia.nl</strong></p>
-                        <p>Druk op onderstaande knop om dit e-mailadres te kopieren naar je klembord, zodat je het niet hoeft te onthouden.</p>
-                        <p>Druk vervolgens op "Verder"</p>
+                        <p>Stuur nu je CV per e-mail naar <strong id="foo">cv@olympia.nl</strong> en let daarbij op onderstaande punten. Je kunt het e-mail adres kopiëren naar je klembord door op de knop kopieer e-mailadres te drukken.<br /><br /></p>
+                        <p>Wanneer je de e-mail met je CV hebt vestuurd druk je op ik heb mijn CV verstuurd om verder te gaan. Terwijl wij wachten op je CV kun jij alvast je sollicitatie verder afronden. Je ontvangt een bericht wanneer wij je CV hebben ontvangen.</p>
+                        <p>Stuur je CV naar cv@olympia.nl en zorg ervoor dat:</p>
+                        <ul>
+                            <li>je hetzelfde e-mailadres gebruikt waarmee je je hebt geregistreerd bij Olympia</li>
+                            <li>je het CV bestand als bijlage van de e-mail verstuurd</li>
+                            <li>het een .pdf, .doc of .docx bestand is</li>
+                            <li>het CV bestand niet groter is dan 5 MB</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="row padding-top-2x">
                     <div class="col-xs-12">
-                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;olympia.copiedtoboard = true"><label>kopieer e-mailadres</label></a>
+                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>kopieer e-mailadres</label></a>
                     </div>
                 </div>
-                <div class="row padding-top-0x" data-ng-show="olympia.copiedtoboard == true">
+                <div class="row padding-top-0x">
                     <div class="col-xs-12">
                         <a class="btn btn-primary width-100" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;olympia.emailisontheway2 = true;movetoBackToScreen()">Ik heb mijn CV verstuurd</a>
                     </div>
@@ -53,6 +59,11 @@
                     <div class="col-xs-9 col-xs-offset-3 text-right">
                         <button class="btn btn-primary width-100px" data-ng-click="olympia.emailisontheway = true;movetoNextOverlay()" data-ng-class="{'hidden': olympia.copiedtoboard != true}">Verder</button>
                         <button ui-turn-off="cvUploadenviaEmail" class="blue btn btn-tertiary">Annuleren</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-center padding-top-1x">
+                        <p><i><small>LET OP: De veiligste manier om je CV te delen met Olympia is door deze up te loaden via Mijn Olympia of via het sollicitatieformulier.</small></i></p>
                     </div>
                 </div>
             </div>
