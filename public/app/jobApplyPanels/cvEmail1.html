@@ -1,5 +1,5 @@
-<div class="modal modal-overlay" ui-if='cvUploadenviaEmail' ui-state='cvUploadenviaEmail'>
-    <div class="modal-dialog" data-ng-init="olympia.copiedtoboard = false; olympia.emailisontheway = false;olympia.emailisontheway2 = false;">
+<div class="modal modal-overlay scrollable" ui-if='cvUploadenviaEmail' ui-state='cvUploadenviaEmail'>
+    <div class="modal-dialog scrollable-content" data-ng-init="olympia.copiedtoboard = false; olympia.emailisontheway = false;olympia.emailisontheway2 = false;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">CV sturen per e-mail</h4>
@@ -7,17 +7,22 @@
             <div class="modal-body" data-ng-show="!olympia.emailisontheway">
                 <div class="row">
                     <div class="col-xs-12">
-                        <p>In de volgende stap kun je je CV als bijlage per e-mail versturen naar: <strong id="foo">cv353764@olympia.nl</strong></p>
-                        <p>Druk op onderstaande knop om dit e-mailadres te kopieren naar je klembord, zodat je het niet hoeft te onthouden.</p>
-                        <p>Druk vervolgens op "Verder"</p>
+                        <p>Stuur nu je CV per e-mail naar <strong id="foo">cv@olympia.nl</strong>, hieronder lees je waar je e-mail aan moet voldoen en kun je het e-mailadres makkelijk kopiëren.</p>
+                        <p>Klik na het versturen van je CV op "ik heb mijn CV verstuurd" en maak je sollicitatie af terwijl wij je CV verwerken. Per e-mail informeren we je over de verwerking van je CV.</p>
+                        <p>Zorg ervoor dat;</p>
+                        <ul>
+                            <li>je het e-mailadres gebruikt van je registratie bij Olympia.</li>
+                            <li>je CV als bijlage is toegevoegd.</li>
+                            <li>je CV een .pdf, .doc of .docx bestand is van max 5MB.</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="row padding-top-2x">
+                <div class="row padding-top-0x">
                     <div class="col-xs-12">
-                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;olympia.copiedtoboard = true"><label>kopieer e-mailadres</label></a>
+                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Kopieer e-mailadres</label></a>
                     </div>
                 </div>
-                <div class="row padding-top-0x" data-ng-show="olympia.copiedtoboard == true">
+                <div class="row padding-top-0x">
                     <div class="col-xs-12">
                         <a class="btn btn-primary width-100" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;olympia.emailisontheway2 = true;movetoBackToScreen()">Ik heb mijn CV verstuurd</a>
                     </div>

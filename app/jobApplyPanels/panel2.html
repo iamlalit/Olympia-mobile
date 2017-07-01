@@ -1,10 +1,9 @@
 <div class="panel-body open-it-up">
     <div class="row">
         <div class="col-xs-12">
-            <p>Je kunt je CV direct toevoegen door een bestand te uploaden, per e-mail te versturen of door een nieuw CV aan te maken. Je kunt er ook voor kiezen om je CV later toe te voegen. Je krijgt dan een e-mailadres waar je je CV naartoe kunt sturen.</p>
+            <p>Je kunt je CV direct toevoegen door een bestand te uploaden, per e-mail te versturen of door een nieuw CV aan te maken. Je kunt er ook voor kiezen om je CV later toe te voegen.</p>
         </div>
         <div class="col-xs-12 padding-top-1x" id="mainCV">
-            <label>Ik wil mijn CV:</label>
             <!--<div class="btn-group padding-top-1x col-xs-12 padding-left-0 padding-right-0" role="group" aria-label="...">
                 <button type="button" value="" ng-model="user.cvChoice" data-ng-init="user.cvChoice = 'cvUpload'" data-ng-click="user.cvChoice = 'cvUpload';olympia.panel2Change = true;olympia.saveThePanelValue = 2;"
                     data-ng-class="{'active': user.cvChoice == 'cvUpload'}" class="btn btn-default btn-tertiary new1 blue">Uploaden</button>
@@ -93,10 +92,8 @@
             </div>
         </div>
         <div class="col-xs-12 padding-top-2x" data-ng-show="user.userCallCV == 'later'">
-            <p>Je kunt je CV wanneer het jou uitkomt per e-mail (voeg je CV toe als bijlage) naar: <strong><a href="mailto:cv35265@olympia.nl">cv35265@olympia.nl</a></strong></p>
-            <p>Je kunt je CV ook later uploaden via je Mijn Olympia account.</p>
-            <p>We sturen je ook een e-mail ter herinnering met dit e-mailadres erin.</p>
-            <p>Je kunt hieronder je sollicitatie afronden. Zodra we je CV ontvangen hebben nemen we je sollicitatie in behandeling.</p>
+            <p>Je kunt je CV per e-mail sturen naar <strong><a href="mailto:cv@olympia.nl">cv@olympia.nl</a></strong> of je CV uploaden via je Mijn Olympia account.</p>
+            <p>Je ontvangt een e-mail met het e-mailadres en instructies. Hieronder kun je je sollicitatie afronden. Zodra we je CV ontvangen hebben nemen we je sollicitatie in behandeling.</p>
         </div>
         <div class="col-xs-12">
             <div data-ng-show="(user.cvWriteExp.length == 0 && user.cvWrite.length == 0 && user.cvChoice == 'cvWrite' && user.userCallCV == 'now') && buttonOfForm3CLicked == true"
