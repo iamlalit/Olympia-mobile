@@ -47,6 +47,8 @@ app.config(function($routeProvider) {
   $routeProvider.when('/jobs',           {templateUrl: 'jobs.html', reloadOnSearch: false});
   $routeProvider.when('/bevestiging',        {templateUrl: 'thankyouPage.html', reloadOnSearch: false});
   $routeProvider.when('/RequestLostPassword',        {templateUrl: 'forgotpassword.html', reloadOnSearch: false});
+  $routeProvider.when('/jobApplyMobile',        {templateUrl: 'jobApplyMobile/mobile.html', reloadOnSearch: false});
+  $routeProvider.when('/jobApplyDesktop',        {templateUrl: 'jobApplyDesktop/desktop.html', reloadOnSearch: false});
 
 });
 
