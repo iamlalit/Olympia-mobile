@@ -311,7 +311,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   $scope.jobs = [];
   for(var i = 1; i<=10; i++){
     jobs.push({
-      jobTitle: 'Fulltime administratief medewerker bedrijfsbureau',
+      jobTitle: 'Logistiek medewerker E-commerce in Ede',
       jobDienstverband: 'Vast',
       jobLocatie: 'Groningen',
       jobAantal: '40',
@@ -369,7 +369,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     $scope.jobUrl = job.url;
   }
   if(typeof $scope.jobTitle == "undefined"){
-    $scope.jobTitle = 'Fulltime administratief medewerker bedrijfsbureau';
+    $scope.jobTitle = 'Logistiek medewerker E-commerce in Ede';
     $scope.jobUrl = 'firstjob';
   }
 

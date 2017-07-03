@@ -15,9 +15,10 @@ var app = angular.module('MobileAngularUiExamples', [
   'mobile-angular-ui.gestures'
 ]);
 
-app.run(function($transform, $anchorScroll) {
+app.run(function($transform, $anchorScroll, $rootScope) {
   window.$transform = $transform;
   $anchorScroll.yOffset = -50;   // always scroll by 50 extra pixels
+  $rootScope.isMobile = angular.element('html').width() < 700;
 });
 
 //
@@ -26,6 +27,12 @@ app.run(function($transform, $anchorScroll) {
 // in order to avoid unwanted routing.
 //
 app.config(function($routeProvider) {
+
+  var isNotMobile = angular.element('html').width() >= 700;
+  console.log(isNotMobile);
+
+  var templateName = (isNotMobile) ? 'jobApplyDesktop/desktop.html' : 'jobApplyMobile/mobile.html'
+
   $routeProvider.when('/',              {templateUrl: 'forms.html', reloadOnSearch: false});
 //  $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false});
 //  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false});
@@ -47,6 +54,8 @@ app.config(function($routeProvider) {
   $routeProvider.when('/jobs',           {templateUrl: 'jobs.html', reloadOnSearch: false});
   $routeProvider.when('/bevestiging',        {templateUrl: 'thankyouPage.html', reloadOnSearch: false});
   $routeProvider.when('/RequestLostPassword',        {templateUrl: 'forgotpassword.html', reloadOnSearch: false});
+  $routeProvider.when('/sollicitatieformulier',        {templateUrl: templateName, reloadOnSearch: false});
+  // $routeProvider.when('/jobApplyDesktop',        {templateUrl: 'jobApplyDesktop/desktop.html', reloadOnSearch: false});
 
 });
 
@@ -302,7 +311,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
   $scope.jobs = [];
   for(var i = 1; i<=10; i++){
     jobs.push({
-      jobTitle: 'Fulltime administratief medewerker bedrijfsbureau',
+      jobTitle: 'Logistiek medewerker E-commerce in Ede',
       jobDienstverband: 'Vast',
       jobLocatie: 'Groningen',
       jobAantal: '40',
@@ -360,7 +369,7 @@ app.controller('MainController', function($rootScope, $scope, $location, $anchor
     $scope.jobUrl = job.url;
   }
   if(typeof $scope.jobTitle == "undefined"){
-    $scope.jobTitle = 'Fulltime administratief medewerker bedrijfsbureau';
+    $scope.jobTitle = 'Logistiek medewerker E-commerce in Ede';
     $scope.jobUrl = 'firstjob';
   }
 
