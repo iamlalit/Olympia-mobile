@@ -7,20 +7,19 @@
             <div class="modal-body" data-ng-show="!olympia.emailisontheway">
                 <div class="row">
                     <div class="col-xs-12">
-                        <p>Stuur nu je CV per e-mail naar <strong id="foo">cv@olympia.nl</strong> en let daarbij op onderstaande punten. Je kunt het e-mail adres kopiëren naar je klembord door op de knop kopieer e-mailadres te drukken.<br /><br /></p>
-                        <p>Wanneer je de e-mail met je CV hebt vestuurd druk je op ik heb mijn CV verstuurd om verder te gaan. Terwijl wij wachten op je CV kun jij alvast je sollicitatie verder afronden. Je ontvangt een bericht wanneer wij je CV hebben ontvangen.</p>
-                        <p>Stuur je CV naar cv@olympia.nl en zorg ervoor dat:</p>
+                        <p>Stuur nu je CV per e-mail naar <strong id="foo">cv@olympia.nl</strong>, hieronder lees je waar je e-mail aan moet voldoen en kun je het e-mailadres makkelijk kopiëren.</p>
+                        <p>Klik na het versturen van je CV op "ik heb mijn CV verstuurd" en maak je sollicitatie af terwijl wij je CV verwerken. Per e-mail informeren we je over de verwerking van je CV.</p>
+                        <p>Zorg ervoor dat;</p>
                         <ul>
-                            <li>je hetzelfde e-mailadres gebruikt waarmee je je hebt geregistreerd bij Olympia</li>
-                            <li>je het CV bestand als bijlage van de e-mail verstuurd</li>
-                            <li>het een .pdf, .doc of .docx bestand is</li>
-                            <li>het CV bestand niet groter is dan 5 MB</li>
+                            <li>je het e-mailadres gebruikt van je registratie bij Olympia.</li>
+                            <li>je CV als bijlage is toegevoegd.</li>
+                            <li>je CV een .pdf, .doc of .docx bestand is van max 5MB.</li>
                         </ul>
                     </div>
                 </div>
-                <div class="row padding-top-2x">
+                <div class="row padding-top-0x">
                     <div class="col-xs-12">
-                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>kopieer e-mailadres</label></a>
+                        <a class="btn btn-default copier" data-clipboard-target="#foo" href="javascript:void(0)" data-ng-click="olympia.panel2Change = true;olympia.saveThePanelValue = 2;"><label>Kopieer e-mailadres</label></a>
                     </div>
                 </div>
                 <div class="row padding-top-0x">
@@ -59,11 +58,6 @@
                     <div class="col-xs-9 col-xs-offset-3 text-right">
                         <button class="btn btn-primary width-100px" data-ng-click="olympia.emailisontheway = true;movetoNextOverlay()" data-ng-class="{'hidden': olympia.copiedtoboard != true}">Verder</button>
                         <button ui-turn-off="cvUploadenviaEmail" class="blue btn btn-tertiary">Annuleren</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 text-center padding-top-1x">
-                        <p><i><small>LET OP: De veiligste manier om je CV te delen met Olympia is door deze up te loaden via Mijn Olympia of via het sollicitatieformulier.</small></i></p>
                     </div>
                 </div>
             </div>
