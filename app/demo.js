@@ -15,10 +15,9 @@ var app = angular.module('MobileAngularUiExamples', [
   'mobile-angular-ui.gestures'
 ]);
 
-app.run(function($transform, $anchorScroll, $rootScope) {
+app.run(function($transform, $anchorScroll) {
   window.$transform = $transform;
   $anchorScroll.yOffset = -50;   // always scroll by 50 extra pixels
-  $rootScope.isMobile = angular.element('html').width() < 700;
 });
 
 //
@@ -27,12 +26,6 @@ app.run(function($transform, $anchorScroll, $rootScope) {
 // in order to avoid unwanted routing.
 //
 app.config(function($routeProvider) {
-
-  var isNotMobile = angular.element('html').width() >= 700;
-  console.log(isNotMobile);
-
-  var templateName = (isNotMobile) ? 'jobApplyDesktop/desktop.html' : 'jobApplyMobile/mobile.html'
-
   $routeProvider.when('/',              {templateUrl: 'forms.html', reloadOnSearch: false});
 //  $routeProvider.when('/scroll',        {templateUrl: 'scroll.html', reloadOnSearch: false});
 //  $routeProvider.when('/toggle',        {templateUrl: 'toggle.html', reloadOnSearch: false});
@@ -54,8 +47,6 @@ app.config(function($routeProvider) {
   $routeProvider.when('/jobs',           {templateUrl: 'jobs.html', reloadOnSearch: false});
   $routeProvider.when('/bevestiging',        {templateUrl: 'thankyouPage.html', reloadOnSearch: false});
   $routeProvider.when('/RequestLostPassword',        {templateUrl: 'forgotpassword.html', reloadOnSearch: false});
-  $routeProvider.when('/sollicitatieformulier',        {templateUrl: templateName, reloadOnSearch: false});
-  // $routeProvider.when('/jobApplyDesktop',        {templateUrl: 'jobApplyDesktop/desktop.html', reloadOnSearch: false});
 
 });
 

@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-base.min.css" />
     <link rel="stylesheet" href="/dist/css/mobile-angular-ui-desktop.min.css" />
     <link rel="stylesheet" href="demo.css" />
-    <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
     <script src="/dist/js/mobile-angular-ui.min.js"></script>
@@ -25,37 +23,53 @@
     <script src="demo.js"></script>
   </head>
 
-   <body
+  <body
     ng-app="MobileAngularUiExamples"
     ng-controller="MainController"
     ui-prevent-touchmove-defaults
     >
 
     <!-- Sidebars starts -->
-    <div ng-include="'sidebar.html'" ui-track-as-search-param='true' class="sidebar sidebar-left" data-ng-if="isMobile"></div> 
+    <div ng-include="'sidebar.html'" ui-track-as-search-param='true' class="sidebar sidebar-left"></div>
 
-    <div class="app" ui-swipe-right='Ui.turnOn("uiSidebarLeft")' ui-swipe-left='Ui.turnOff("uiSidebarLeft")' data-ng-if="isMobile"> 
+    <!--Lalit: hiding right side bar-->
+    <!--<div ng-include="'sidebarRight.html'" class="sidebar sidebar-right"></div>-->
+
+    <div class="app" ui-swipe-right='Ui.turnOn("uiSidebarLeft")' ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+    <!-- Sidebars ends -->
+
+
+    <!-- Navbars starts-->
+
       <div class="navbar navbar-app navbar-absolute-top">
-         <div class="navbar-brand navbar-brand-center">
-        </div> 
+        <!--<div class="navbar-brand navbar-brand-center" ui-yield-to="title">
+          <img src="img/logo.png" />
+        </div>-->
+        <div class="navbar-brand navbar-brand-center">
+
+        </div>
         <div class="btn-group pull-left">
           <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
             <i class="fa fa-bars"></i> Menu
           </div>
         </div>
+        <!--
+        Lalit hiding chat right side bar
+        <div class="btn-group pull-right" ui-yield-to="navbarAction">
+          <div ui-toggle="uiSidebarRight" class="btn">
+            <i class="fa fa-comment"></i> Chat
+          </div>
+        </div>
+        -->
       </div>
+
+      <!-- <div class="navbar navbar-app navbar-absolute-bottom">
+        <a href="#/search" class="btn btn-navbar"><i class="fa fa-arrow-left fa-navbar"></i> naar zoekresultaat</a>
+        <a href="#/" class="btn btn-navbar pull-right"><i class="fa fa-search fa-navbar"></i> Zoeken</a>
+      </div> -->
+    <!-- Navbars ends -->
+      <!-- App Body -->
       <div class="app-body" ng-class="{loading: loading}" id="top">
-        <div ng-show="loading" class="app-content-loading">
-          <i class="fa fa-spinner fa-spin loading-spinner"></i>
-        </div>
-        <div class="app-content" id="app-content">
-          <ng-view autoscroll="true"></ng-view>
-        </div>
-      </div>
-
-    </div><!-- ~ .app -->
-
-      <div class="app-body" ng-class="{loading: loading}" id="top" data-ng-if="!isMobile">
         <div ng-show="loading" class="app-content-loading">
           <i class="fa fa-spinner fa-spin loading-spinner"></i>
         </div>
@@ -80,33 +94,5 @@
       };
       firebase.initializeApp(config);
     </script>
-    <!-- Scripts -->
-    <script type="text/javascript" src="lib/hoverIntent.js"></script>
-    <script type="text/javascript" src="lib/superfish.min.js"></script>
-    <script type="text/javascript" src="lib/supersubs.js"></script>
-
-    <script>
-      $("#text-content").keyup(function() {
-        var text  = $(this).val();
-        $('#text-content-pop').val(text);
-        $('#text-content-count').text($(this).val().length);
-        $('#text-content-count-pop').text($(this).val().length);
-      });
-      $("#text-content-pop").keyup(function() {
-        var text  = $(this).val();
-        $('#text-content').val(text);
-        $('#text-content-count-pop').text(text.length);
-        $('#text-content-count').text(text.length);
-      });
-      $(document).ready(function () {
-        $("#menu-227").addClass('sf-menu');
-        $('#menu-227').superfish({
-          delay: 200,
-          speed: 'fast',
-          autoArrows: 1,
-          dropShadows: 1
-        });
-      });
-    </script> 
   </body>
 </html>
